@@ -1,4 +1,5 @@
 import UIKit
+import ThemeKit
 import SnapKit
 
 public class MultiTextComponent: UIView {
@@ -7,8 +8,9 @@ public class MultiTextComponent: UIView {
 
     public let title = TextComponent()
     public let titleBadge = BadgeView()
-    public let titleImageLeft = ImageComponent()
-    public let titleImageRight = ImageComponent()
+    public let titleImageLeft = ImageComponent(size: .iconSize20)
+    public let titleImageRight = ImageComponent(size: .iconSize20)
+    public let titleSpacingView = UIView()
 
     public let subtitleBadge = BadgeView()
     public let subtitleLeft = TextComponent()
@@ -28,7 +30,7 @@ public class MultiTextComponent: UIView {
         container.addSubview(titleStackView)
         titleStackView.snp.makeConstraints { maker in
             maker.leading.top.equalToSuperview()
-            maker.trailing.equalToSuperview().priority(.medium)
+            maker.trailing.equalToSuperview()
         }
 
         titleStackView.alignment = .center
@@ -47,18 +49,23 @@ public class MultiTextComponent: UIView {
 
         titleStackView.addArrangedSubview(titleBadge)
         titleStackView.setCustomSpacing(.margin6, after: titleBadge)
+        titleBadge.set(style: .small)
 
         titleStackView.addArrangedSubview(titleImageLeft)
         titleStackView.setCustomSpacing(.margin6, after: titleImageLeft)
 
         titleStackView.addArrangedSubview(titleImageRight)
 
+        titleStackView.addArrangedSubview(titleSpacingView)
+
         subtitleStackView.addArrangedSubview(subtitleBadge)
         subtitleStackView.setCustomSpacing(.margin8, after: subtitleBadge)
+        subtitleBadge.set(style: .small)
 
         subtitleStackView.addArrangedSubview(subtitleLeft)
         subtitleStackView.setCustomSpacing(.margin4, after: subtitleLeft)
 
+        subtitleLeft.setContentCompressionResistancePriority(.required, for: .horizontal)
         subtitleLeft.setContentHuggingPriority(.required, for: .horizontal)
 
         subtitleStackView.addArrangedSubview(subtitleRight)
@@ -107,6 +114,10 @@ public class MultiTextComponent: UIView {
             titleImageLeft.isHidden = false
             titleImageRight.isHidden = false
             subtitleRight.isHidden = false
+        case .m7:
+            title.isHidden = false
+            titleBadge.isHidden = false
+            subtitleRight.isHidden = false
         }
     }
 
@@ -121,6 +132,7 @@ extension MultiTextComponent {
         case m4
         case m5
         case m6
+        case m7
     }
 
 }

@@ -5,21 +5,27 @@ import Kingfisher
 public class ImageComponent: UIView {
     public let imageView = UIImageView()
 
-    override public init(frame: CGRect) {
-        super.init(frame: frame)
+    public init(size: CGFloat) {
+        super.init(frame: .zero)
 
         addSubview(imageView)
         imageView.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview()
             maker.centerY.equalToSuperview()
+            maker.size.equalTo(size)
         }
-
-        imageView.setContentCompressionResistancePriority(.required, for: .horizontal)
-        imageView.setContentHuggingPriority(.required, for: .horizontal)
     }
 
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    public var imageRatio: CGFloat? {
+        if let image = imageView.image {
+            return image.size.height / image.size.width
+        }
+
+        return nil
     }
 
     public func setImage(urlString: String?, placeholder: UIImage?) {

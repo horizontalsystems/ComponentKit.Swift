@@ -2,17 +2,20 @@ import UIKit
 import ThemeKit
 import SnapKit
 
-public class PrimaryCircleButton: UIButton {
+open class PrimaryCircleButton: UIButton {
+    public static let size: CGFloat = .heightButton
+
+    private var style: Style?
 
     public init() {
         super.init(frame: .zero)
 
-        cornerRadius = 25
+        cornerRadius = Self.size / 2
 
         setBackgroundColor(.themeSteel20, for: .disabled)
 
         snp.makeConstraints { maker in
-            maker.size.equalTo(CGFloat.heightButton)
+            maker.size.equalTo(Self.size)
         }
     }
 
@@ -21,13 +24,22 @@ public class PrimaryCircleButton: UIButton {
     }
 
     public func set(image: UIImage?) {
-        setImage(image?.withTintColor(.themeClaude), for: .normal)
+        if let style = style, case .yellow = style {
+            setImage(image?.withTintColor(.themeDark), for: .normal)
+            setImage(image?.withTintColor(.themeDark), for: .highlighted)
+        } else {
+            setImage(image?.withTintColor(.themeClaude), for: .normal)
+            setImage(image?.withTintColor(.themeClaude), for: .highlighted)
+        }
         setImage(image?.withTintColor(.themeSteel20), for: .disabled)
     }
 
     public func set(style: Style) {
+        self.style = style
+
         switch style {
         case .yellow:
+            setImage(imageView?.image?.withTintColor(.themeDark), for: .normal)
             setBackgroundColor(.themeYellowD, for: .normal)
             setBackgroundColor(.themeYellow50, for: .highlighted)
         case .red:

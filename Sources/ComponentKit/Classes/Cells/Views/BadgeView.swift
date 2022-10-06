@@ -2,32 +2,51 @@ import UIKit
 import SnapKit
 
 public class BadgeView: UIView {
-    static private let sideMargin: CGFloat = .margin1x
-    static private let height: CGFloat = 15
-    static private let font: UIFont = .microSB
+    static private let sideMargin: CGFloat = .margin4
+    static private let spacing: CGFloat = .margin2
 
+    private let stackView = UIStackView()
     private let label = UILabel()
+    private let changeLabel = UILabel()
 
     override public init(frame: CGRect) {
         super.init(frame: frame)
 
         snp.makeConstraints { maker in
-            maker.height.equalTo(Self.height)
+            maker.height.equalTo(0)
         }
 
-        layer.cornerRadius = .cornerRadius1x
-        backgroundColor = .themeJeremy
+        layer.cornerRadius = .cornerRadius4
+        layer.cornerCurve = .continuous
 
-        addSubview(label)
-        label.snp.makeConstraints { maker in
+        addSubview(stackView)
+        stackView.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(Self.sideMargin)
             maker.centerY.equalToSuperview()
         }
 
+        stackView.spacing = Self.spacing
+        stackView.alignment = .fill
+
+        stackView.addArrangedSubview(label)
         label.setContentCompressionResistancePriority(.required, for: .horizontal)
         label.setContentHuggingPriority(.required, for: .horizontal)
-        label.textColor = .themeBran
-        label.font = Self.font
+
+        stackView.addArrangedSubview(changeLabel)
+        changeLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
+        changeLabel.setContentHuggingPriority(.required, for: .horizontal)
+        changeLabel.isHidden = true
+    }
+
+    public func set(style: Style) {
+        backgroundColor = style.backgroundColor
+        label.textColor = style.textColor
+        label.font = style.font
+        changeLabel.font = style.font
+
+        snp.updateConstraints { maker in
+            maker.height.equalTo(style.height)
+        }
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -42,7 +61,10 @@ public class BadgeView: UIView {
 
     public var font: UIFont {
         get { label.font }
-        set { label.font = newValue }
+        set {
+            label.font = newValue
+            changeLabel.font = newValue
+        }
     }
 
     public var textColor: UIColor {
@@ -55,8 +77,82 @@ public class BadgeView: UIView {
         set { label.text = newValue }
     }
 
-    static public func width(for text: String) -> CGFloat {
-        text.size(containerWidth: .greatestFiniteMagnitude, font: font).width + sideMargin * 2
+    public var change: Change? {
+        didSet {
+            changeLabel.isHidden = change == nil
+            changeLabel.text = change?.text
+            changeLabel.textColor = change?.color
+        }
+    }
+
+    static public func width(for text: String, change: Change?, style: Style) -> CGFloat {
+        let textWidth = text.size(containerWidth: .greatestFiniteMagnitude, font: style.font).width
+        let changeWidth = change.map { $0.text.size(containerWidth: .greatestFiniteMagnitude, font: style.font).width + spacing } ?? 0
+        return textWidth + changeWidth + sideMargin * 2
+    }
+
+}
+
+extension BadgeView {
+
+    public enum Style {
+        case small
+        case medium
+
+        var height: CGFloat {
+            switch self {
+            case .small: return 15
+            case .medium: return 18
+            }
+        }
+
+        var font: UIFont {
+            switch self {
+            case .small: return .microSB
+            case .medium: return .captionSB
+            }
+        }
+
+        var textColor: UIColor {
+            switch self {
+            case .small: return .themeBran
+            case .medium: return .themeWhite
+            }
+        }
+
+        var backgroundColor: UIColor {
+            switch self {
+            case .small: return .themeJeremy
+            case .medium: return .themeLucian
+            }
+        }
+
+    }
+
+    public enum Change {
+        case up(String)
+        case down(String)
+
+        private var symbol: String {
+            switch self {
+            case .up: return "↑"
+            case .down: return "↓"
+            }
+        }
+
+        var color: UIColor {
+            switch self {
+            case .up: return .themeRemus
+            case .down: return .themeLucian
+            }
+        }
+
+        var text: String {
+            switch self {
+            case let .down(text): return symbol + text
+            case let .up(text): return symbol + text
+            }
+        }
     }
 
 }

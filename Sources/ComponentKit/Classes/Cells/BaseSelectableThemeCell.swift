@@ -12,8 +12,8 @@ open class BaseSelectableThemeCell: BaseThemeCell {
         wrapperView.insertSubview(selectView, at: 0)
         selectView.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview()
-            maker.top.equalTo(topSeparatorView.snp.bottom)
-            maker.bottom.equalTo(bottomSeparatorView.snp.top).priority(.high)
+            maker.top.equalToSuperview()
+            maker.bottom.equalToSuperview().priority(.high)
         }
 
         selectView.alpha = 0
@@ -23,17 +23,35 @@ open class BaseSelectableThemeCell: BaseThemeCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    open override func set(backgroundStyle: BackgroundStyle, isFirst: Bool = false, isLast: Bool = false) {
-        super.set(backgroundStyle: backgroundStyle, isFirst: isFirst, isLast: isLast)
+    open override func set(backgroundStyle: BackgroundStyle, cornerRadius: CGFloat = .cornerRadius12, isFirst: Bool = false, isLast: Bool = false) {
+        super.set(backgroundStyle: backgroundStyle, cornerRadius: cornerRadius, isFirst: isFirst, isLast: isLast)
 
         switch backgroundStyle {
-        case .lawrence:
+        case .lawrence, .bordered:
             selectView.backgroundColor = .themeLawrencePressed
-        case .claude:
-            selectView.backgroundColor = .themeJeremy
+            selectView.layer.cornerRadius = wrapperView.cornerRadius
+            selectView.layer.maskedCorners = corners(isFirst: isFirst, isLast: isLast)
         case .transparent:
             selectView.backgroundColor = .themeLawrencePressed
+            selectView.layer.cornerRadius = 0
+            selectView.layer.maskedCorners = []
         }
+
+        var topInset: CGFloat = 0
+        if !topSeparatorView.isHidden {
+            topInset = topSeparatorView.height
+        }
+        if wrapperView.borders.contains(.top) {
+            topInset = wrapperView.borderWidth
+        }
+        selectView.snp.updateConstraints { maker in
+            maker.top.equalToSuperview().inset(topInset)
+            maker.leading.equalToSuperview().inset(wrapperView.borders.contains(.left) ? wrapperView.borderWidth : 0)
+            maker.trailing.equalToSuperview().inset(wrapperView.borders.contains(.right) ? wrapperView.borderWidth : 0)
+            maker.bottom.equalToSuperview().inset(wrapperView.borders.contains(.bottom) ? wrapperView.borderWidth : 0).priority(.high)
+        }
+
+        layoutIfNeeded()
     }
 
     override open func setHighlighted(_ highlighted: Bool, animated: Bool) {
