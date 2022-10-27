@@ -183,6 +183,7 @@ public class CellBuilderNew {
         case .image16: return ImageComponent(size: .iconSize16)
         case .image20: return ImageComponent(size: .iconSize20)
         case .image24: return ImageComponent(size: .iconSize24)
+        case .image32: return ImageComponent(size: .iconSize32)
         case .transactionImage: return TransactionImageComponent()
         case .switch: return SwitchComponent()
         case .primaryButton: return PrimaryButtonComponent()
@@ -233,6 +234,7 @@ extension CellBuilderNew {
         case image16(_ bind: (ImageComponent) ->  ())
         case image20(_ bind: (ImageComponent) ->  ())
         case image24(_ bind: (ImageComponent) ->  ())
+        case image32(_ bind: (ImageComponent) ->  ())
         case transactionImage(_ bind: (TransactionImageComponent) ->  ())
         case `switch`(_ bind: (SwitchComponent) ->  ())
         case primaryButton(_ bind: (PrimaryButtonComponent) ->  ())
@@ -268,6 +270,7 @@ extension CellBuilderNew {
             case .image16: return "image16"
             case .image20: return "image20"
             case .image24: return "image24"
+            case .image32: return "image32"
             case .transactionImage: return "transactionImage"
             case .switch: return "switch"
             case .primaryButton: return "primaryButton"
@@ -308,7 +311,7 @@ extension CellBuilderNew {
                 if let component = view as? TextButtonComponent {
                     bind(component)
                 }
-            case .image16(let bind), .image20(let bind), .image24(let bind):
+            case .image16(let bind), .image20(let bind), .image24(let bind), .image32(let bind):
                 if let component = view as? ImageComponent {
                     bind(component)
                 }

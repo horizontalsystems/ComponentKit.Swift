@@ -169,6 +169,7 @@ public class CellBuilder {
         case .image16: return ImageComponent(size: .iconSize16)
         case .image20: return ImageComponent(size: .iconSize20)
         case .image24: return ImageComponent(size: .iconSize24)
+        case .image32: return ImageComponent(size: .iconSize32)
         case .transactionImage: return TransactionImageComponent()
         case .switch: return SwitchComponent()
         case .primaryButton: return PrimaryButtonComponent()
@@ -209,6 +210,7 @@ extension CellBuilder {
         case image16
         case image20
         case image24
+        case image32
         case transactionImage
         case `switch`
         case primaryButton

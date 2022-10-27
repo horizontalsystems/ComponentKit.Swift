@@ -33,7 +33,7 @@ public class TransactionImageComponent: UIView {
         addSubview(imageView)
         imageView.snp.makeConstraints { maker in
             maker.center.equalTo(spinner)
-            maker.size.equalTo(CGFloat.iconSize24)
+            maker.size.equalTo(CGFloat.iconSize32)
         }
 
         imageView.cornerRadius = .cornerRadius4
@@ -41,22 +41,27 @@ public class TransactionImageComponent: UIView {
         addSubview(doubleImageWrapper)
         doubleImageWrapper.snp.makeConstraints { maker in
             maker.center.equalTo(spinner)
-            maker.size.equalTo(28)
+            maker.width.equalTo(32)
+            maker.height.equalTo(36)
         }
 
         doubleImageWrapper.addSubview(backImageView)
         backImageView.snp.makeConstraints { maker in
             maker.leading.top.equalToSuperview()
-            maker.size.equalTo(CGFloat.iconSize20)
+            maker.size.equalTo(CGFloat.iconSize24)
         }
+
+        backImageView.contentMode = .scaleAspectFill
 
         doubleImageWrapper.addSubview(frontImageMask)
         doubleImageWrapper.addSubview(frontImageView)
 
         frontImageView.snp.makeConstraints { maker in
             maker.trailing.bottom.equalToSuperview()
-            maker.size.equalTo(CGFloat.iconSize20)
+            maker.size.equalTo(CGFloat.iconSize24)
         }
+
+        frontImageView.contentMode = .scaleAspectFill
 
         frontImageMask.snp.makeConstraints { maker in
             maker.size.equalTo(frontImageView)
@@ -81,10 +86,11 @@ public class TransactionImageComponent: UIView {
         }
     }
 
-    public func set(image: UIImage?) {
+    public func set(image: UIImage?, contentMode: UIView.ContentMode = .scaleAspectFill) {
         doubleImageWrapper.isHidden = true
         imageView.isHidden = false
 
+        imageView.contentMode = contentMode
         imageView.image = image
     }
 
@@ -92,6 +98,7 @@ public class TransactionImageComponent: UIView {
         doubleImageWrapper.isHidden = true
         imageView.isHidden = false
 
+        imageView.contentMode = .scaleAspectFill
         imageView.image = nil
         imageView.kf.setImage(with: urlString.flatMap { URL(string: $0) }, placeholder: placeholder, options: [.onlyLoadFirstFrame, .transition(.fade(0.5))])
     }
@@ -102,8 +109,8 @@ public class TransactionImageComponent: UIView {
 
         switch frontType {
         case .circle:
-            frontImageView.cornerRadius = CGFloat.iconSize20 / 2
-            frontImageMask.cornerRadius = CGFloat.iconSize20 / 2
+            frontImageView.cornerRadius = CGFloat.iconSize24 / 2
+            frontImageMask.cornerRadius = CGFloat.iconSize24 / 2
         case .squircle:
             frontImageView.cornerRadius = .cornerRadius4
             frontImageMask.cornerRadius = .cornerRadius4
@@ -111,7 +118,7 @@ public class TransactionImageComponent: UIView {
 
         switch backType {
         case .circle:
-            backImageView.cornerRadius = CGFloat.iconSize20 / 2
+            backImageView.cornerRadius = CGFloat.iconSize24 / 2
         case .squircle:
             backImageView.cornerRadius = .cornerRadius4
         }
