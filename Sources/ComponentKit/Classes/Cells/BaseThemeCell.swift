@@ -91,7 +91,7 @@ open class BaseThemeCell: UITableViewCell {
             topSeparatorView.isHidden = isFirst
             wrapperView.backgroundColor = .themeLawrence
             wrapperView.borderColor = .clear
-        case .bordered:
+        case .bordered, .externalBorderOnly:
             var borders: UIRectEdge = [.left, .right]
             if isFirst || isLast {
                 resolvedCornerRadius = cornerRadius
@@ -110,7 +110,7 @@ open class BaseThemeCell: UITableViewCell {
                 maker.height.equalTo(CGFloat.heightOneDp)
             }
 
-            topSeparatorView.isHidden = isFirst
+            topSeparatorView.isHidden = isFirst || backgroundStyle == .externalBorderOnly
             wrapperView.backgroundColor = .clear
             wrapperView.borderWidth = .heightOneDp
             wrapperView.borders = borders
@@ -168,7 +168,7 @@ open class BaseThemeCell: UITableViewCell {
 
     public static func margin(backgroundStyle: BackgroundStyle) -> UIEdgeInsets {
         switch backgroundStyle {
-        case .lawrence, .bordered:
+        case .lawrence, .bordered, .externalBorderOnly:
             return UIEdgeInsets(top: 0, left: .margin16, bottom: 0, right: .margin16)
         case .transparent:
             return UIEdgeInsets.zero
@@ -178,6 +178,7 @@ open class BaseThemeCell: UITableViewCell {
     public enum BackgroundStyle {
         case lawrence
         case bordered
+        case externalBorderOnly
         case transparent
     }
 

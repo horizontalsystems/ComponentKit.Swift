@@ -27,7 +27,7 @@ open class BaseSelectableThemeCell: BaseThemeCell {
         super.set(backgroundStyle: backgroundStyle, cornerRadius: cornerRadius, isFirst: isFirst, isLast: isLast)
 
         switch backgroundStyle {
-        case .lawrence, .bordered:
+        case .lawrence, .bordered, .externalBorderOnly:
             selectView.backgroundColor = .themeLawrencePressed
             selectView.layer.cornerRadius = wrapperView.cornerRadius
             selectView.layer.maskedCorners = corners(isFirst: isFirst, isLast: isLast)
