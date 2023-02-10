@@ -126,8 +126,8 @@ public class TransactionImageComponent: UIView {
         frontImageView.image = nil
         backImageView.image = nil
 
-        frontImageView.kf.setImage(with: frontUrl.flatMap { URL(string: $0) }, placeholder: frontPlaceholder)
-        backImageView.kf.setImage(with: backUrl.flatMap { URL(string: $0) }, placeholder: backPlaceholder)
+        frontImageView.kf.setImage(with: frontUrl.flatMap { URL(string: $0) }, placeholder: frontPlaceholder, options: [.onlyLoadFirstFrame, .transition(.fade(0.5))])
+        backImageView.kf.setImage(with: backUrl.flatMap { URL(string: $0) }, placeholder: backPlaceholder, options: [.onlyLoadFirstFrame, .transition(.fade(0.5))])
     }
 
 }
