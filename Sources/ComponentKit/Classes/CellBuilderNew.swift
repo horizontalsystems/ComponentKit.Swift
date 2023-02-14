@@ -174,9 +174,9 @@ public class CellBuilderNew {
 
     private static func view(element: CellElement) -> UIView? {
         switch element {
-        case let .hStack(elements): return stackComponent(axis: .horizontal, elements: elements)
-        case let .vStack(elements): return stackComponent(axis: .vertical, elements: elements)
-        case let .vStackCentered(elements): return stackComponent(axis: .vertical, elements: elements, centered: true)
+        case let .hStack(elements, _): return stackComponent(axis: .horizontal, elements: elements)
+        case let .vStack(elements, _): return stackComponent(axis: .vertical, elements: elements)
+        case let .vStackCentered(elements, _): return stackComponent(axis: .vertical, elements: elements, centered: true)
 
         case .text: return TextComponent()
         case .textButton: return TextButtonComponent()
@@ -216,9 +216,9 @@ public class CellBuilderNew {
 extension CellBuilderNew {
 
     public enum CellElement {
-        case hStack(_ elements: [CellElement])
-        case vStack(_ elements: [CellElement])
-        case vStackCentered(_ elements: [CellElement])
+        case hStack(_ elements: [CellElement], _ bind: ((StackComponent) ->  ())? = nil)
+        case vStack(_ elements: [CellElement], _ bind: ((StackComponent) ->  ())? = nil)
+        case vStackCentered(_ elements: [CellElement], _ bind: ((StackComponent) ->  ())? = nil)
 
         case margin(_ value: CGFloat)
         case margin0
@@ -252,9 +252,9 @@ extension CellBuilderNew {
 
         var id: String {
             switch self {
-            case let .hStack(elements): return "hStack[\(elements.map { $0.id }.joined(separator: "-"))]"
-            case let .vStack(elements): return "vStack[\(elements.map { $0.id }.joined(separator: "-"))]"
-            case let .vStackCentered(elements): return "vStackCentered[\(elements.map { $0.id }.joined(separator: "-"))]"
+            case let .hStack(elements, _): return "hStack[\(elements.map { $0.id }.joined(separator: "-"))]"
+            case let .vStack(elements, _): return "vStack[\(elements.map { $0.id }.joined(separator: "-"))]"
+            case let .vStackCentered(elements, _): return "vStackCentered[\(elements.map { $0.id }.joined(separator: "-"))]"
 
             case .margin(let value): return "margin\(value)"
             case .margin0: return "margin0"
@@ -297,8 +297,11 @@ extension CellBuilderNew {
 
         func bind(view: UIView) {
             switch self {
-            case .hStack(let elements), .vStack(let elements), .vStackCentered(let elements):
+            case .hStack(let elements, let bind), .vStack(let elements, let bind), .vStackCentered(let elements, let bind):
                 if let component = view as? StackComponent {
+                    if let bind = bind {
+                        bind(component)
+                    }
                     for (index, element) in elements.filter({ $0.isView }).enumerated() {
                         element.bind(view: component.stackView.arrangedSubviews[index])
                     }
