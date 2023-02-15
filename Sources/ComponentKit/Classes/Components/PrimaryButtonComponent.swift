@@ -3,13 +3,20 @@ import SnapKit
 
 public class PrimaryButtonComponent: UIView {
     public let button = PrimaryButton()
+    private let dummyButton = UIButton()
 
     public var onTap: (() -> ())?
 
     override public init(frame: CGRect) {
         super.init(frame: frame)
 
+        addSubview(dummyButton)
         addSubview(button)
+
+        dummyButton.snp.makeConstraints { maker in
+            maker.edges.equalTo(button)
+        }
+
         button.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview()
             maker.centerY.equalToSuperview()
