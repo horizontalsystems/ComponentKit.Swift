@@ -3,13 +3,20 @@ import SnapKit
 
 public class TransparentIconButtonComponent: UIView {
     public let button = TransparentIconButton()
+    private let dummyButton = UIButton()
 
     public var onTap: (() -> ())?
 
     override public init(frame: CGRect) {
         super.init(frame: frame)
 
+        addSubview(dummyButton)
         addSubview(button)
+
+        dummyButton.snp.makeConstraints { maker in
+            maker.edges.equalTo(button)
+        }
+
         button.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
         }
