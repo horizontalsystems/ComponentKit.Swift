@@ -2,7 +2,7 @@ import UIKit
 import ThemeKit
 import SnapKit
 
-open class PrimaryButton: UIButton {
+open class PrimaryButton: BaseButton {
     private static let horizontalPadding: CGFloat = .margin16
     public static let height: CGFloat = .heightButton
 

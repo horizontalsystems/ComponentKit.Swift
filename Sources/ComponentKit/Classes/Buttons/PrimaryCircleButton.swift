@@ -2,7 +2,7 @@ import UIKit
 import ThemeKit
 import SnapKit
 
-open class PrimaryCircleButton: UIButton {
+open class PrimaryCircleButton: BaseButton {
     public static let size: CGFloat = .heightButton
 
     private var style: Style?
