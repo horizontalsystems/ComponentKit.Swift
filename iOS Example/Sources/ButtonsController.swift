@@ -14,7 +14,9 @@ class ButtonsController: ThemeViewController {
     private let primaryCircleCell = BaseThemeCell()
     private let secondaryCell = BaseThemeCell()
     private let secondaryFullCell = BaseThemeCell()
+    private let secondaryFull2Cell = BaseThemeCell()
     private let secondaryTransparentCell = BaseThemeCell()
+    private let secondaryTransparent2Cell = BaseThemeCell()
     private let secondaryCircleCell = BaseThemeCell()
     private let transparentIconCell = BaseThemeCell()
 
@@ -103,12 +105,16 @@ class ButtonsController: ThemeViewController {
             component.button.set(style: .transparent)
             component.button.setTitle("Transparent", for: .normal)
             component.button.setContentHuggingPriority(.required, for: .horizontal)
+            component.button.borderWidth = 1
+            component.button.borderColor = .themeSteel10
         })
         primaryTransparentCell.bind(index: 2, block: { (component: PrimaryButtonComponent) in
             component.button.set(style: .transparent)
             component.button.isEnabled = false
             component.button.setTitle("Disabled", for: .normal)
             component.button.setContentHuggingPriority(.required, for: .horizontal)
+            component.button.borderWidth = 1
+            component.button.borderColor = .themeSteel10
         })
 
         primaryCircleCell.set(backgroundStyle: .transparent)
@@ -173,11 +179,43 @@ class ButtonsController: ThemeViewController {
         secondaryTransparentCell.bind(index: 2, block: { (component: SecondaryButtonComponent) in
             component.button.set(style: .transparent)
             component.button.setTitle("Copy", for: .normal)
+            component.button.borderWidth = 1
+            component.button.borderColor = .themeSteel10
         })
         secondaryTransparentCell.bind(index: 3, block: { (component: SecondaryButtonComponent) in
             component.button.isEnabled = false
             component.button.set(style: .transparent)
             component.button.setTitle("Copy", for: .normal)
+            component.button.borderWidth = 1
+            component.button.borderColor = .themeSteel10
+        })
+
+        secondaryTransparent2Cell.set(backgroundStyle: .transparent)
+        CellBuilder.build(cell: secondaryTransparent2Cell, elements: [.text, .secondaryButton, .margin4, .secondaryButton, .margin4, .secondaryButton])
+        secondaryTransparent2Cell.bind(index: 0, block: { (component: TextComponent) in
+            component.font = .subhead1
+            component.textColor = .themeLeah
+            component.text = "Transparent 2"
+        })
+        secondaryTransparent2Cell.bind(index: 1, block: { (component: SecondaryButtonComponent) in
+            component.button.isSelected = true
+            component.button.set(style: .transparent2)
+            component.button.setTitle("Copy", for: .normal)
+            component.button.borderWidth = 1
+            component.button.borderColor = .themeSteel10
+        })
+        secondaryTransparent2Cell.bind(index: 2, block: { (component: SecondaryButtonComponent) in
+            component.button.set(style: .transparent2)
+            component.button.setTitle("Copy", for: .normal)
+            component.button.borderWidth = 1
+            component.button.borderColor = .themeSteel10
+        })
+        secondaryTransparent2Cell.bind(index: 3, block: { (component: SecondaryButtonComponent) in
+            component.button.isEnabled = false
+            component.button.set(style: .transparent2)
+            component.button.setTitle("Copy", for: .normal)
+            component.button.borderWidth = 1
+            component.button.borderColor = .themeSteel10
         })
 
         secondaryFullCell.set(backgroundStyle: .transparent)
@@ -189,20 +227,45 @@ class ButtonsController: ThemeViewController {
         })
         secondaryFullCell.bind(index: 1, block: { (component: SecondaryButtonComponent) in
             component.button.isSelected = true
-            component.button.set(style: .default)
+            component.button.set(style: .default, image: UIImage(named: "icon_20"))
             component.button.setTitle("Copy", for: .normal)
-            component.button.set(image: UIImage(named: "icon_20"))
         })
         secondaryFullCell.bind(index: 2, block: { (component: SecondaryButtonComponent) in
-            component.button.set(style: .default)
+            component.button.set(style: .default, image: UIImage(named: "icon_20"))
             component.button.setTitle("Copy", for: .normal)
-            component.button.set(image: UIImage(named: "icon_20"))
         })
         secondaryFullCell.bind(index: 3, block: { (component: SecondaryButtonComponent) in
             component.button.isEnabled = false
-            component.button.set(style: .default)
+            component.button.set(style: .default, image: UIImage(named: "icon_20"))
             component.button.setTitle("Copy", for: .normal)
-            component.button.set(image: UIImage(named: "icon_20"))
+        })
+
+        secondaryFull2Cell.set(backgroundStyle: .transparent)
+        CellBuilder.build(cell: secondaryFull2Cell, elements: [.text, .secondaryButton, .margin4, .secondaryButton, .margin4, .secondaryButton])
+        secondaryFull2Cell.bind(index: 0, block: { (component: TextComponent) in
+            component.font = .subhead1
+            component.textColor = .themeLeah
+            component.text = "Full 2"
+        })
+        secondaryFull2Cell.bind(index: 1, block: { (component: SecondaryButtonComponent) in
+            component.button.isSelected = true
+            component.button.set(style: .transparent2, image: UIImage(named: "icon_20"))
+            component.button.setTitle("Copy", for: .normal)
+            component.button.borderWidth = 1
+            component.button.borderColor = .themeSteel10
+        })
+        secondaryFull2Cell.bind(index: 2, block: { (component: SecondaryButtonComponent) in
+            component.button.set(style: .transparent2, image: UIImage(named: "icon_20"))
+            component.button.setTitle("Copy", for: .normal)
+            component.button.borderWidth = 1
+            component.button.borderColor = .themeSteel10
+        })
+        secondaryFull2Cell.bind(index: 3, block: { (component: SecondaryButtonComponent) in
+            component.button.isEnabled = false
+            component.button.set(style: .transparent2, image: UIImage(named: "icon_20"))
+            component.button.setTitle("Copy", for: .normal)
+            component.button.borderWidth = 1
+            component.button.borderColor = .themeSteel10
         })
 
         secondaryCircleCell.set(backgroundStyle: .transparent)
@@ -228,22 +291,28 @@ class ButtonsController: ThemeViewController {
         })
 
         transparentIconCell.set(backgroundStyle: .transparent, isLast: true)
-        CellBuilder.build(cell: transparentIconCell, elements: [.text, .margin4, .transparentIconButton, .margin4, .transparentIconButton, .margin4, .transparentIconButton])
+        CellBuilder.build(cell: transparentIconCell, elements: [.text, .margin4, .secondaryCircleButton, .margin4, .secondaryCircleButton, .margin4, .secondaryCircleButton])
         transparentIconCell.bind(index: 0, block: { (component: TextComponent) in
             component.font = .subhead1
             component.textColor = .themeLeah
-            component.text = "Transparent Icon"
+            component.text = "Sec Circle Trans"
         })
-        transparentIconCell.bind(index: 1, block: { (component: TransparentIconButtonComponent) in
+        transparentIconCell.bind(index: 1, block: { (component: SecondaryCircleButtonComponent) in
             component.button.isSelected = true
-            component.button.set(image: UIImage(named: "icon_20"))
+            component.button.set(image: UIImage(named: "icon_20"), style: .transparent)
+            component.button.borderWidth = 1
+            component.button.borderColor = .themeSteel10
         })
-        transparentIconCell.bind(index: 2, block: { (component: TransparentIconButtonComponent) in
-            component.button.set(image: UIImage(named: "icon_20"))
+        transparentIconCell.bind(index: 2, block: { (component: SecondaryCircleButtonComponent) in
+            component.button.set(image: UIImage(named: "icon_20"), style: .transparent)
+            component.button.borderWidth = 1
+            component.button.borderColor = .themeSteel10
         })
-        transparentIconCell.bind(index: 3, block: { (component: TransparentIconButtonComponent) in
+        transparentIconCell.bind(index: 3, block: { (component: SecondaryCircleButtonComponent) in
             component.button.isEnabled = false
-            component.button.set(image: UIImage(named: "icon_20"))
+            component.button.set(image: UIImage(named: "icon_20"), style: .transparent)
+            component.button.borderWidth = 1
+            component.button.borderColor = .themeSteel10
         })
     }
 
@@ -265,7 +334,9 @@ extension ButtonsController: SectionsDataSource {
                         StaticRow(cell: primaryCircleCell, id: "primary-icon", height: .heightDoubleLineCell),
                         StaticRow(cell: secondaryCell, id: "secondary", height: .heightSingleLineCell),
                         StaticRow(cell: secondaryTransparentCell, id: "secondary-transparent", height: .heightSingleLineCell),
+                        StaticRow(cell: secondaryTransparent2Cell, id: "secondary-transparent-2", height: .heightSingleLineCell),
                         StaticRow(cell: secondaryFullCell, id: "secondary-full", height: .heightSingleLineCell),
+                        StaticRow(cell: secondaryFull2Cell, id: "secondary-full-2", height: .heightSingleLineCell),
                         StaticRow(cell: secondaryCircleCell, id: "secondary-circle", height: .heightSingleLineCell),
                         StaticRow(cell: transparentIconCell, id: "transparent-icon", height: .heightSingleLineCell),
                     ]
