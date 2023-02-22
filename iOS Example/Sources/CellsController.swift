@@ -146,8 +146,8 @@ extension CellsController: SectionsDataSource {
                         component.imageView.contentMode = .scaleAspectFit
                     },
                     .margin4,
-                    .transparentIconButton { component in
-                        component.button.set(image: UIImage(named: "icon_20"))
+                    .secondaryCircleButton { component in
+                        component.button.set(image: UIImage(named: "icon_20"), style: .transparent)
                         component.onTap = { print("Did tap edit wallet") }
                     }
                 ]),

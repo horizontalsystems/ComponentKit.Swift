@@ -3,25 +3,18 @@ import ThemeKit
 import SnapKit
 
 open class SecondaryButton: UIButton {
-    public static let height: CGFloat = 28
-    private static let titleFont: UIFont = .subhead1
-    private static let horizontalPadding: CGFloat = .margin16
 
     public init() {
         super.init(frame: .zero)
 
-        cornerRadius = Self.height / 2
         layer.cornerCurve = .continuous
         semanticContentAttribute = .forceRightToLeft
 
         setContentCompressionResistancePriority(.required, for: .horizontal)
         setContentHuggingPriority(.required, for: .horizontal)
-        titleLabel?.font = Self.titleFont
-
-        syncInsets()
 
         snp.makeConstraints { maker in
-            maker.height.equalTo(Self.height)
+            maker.height.equalTo(Self.height(style: .default))
         }
     }
 
@@ -29,27 +22,20 @@ open class SecondaryButton: UIButton {
         fatalError("init(coder:) has not been implemented")
     }
 
-    public func set(image: UIImage?) {
-        setImage(image?.withTintColor(.themeGray), for: .normal)
-        setImage(image?.withTintColor(.themeGray), for: .highlighted)
-        setImage(image?.withTintColor(.themeGray50), for: .disabled)
-        setImage(image?.withTintColor(.themeDark), for: .selected)
-        setImage(image?.withTintColor(.themeDark), for: [.selected, .highlighted])
+    public func set(style: Style, image: UIImage? = nil) {
+        let height = Self.height(style: style)
 
-        syncInsets()
-    }
-
-    public func syncInsets() {
-        if image(for: .normal) != nil {
-            titleEdgeInsets = UIEdgeInsets(top: 0, left: -.margin4, bottom: 0, right: .margin4)
-            contentEdgeInsets = UIEdgeInsets(top: .margin4, left: .margin16 + .margin4, bottom: .margin4, right: .margin8)
-        } else {
-            titleEdgeInsets = .zero
-            contentEdgeInsets = UIEdgeInsets(top: 0, left: Self.horizontalPadding, bottom: 0, right: Self.horizontalPadding)
+        snp.updateConstraints { maker in
+            maker.height.equalTo(height)
         }
-    }
 
-    public func set(style: Style) {
+        switch style {
+        case .default, .transparent, .tab: cornerRadius = height / 2
+        case .transparent2: cornerRadius = 0
+        }
+
+        titleLabel?.font = Self.font(style: style)
+
         switch style {
         case .default:
             setBackgroundColor(.themeSteel20, for: .normal)
@@ -63,7 +49,7 @@ open class SecondaryButton: UIButton {
             setBackgroundColor(.clear, for: .disabled)
             setBackgroundColor(.themeYellowD, for: .selected)
             setBackgroundColor(.themeYellow50, for: [.selected, .highlighted])
-        case .tab:
+        case .transparent2, .tab:
             setBackgroundColor(.clear, for: .normal)
             setBackgroundColor(.clear, for: .highlighted)
             setBackgroundColor(.clear, for: .disabled)
@@ -78,6 +64,12 @@ open class SecondaryButton: UIButton {
             setTitleColor(.themeGray50, for: .disabled)
             setTitleColor(.themeDark, for: .selected)
             setTitleColor(.themeDark, for: [.selected, .highlighted])
+        case .transparent2:
+            setTitleColor(.themeGray, for: .normal)
+            setTitleColor(.themeGray50, for: .highlighted)
+            setTitleColor(.themeGray50, for: .disabled)
+            setTitleColor(.themeLeah, for: .selected)
+            setTitleColor(.themeGray, for: [.selected, .highlighted])
         case .tab:
             setTitleColor(.themeGray, for: .normal)
             setTitleColor(.themeGray, for: .highlighted)
@@ -85,11 +77,40 @@ open class SecondaryButton: UIButton {
             setTitleColor(.themeLeah, for: .selected)
             setTitleColor(.themeLeah, for: [.selected, .highlighted])
         }
+
+        let leftPadding = Self.leftPadding(style: style)
+        let rightPadding = Self.rightPadding(style: style, hasImage: image != nil)
+        let imagePadding = Self.imagePadding(style: style)
+
+        if let image = image {
+            switch style {
+            case .default, .transparent, .tab:
+                setImage(image.withTintColor(.themeGray), for: .normal)
+                setImage(image.withTintColor(.themeGray), for: .highlighted)
+                setImage(image.withTintColor(.themeGray50), for: .disabled)
+                setImage(image.withTintColor(.themeDark), for: .selected)
+                setImage(image.withTintColor(.themeDark), for: [.selected, .highlighted])
+            case .transparent2:
+                setImage(image.withTintColor(.themeGray), for: .normal)
+                setImage(image.withTintColor(.themeGray50), for: .highlighted)
+                setImage(image.withTintColor(.themeGray50), for: .disabled)
+                setImage(image.withTintColor(.themeGray), for: .selected)
+                setImage(image.withTintColor(.themeGray50), for: [.selected, .highlighted])
+            }
+
+            let verticalPadding = (height - CGFloat.iconSize20) / 2
+            titleEdgeInsets = UIEdgeInsets(top: 0, left: -imagePadding, bottom: 0, right: imagePadding)
+            contentEdgeInsets = UIEdgeInsets(top: verticalPadding, left: leftPadding + imagePadding, bottom: verticalPadding, right: rightPadding)
+        } else {
+            titleEdgeInsets = .zero
+            contentEdgeInsets = UIEdgeInsets(top: 0, left: leftPadding, bottom: 0, right: rightPadding)
+        }
     }
 
     public enum Style {
         case `default`
         case transparent
+        case transparent2
         case tab
     }
 
@@ -97,9 +118,49 @@ open class SecondaryButton: UIButton {
 
 extension SecondaryButton {
 
-    public static func width(title: String) -> CGFloat {
-        title.size(containerWidth: .greatestFiniteMagnitude, font: titleFont).width + 2 * horizontalPadding
+    private static func font(style: Style) -> UIFont {
+        switch style {
+        case .default, .transparent, .tab: return .subhead1
+        case .transparent2: return .subhead2
+        }
+    }
+
+    private static func leftPadding(style: Style) -> CGFloat {
+        switch style {
+        case .default, .transparent, .tab: return .margin16
+        case .transparent2: return 0
+        }
+    }
+
+    private static func rightPadding(style: Style, hasImage: Bool) -> CGFloat {
+        switch style {
+        case .default, .transparent, .tab: return hasImage ? .margin12 : .margin16
+        case .transparent2: return 0
+        }
+    }
+
+    private static func imagePadding(style: Style) -> CGFloat {
+        switch style {
+        case .default, .transparent, .tab: return .margin4
+        case .transparent2: return .margin8
+        }
+    }
+
+    public static func height(style: Style) -> CGFloat {
+        switch style {
+        case .default, .transparent, .tab: return 28
+        case .transparent2: return 20
+        }
+    }
+
+    public static func width(title: String, style: Style, hasImage: Bool) -> CGFloat {
+        var width = title.size(containerWidth: .greatestFiniteMagnitude, font: font(style: style)).width
+
+        if hasImage {
+            width += CGFloat.iconSize20 + imagePadding(style: style)
+        }
+
+        return width + leftPadding(style: style) + rightPadding(style: style, hasImage: hasImage)
     }
 
 }
-

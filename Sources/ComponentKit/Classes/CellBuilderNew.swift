@@ -190,7 +190,6 @@ public class CellBuilderNew {
         case .primaryCircleButton: return PrimaryCircleButtonComponent()
         case .secondaryButton: return SecondaryButtonComponent()
         case .secondaryCircleButton: return SecondaryCircleButtonComponent()
-        case .transparentIconButton: return TransparentIconButtonComponent()
         case .badge: return BadgeComponent()
         case .spinner20: return SpinnerComponent(style: .small20)
         case .spinner24: return SpinnerComponent(style: .medium24)
@@ -241,7 +240,6 @@ extension CellBuilderNew {
         case primaryCircleButton(_ bind: (PrimaryCircleButtonComponent) ->  ())
         case secondaryButton(_ bind: (SecondaryButtonComponent) ->  ())
         case secondaryCircleButton(_ bind: (SecondaryCircleButtonComponent) ->  ())
-        case transparentIconButton(_ bind: (TransparentIconButtonComponent) ->  ())
         case badge(_ bind: (BadgeComponent) ->  ())
         case spinner20(_ bind: (SpinnerComponent) ->  ())
         case spinner24(_ bind: (SpinnerComponent) ->  ())
@@ -277,7 +275,6 @@ extension CellBuilderNew {
             case .primaryCircleButton: return "primaryCircleButton"
             case .secondaryButton: return "secondaryButton"
             case .secondaryCircleButton: return "secondaryCircleButton"
-            case .transparentIconButton: return "transparentIconButton"
             case .badge: return "badge"
             case .spinner20: return "spinner20"
             case .spinner24: return "spinner24"
@@ -340,10 +337,6 @@ extension CellBuilderNew {
                 }
             case .secondaryCircleButton(let bind):
                 if let component = view as? SecondaryCircleButtonComponent {
-                    bind(component)
-                }
-            case .transparentIconButton(let bind):
-                if let component = view as? TransparentIconButtonComponent {
                     bind(component)
                 }
             case .badge(let bind):
