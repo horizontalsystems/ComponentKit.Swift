@@ -1,11 +1,14 @@
 import UIKit
 import SnapKit
+import ThemeKit
 
 open class SubtitleHeaderFooterView: UITableViewHeaderFooterView {
     private let label = UILabel()
 
     override public init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
+
+        backgroundView = UIView()
 
         addSubview(label)
         label.snp.makeConstraints { maker in
@@ -21,8 +24,9 @@ open class SubtitleHeaderFooterView: UITableViewHeaderFooterView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    open func bind(text: String?) {
+    open func bind(text: String?, backgroundColor: UIColor = .clear) {
         label.text = text?.uppercased()
+        backgroundView?.backgroundColor = backgroundColor
     }
 
 }
