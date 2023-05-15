@@ -8,8 +8,13 @@ class ButtonsController: ThemeViewController {
     private let tableView = SectionsTableView(style: .grouped)
 
     private let primaryYellowCell = BaseThemeCell()
+    private let primaryYellowIconCell = BaseThemeCell()
+    private let primaryYellowIconCell2 = BaseThemeCell()
     private let primaryRedCell = BaseThemeCell()
+    private let primaryRedIconCell = BaseThemeCell()
     private let primaryGrayCell = BaseThemeCell()
+    private let primaryGrayIconCell = BaseThemeCell()
+    private let primaryTransparentIconCell = BaseThemeCell()
     private let primaryTransparentCell = BaseThemeCell()
     private let primaryCircleCell = BaseThemeCell()
     private let secondaryCell = BaseThemeCell()
@@ -56,6 +61,36 @@ class ButtonsController: ThemeViewController {
             component.button.setContentHuggingPriority(.required, for: .horizontal)
         })
 
+        primaryYellowIconCell.set(backgroundStyle: .transparent)
+        CellBuilder.build(cell: primaryYellowIconCell, elements: [.text, .primaryButton, .margin8, .primaryButton])
+        primaryYellowIconCell.bind(index: 0, block: { (component: TextComponent) in
+            component.font = .subhead1
+            component.textColor = .themeLeah
+            component.text = "Primary Icon"
+        })
+        primaryYellowIconCell.bind(index: 1, block: { (component: PrimaryButtonComponent) in
+            component.button.set(style: .yellow, image: UIImage(named: "arrow_swap_2_24"))
+            component.button.setTitle("Yellow", for: .normal)
+            component.button.setContentHuggingPriority(.required, for: .horizontal)
+            component.button.setContentCompressionResistancePriority(.required, for: .horizontal)
+        })
+        primaryYellowIconCell.bind(index: 2, block: { (component: PrimaryButtonComponent) in
+            component.button.set(style: .yellow, image: UIImage(named: "arrow_swap_2_24"))
+            component.button.isEnabled = false
+            component.button.setTitle("Disabled", for: .normal)
+            component.button.setContentHuggingPriority(.required, for: .horizontal)
+            component.button.setContentCompressionResistancePriority(.required, for: .horizontal)
+        })
+
+        primaryYellowIconCell2.set(backgroundStyle: .transparent)
+        CellBuilder.build(cell: primaryYellowIconCell2, elements: [.primaryButton])
+        primaryYellowIconCell2.bind(index: 0, block: { (component: PrimaryButtonComponent) in
+            component.button.set(style: .yellow, image: UIImage(named: "arrow_swap_2_24"))
+            component.button.setTitle("Yellow", for: .normal)
+            component.button.setContentHuggingPriority(.required, for: .horizontal)
+            component.button.setContentCompressionResistancePriority(.required, for: .horizontal)
+        })
+
         primaryRedCell.set(backgroundStyle: .transparent)
         CellBuilder.build(cell: primaryRedCell, elements: [.text, .primaryButton, .margin8, .primaryButton])
         primaryRedCell.bind(index: 0, block: { (component: TextComponent) in
@@ -73,6 +108,27 @@ class ButtonsController: ThemeViewController {
             component.button.isEnabled = false
             component.button.setTitle("Disabled", for: .normal)
             component.button.setContentHuggingPriority(.required, for: .horizontal)
+        })
+
+        primaryRedIconCell.set(backgroundStyle: .transparent)
+        CellBuilder.build(cell: primaryRedIconCell, elements: [.text, .primaryButton, .margin8, .primaryButton])
+        primaryRedIconCell.bind(index: 0, block: { (component: TextComponent) in
+            component.font = .subhead1
+            component.textColor = .themeLeah
+            component.text = "Primary"
+        })
+        primaryRedIconCell.bind(index: 1, block: { (component: PrimaryButtonComponent) in
+            component.button.set(style: .red, image: UIImage(named: "arrow_swap_2_24"))
+            component.button.setTitle("Red", for: .normal)
+            component.button.setContentHuggingPriority(.required, for: .horizontal)
+            component.button.setContentCompressionResistancePriority(.required, for: .horizontal)
+        })
+        primaryRedIconCell.bind(index: 2, block: { (component: PrimaryButtonComponent) in
+            component.button.set(style: .red, image: UIImage(named: "arrow_swap_2_24"))
+            component.button.isEnabled = false
+            component.button.setTitle("Disabled", for: .normal)
+            component.button.setContentHuggingPriority(.required, for: .horizontal)
+            component.button.setContentCompressionResistancePriority(.required, for: .horizontal)
         })
 
         primaryGrayCell.set(backgroundStyle: .transparent)
@@ -94,6 +150,27 @@ class ButtonsController: ThemeViewController {
             component.button.setContentHuggingPriority(.required, for: .horizontal)
         })
 
+        primaryGrayIconCell.set(backgroundStyle: .transparent)
+        CellBuilder.build(cell: primaryGrayIconCell, elements: [.text, .primaryButton, .margin8, .primaryButton])
+        primaryGrayIconCell.bind(index: 0, block: { (component: TextComponent) in
+            component.font = .subhead1
+            component.textColor = .themeLeah
+            component.text = "Primary"
+        })
+        primaryGrayIconCell.bind(index: 1, block: { (component: PrimaryButtonComponent) in
+            component.button.set(style: .gray, image: UIImage(named: "arrow_swap_2_24"))
+            component.button.setTitle("Gray", for: .normal)
+            component.button.setContentHuggingPriority(.required, for: .horizontal)
+            component.button.setContentCompressionResistancePriority(.required, for: .horizontal)
+        })
+        primaryGrayIconCell.bind(index: 2, block: { (component: PrimaryButtonComponent) in
+            component.button.set(style: .gray, image: UIImage(named: "arrow_swap_2_24"))
+            component.button.isEnabled = false
+            component.button.setTitle("Disabled", for: .normal)
+            component.button.setContentHuggingPriority(.required, for: .horizontal)
+            component.button.setContentCompressionResistancePriority(.required, for: .horizontal)
+        })
+
         primaryTransparentCell.set(backgroundStyle: .transparent)
         CellBuilder.build(cell: primaryTransparentCell, elements: [.text, .primaryButton, .margin8, .primaryButton])
         primaryTransparentCell.bind(index: 0, block: { (component: TextComponent) in
@@ -113,6 +190,31 @@ class ButtonsController: ThemeViewController {
             component.button.isEnabled = false
             component.button.setTitle("Disabled", for: .normal)
             component.button.setContentHuggingPriority(.required, for: .horizontal)
+            component.button.borderWidth = 1
+            component.button.borderColor = .themeSteel10
+        })
+
+        primaryTransparentIconCell.set(backgroundStyle: .transparent)
+        CellBuilder.build(cell: primaryTransparentIconCell, elements: [.text, .primaryButton, .margin8, .primaryButton])
+        primaryTransparentIconCell.bind(index: 0, block: { (component: TextComponent) in
+            component.font = .subhead1
+            component.textColor = .themeLeah
+            component.text = "Primary"
+        })
+        primaryTransparentIconCell.bind(index: 1, block: { (component: PrimaryButtonComponent) in
+            component.button.set(style: .transparent, image: UIImage(named: "arrow_swap_2_24"))
+            component.button.setTitle("Transparent", for: .normal)
+            component.button.setContentHuggingPriority(.required, for: .horizontal)
+            component.button.setContentCompressionResistancePriority(.required, for: .horizontal)
+            component.button.borderWidth = 1
+            component.button.borderColor = .themeSteel10
+        })
+        primaryTransparentIconCell.bind(index: 2, block: { (component: PrimaryButtonComponent) in
+            component.button.set(style: .transparent, image: UIImage(named: "arrow_swap_2_24"))
+            component.button.isEnabled = false
+            component.button.setTitle("Disabled", for: .normal)
+            component.button.setContentHuggingPriority(.required, for: .horizontal)
+            component.button.setContentCompressionResistancePriority(.required, for: .horizontal)
             component.button.borderWidth = 1
             component.button.borderColor = .themeSteel10
         })
@@ -328,9 +430,14 @@ extension ButtonsController: SectionsDataSource {
                     footerState: .margin(height: .margin32),
                     rows: [
                         StaticRow(cell: primaryYellowCell, id: "primary-yellow", height: .heightDoubleLineCell),
+                        StaticRow(cell: primaryYellowIconCell, id: "primary-yellow-icon", height: .heightDoubleLineCell),
+                        StaticRow(cell: primaryYellowIconCell2, id: "primary-yellow-icon-2", height: .heightDoubleLineCell),
                         StaticRow(cell: primaryRedCell, id: "primary-red", height: .heightDoubleLineCell),
+                        StaticRow(cell: primaryRedIconCell, id: "primary-red-icon", height: .heightDoubleLineCell),
                         StaticRow(cell: primaryGrayCell, id: "primary-gray", height: .heightDoubleLineCell),
+                        StaticRow(cell: primaryGrayIconCell, id: "primary-gray-icon", height: .heightDoubleLineCell),
                         StaticRow(cell: primaryTransparentCell, id: "primary-transparent", height: .heightDoubleLineCell),
+                        StaticRow(cell: primaryTransparentIconCell, id: "primary-transparent-icon", height: .heightDoubleLineCell),
                         StaticRow(cell: primaryCircleCell, id: "primary-icon", height: .heightDoubleLineCell),
                         StaticRow(cell: secondaryCell, id: "secondary", height: .heightSingleLineCell),
                         StaticRow(cell: secondaryTransparentCell, id: "secondary-transparent", height: .heightSingleLineCell),
