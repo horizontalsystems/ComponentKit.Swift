@@ -1,6 +1,7 @@
 import SkeletonView
 import SnapKit
 import UIKit
+import ThemeKit
 
 open class BaseThemeCell: UITableViewCell {
     public static let leftInset: CGFloat = .margin16

@@ -1,13 +1,16 @@
 import UIKit
-import ThemeKit
 import SnapKit
+import ThemeKit
+import HUD
 
 open class PrimaryButton: UIButton {
     private static let horizontalPadding: CGFloat = .margin16
-    private static let leftPaddingWithImage: CGFloat = 18
+    private static let leftPaddingWithImage: CGFloat = 14
     private static let rightPaddingWithImage: CGFloat = 26
     private static let imageMargin: CGFloat = .margin8
     public static let height: CGFloat = .heightButton
+
+    private let spinner = HUDActivityView.create(with: .medium24)
 
     public init() {
         super.init(frame: .zero)
@@ -18,8 +21,18 @@ open class PrimaryButton: UIButton {
         titleLabel?.font = .headline2
         setTitleColor(.themeGray50, for: .disabled)
 
-        snp.makeConstraints { maker in
-            maker.height.equalTo(Self.height)
+        snp.makeConstraints { make in
+            make.height.equalTo(Self.height)
+        }
+
+        addSubview(spinner)
+        spinner.snp.makeConstraints { make in
+            if let titleLabel {
+                make.trailing.equalTo(titleLabel.snp.leading).offset(-Self.imageMargin)
+            } else {
+                make.leading.equalToSuperview().inset(Self.leftPaddingWithImage)
+            }
+            make.centerY.equalToSuperview()
         }
     }
 
@@ -27,7 +40,7 @@ open class PrimaryButton: UIButton {
         fatalError("init(coder:) has not been implemented")
     }
 
-    public func set(style: Style, image: UIImage? = nil) {
+    public func set(style: Style, accessoryType: AccessoryType = .none) {
         switch style {
         case .yellow:
             setBackgroundColor(.themeYellowD, for: .normal)
@@ -62,30 +75,49 @@ open class PrimaryButton: UIButton {
             setTitleColor(.themeGray50, for: .disabled)
         }
 
-        if let image = image {
+        switch accessoryType {
+        case .icon(let image):
             switch style {
             case .yellow:
-                setImage(image.withTintColor(.themeDark), for: .normal)
-                setImage(image.withTintColor(.themeDark), for: .highlighted)
-                setImage(image.withTintColor(.themeGray50), for: .disabled)
+                setImage(image?.withTintColor(.themeDark), for: .normal)
+                setImage(image?.withTintColor(.themeDark), for: .highlighted)
+                setImage(image?.withTintColor(.themeGray50), for: .disabled)
             case .red, .gray:
-                setImage(image.withTintColor(.themeClaude), for: .normal)
-                setImage(image.withTintColor(.themeClaude), for: .highlighted)
-                setImage(image.withTintColor(.themeGray50), for: .disabled)
+                setImage(image?.withTintColor(.themeClaude), for: .normal)
+                setImage(image?.withTintColor(.themeClaude), for: .highlighted)
+                setImage(image?.withTintColor(.themeGray50), for: .disabled)
             case .transparent:
-                setImage(image.withTintColor(.themeLeah), for: .normal)
-                setImage(image.withTintColor(.themeGray), for: .highlighted)
-                setImage(image.withTintColor(.themeGray50), for: .disabled)
+                setImage(image?.withTintColor(.themeLeah), for: .normal)
+                setImage(image?.withTintColor(.themeGray), for: .highlighted)
+                setImage(image?.withTintColor(.themeGray50), for: .disabled)
             }
 
             let verticalPadding = (height - CGFloat.iconSize24) / 2
-            titleEdgeInsets = UIEdgeInsets(top: 0, left: Self.imageMargin, bottom: 0, right: -Self.imageMargin)
-            imageEdgeInsets = UIEdgeInsets(top: 0, left: -Self.imageMargin, bottom: 0, right: Self.imageMargin)
-            contentEdgeInsets = UIEdgeInsets(top: verticalPadding, left: Self.leftPaddingWithImage + Self.imageMargin, bottom: verticalPadding, right: Self.rightPaddingWithImage + Self.imageMargin)
-        } else {
-            titleEdgeInsets = .zero
+            imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: Self.imageMargin)
+            contentEdgeInsets = UIEdgeInsets(top: verticalPadding, left: Self.leftPaddingWithImage, bottom: verticalPadding, right: Self.rightPaddingWithImage)
+
+            spinner.isHidden = true
+            spinner.stopAnimating()
+        case .spinner:
+            setImage(nil, for: .normal)
+            setImage(nil, for: .highlighted)
+            setImage(nil, for: .disabled)
+
+            imageEdgeInsets = .zero
+            contentEdgeInsets = UIEdgeInsets(top: 0, left: Self.leftPaddingWithImage + .iconSize24 + Self.imageMargin, bottom: 0, right: Self.rightPaddingWithImage)
+
+            spinner.isHidden = false
+            spinner.startAnimating()
+        case .none:
+            setImage(nil, for: .normal)
+            setImage(nil, for: .highlighted)
+            setImage(nil, for: .disabled)
+
             imageEdgeInsets = .zero
             contentEdgeInsets = UIEdgeInsets(top: 0, left: Self.horizontalPadding, bottom: 0, right: Self.horizontalPadding)
+
+            spinner.isHidden = true
+            spinner.stopAnimating()
         }
     }
 
@@ -94,6 +126,12 @@ open class PrimaryButton: UIButton {
         case red
         case gray
         case transparent
+    }
+
+    public enum AccessoryType {
+        case icon(image: UIImage?)
+        case spinner
+        case none
     }
 
 }

@@ -1,5 +1,6 @@
 import UIKit
 import SnapKit
+import ThemeKit
 
 open class BaseSelectableThemeCell: BaseThemeCell {
     private let selectView = UIView()
