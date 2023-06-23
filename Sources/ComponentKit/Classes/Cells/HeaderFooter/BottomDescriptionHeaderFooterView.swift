@@ -17,8 +17,14 @@ open class BottomDescriptionHeaderFooterView: UITableViewHeaderFooterView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    open func bind(text: String?) {
-        descriptionView.bind(text: text)
+    open var text: String? {
+        get { descriptionView.text }
+        set { descriptionView.text = newValue }
+    }
+
+    open var textColor: UIColor? {
+        get { descriptionView.textColor }
+        set { descriptionView.textColor = newValue }
     }
 
 }

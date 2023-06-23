@@ -28,8 +28,14 @@ open class BottomDescriptionView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    open func bind(text: String?) {
-        label.text = text
+    open var text: String? {
+        get { label.text }
+        set { label.text = newValue }
+    }
+
+    open var textColor: UIColor? {
+        get { label.textColor }
+        set { label.textColor = newValue }
     }
 
 }
