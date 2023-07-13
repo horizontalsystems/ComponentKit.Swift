@@ -12,6 +12,7 @@ class ButtonsController: ThemeViewController {
     private let primaryYellowSpinnerCell = BaseThemeCell()
     private let primaryYellowIconCell2 = BaseThemeCell()
     private let primaryYellowSpinnerCell2 = BaseThemeCell()
+    private let sliderCell = BaseThemeCell()
     private let primaryRedCell = BaseThemeCell()
     private let primaryRedIconCell = BaseThemeCell()
     private let primaryGrayCell = BaseThemeCell()
@@ -121,6 +122,14 @@ class ButtonsController: ThemeViewController {
             component.button.setTitle("Yellow", for: .normal)
             component.button.setContentHuggingPriority(.required, for: .horizontal)
             component.button.setContentCompressionResistancePriority(.required, for: .horizontal)
+        })
+
+        sliderCell.set(backgroundStyle: .transparent)
+        CellBuilder.build(cell: sliderCell, elements: [.sliderButton])
+        sliderCell.bind(index: 0, block: { (component: SliderButtonComponent) in
+            component.button.title = "Slide to Send"
+            component.button.image = UIImage(named: "arrow_swap_2_24")
+            component.button.onTap = { print("On Tap Slider") }
         })
 
         primaryRedCell.set(backgroundStyle: .transparent)
@@ -466,6 +475,7 @@ extension ButtonsController: SectionsDataSource {
                         StaticRow(cell: primaryYellowSpinnerCell, id: "primary-yellow-spinner", height: .heightDoubleLineCell),
                         StaticRow(cell: primaryYellowIconCell2, id: "primary-yellow-icon-2", height: .heightDoubleLineCell),
                         StaticRow(cell: primaryYellowSpinnerCell2, id: "primary-yellow-spinner-2", height: .heightDoubleLineCell),
+                        StaticRow(cell: sliderCell, id: "slider", height: 80),
                         StaticRow(cell: primaryRedCell, id: "primary-red", height: .heightDoubleLineCell),
                         StaticRow(cell: primaryRedIconCell, id: "primary-red-icon", height: .heightDoubleLineCell),
                         StaticRow(cell: primaryGrayCell, id: "primary-gray", height: .heightDoubleLineCell),
