@@ -12,6 +12,7 @@
 		3A39D0AE275769A10022CB8B /* ButtonsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A39D0A3275769A00022CB8B /* ButtonsController.swift */; };
 		3A39D0AF275769A10022CB8B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3A39D0A4275769A00022CB8B /* Images.xcassets */; };
 		3A39D0B0275769A10022CB8B /* MainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A39D0A5275769A00022CB8B /* MainController.swift */; };
+		D3C59F2C2A5EA43300D5F439 /* ExperimentalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C59F2B2A5EA43300D5F439 /* ExperimentalView.swift */; };
 		D945030C261F99CC00F6BF2E /* ComponentKit in Frameworks */ = {isa = PBXBuildFile; productRef = D945030B261F99CC00F6BF2E /* ComponentKit */; };
 /* End PBXBuildFile section */
 
@@ -21,6 +22,7 @@
 		3A39D0A3275769A00022CB8B /* ButtonsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonsController.swift; sourceTree = "<group>"; };
 		3A39D0A4275769A00022CB8B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		3A39D0A5275769A00022CB8B /* MainController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainController.swift; sourceTree = "<group>"; };
+		D3C59F2B2A5EA43300D5F439 /* ExperimentalView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExperimentalView.swift; sourceTree = "<group>"; };
 		D94502F5261F98A400F6BF2E /* ComponentKit Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ComponentKit Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9450301261F98A500F6BF2E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -57,6 +59,7 @@
 		D94502F7261F98A400F6BF2E /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				D3C59F2B2A5EA43300D5F439 /* ExperimentalView.swift */,
 				3A39D09B2757536E0022CB8B /* AppDelegate.swift */,
 				3A39D0A3275769A00022CB8B /* ButtonsController.swift */,
 				3A39D09F275769A00022CB8B /* CellsController.swift */,
@@ -146,6 +149,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D3C59F2C2A5EA43300D5F439 /* ExperimentalView.swift in Sources */,
 				3A39D09D2757536E0022CB8B /* AppDelegate.swift in Sources */,
 				3A39D0AA275769A10022CB8B /* CellsController.swift in Sources */,
 				3A39D0B0275769A10022CB8B /* MainController.swift in Sources */,
