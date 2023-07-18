@@ -1,4 +1,5 @@
 import UIKit
+import ThemeKit
 import SnapKit
 
 open class BottomDescriptionHeaderFooterView: UITableViewHeaderFooterView {
@@ -17,22 +18,16 @@ open class BottomDescriptionHeaderFooterView: UITableViewHeaderFooterView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    open var text: String? {
-        get { descriptionView.text }
-        set { descriptionView.text = newValue }
-    }
-
-    open var textColor: UIColor? {
-        get { descriptionView.textColor }
-        set { descriptionView.textColor = newValue }
+    public func bind(text: String, textColor: UIColor = .themeGray, topMargin: CGFloat = .margin12, bottomMargin: CGFloat = .margin32) {
+        descriptionView.bind(text: text, textColor: textColor, topMargin: topMargin, bottomMargin: bottomMargin)
     }
 
 }
 
 extension BottomDescriptionHeaderFooterView {
 
-    public static func height(containerWidth: CGFloat, text: String) -> CGFloat {
-        BottomDescriptionView.height(containerWidth: containerWidth, text: text)
+    public static func height(containerWidth: CGFloat, text: String, topMargin: CGFloat = .margin12, bottomMargin: CGFloat = .margin32) -> CGFloat {
+        BottomDescriptionView.height(containerWidth: containerWidth, text: text, topMargin: topMargin, bottomMargin: bottomMargin)
     }
 
 }
