@@ -1,10 +1,9 @@
 import UIKit
+import ThemeKit
 import SnapKit
 
 open class BottomDescriptionView: UIView {
     private static let sideMargin: CGFloat = .margin32
-    private static let topMargin: CGFloat = .margin12
-    private static let bottomMargin: CGFloat = .margin32
     private static let font: UIFont = .subhead2
 
     private let label = UILabel()
@@ -19,8 +18,8 @@ open class BottomDescriptionView: UIView {
         addSubview(label)
         label.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(BottomDescriptionView.sideMargin)
-            maker.top.equalToSuperview().offset(BottomDescriptionView.topMargin)
-            maker.bottom.equalToSuperview().inset(BottomDescriptionView.bottomMargin)
+            maker.top.equalToSuperview()
+            maker.bottom.equalToSuperview()
         }
     }
 
@@ -28,23 +27,24 @@ open class BottomDescriptionView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    open var text: String? {
-        get { label.text }
-        set { label.text = newValue }
-    }
+    public func bind(text: String, textColor: UIColor = .themeGray, topMargin: CGFloat = .margin12, bottomMargin: CGFloat = .margin32) {
+        label.text = text
+        label.textColor = textColor
 
-    open var textColor: UIColor? {
-        get { label.textColor }
-        set { label.textColor = newValue }
+        label.snp.remakeConstraints { maker in
+            maker.leading.trailing.equalToSuperview().inset(Self.sideMargin)
+            maker.top.equalToSuperview().offset(topMargin)
+            maker.bottom.equalToSuperview().inset(bottomMargin)
+        }
     }
 
 }
 
 extension BottomDescriptionView {
 
-    public static func height(containerWidth: CGFloat, text: String) -> CGFloat {
+    public static func height(containerWidth: CGFloat, text: String, topMargin: CGFloat = .margin12, bottomMargin: CGFloat = .margin32) -> CGFloat {
         let textHeight = text.height(forContainerWidth: containerWidth - 2 * BottomDescriptionView.sideMargin, font: BottomDescriptionView.font)
-        return textHeight + BottomDescriptionView.topMargin + BottomDescriptionView.bottomMargin
+        return textHeight + topMargin + bottomMargin
     }
 
 }
