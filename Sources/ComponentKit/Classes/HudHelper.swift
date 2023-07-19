@@ -77,8 +77,8 @@ extension HudHelper {
         show(type: .attention, title: title, subtitle: subtitle)
     }
 
-    public func showSuccessBanner() {
-        show(banner: .success)
+    public func showSuccessBanner(title: String) {
+        show(banner: .success(title: title))
     }
 
     public func showErrorBanner(title: String) {
@@ -158,7 +158,7 @@ extension HudHelper {
     }
 
     private enum BannerType {
-        case success
+        case success(title: String)
         case error(string: String)
 
         var icon: UIImage? {
@@ -179,7 +179,7 @@ extension HudHelper {
 
         var title: String {
             switch self {
-            case .success: return "alert.copied".localized
+            case .success(let title): return title
             case .error(let description): return description
             }
         }
