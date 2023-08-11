@@ -91,7 +91,7 @@ open class SliderButton: UIView {
     }
 
     private func syncState() {
-        initialImageView.backgroundColor = isEnabled ? .themeJacob : .themeSteel20
+        initialImageView.backgroundColor = isEnabled ? .themeYellowD : .themeSteel20
         initialImageView.image = initialImageView.image?.withTintColor(isEnabled ? .themeDark : .themeGray50)
         label.textColor = isEnabled ? .themeGray : .themeGray50
     }
