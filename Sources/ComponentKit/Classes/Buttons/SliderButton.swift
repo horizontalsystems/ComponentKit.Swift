@@ -13,6 +13,12 @@ open class SliderButton: UIView {
 
     public var onTap: (() -> ())?
 
+    public var isEnabled: Bool = true {
+        didSet {
+            syncState()
+        }
+    }
+
     public init() {
         super.init(frame: .zero)
 
@@ -33,7 +39,6 @@ open class SliderButton: UIView {
 
         label.textAlignment = .center
         label.font = .headline2
-        label.textColor = .themeGray
 
         addSubview(imageView)
         imageView.snp.makeConstraints { make in
@@ -44,7 +49,8 @@ open class SliderButton: UIView {
 
         imageView.contentMode = .center
         imageView.cornerRadius = CGFloat.heightButton / 2
-        imageView.backgroundColor = .themeJacob
+
+        syncState()
 
         let gestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(onTouch))
         imageView.isUserInteractionEnabled = true
@@ -55,7 +61,17 @@ open class SliderButton: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
+    private func syncState() {
+        imageView.backgroundColor = isEnabled ? .themeJacob : .themeSteel20
+        imageView.image = imageView.image?.withTintColor(isEnabled ? .themeDark : .themeGray50)
+        label.textColor = isEnabled ? .themeGray : .themeGray50
+    }
+
     @objc private func onTouch(_ gestureRecognizer: UIPanGestureRecognizer) {
+        guard isEnabled else {
+            return
+        }
+
         guard let touchedView = gestureRecognizer.view else {
             return
         }
@@ -107,7 +123,10 @@ open class SliderButton: UIView {
 
     public var image: UIImage? {
         get { imageView.image }
-        set { imageView.image = newValue?.withTintColor(.themeDark) }
+        set {
+            imageView.image = newValue
+            syncState()
+        }
     }
 
 }
