@@ -3,17 +3,20 @@ import SnapKit
 import ThemeKit
 
 open class SliderButton: UIView {
-    public static let height: CGFloat = .margin6 + .heightButton + .margin6
+    public static let margin: CGFloat = 3
+    public static let height: CGFloat = margin + .heightButton + margin
 
-    private let initialBackground = UIView()
-    private let finalBackground = UIView()
-
+    private let fillView = UIView()
     private let label = UILabel()
-
-    private let initialImageView = UIImageView()
+    private let finalLabel = UILabel()
+    private let circleView = UIView()
+    private let slideImageView = UIImageView()
     private let finalImageView = UIImageView()
 
-    private var initialPosition: CGFloat?
+    private var circleConstraint: Constraint? = nil
+    private var fillInitialConstraint: Constraint? = nil
+    private var fillFinalConstraint: Constraint? = nil
+
     private var maxPosition: CGFloat?
 
     public var onTap: (() -> ())?
@@ -27,63 +30,92 @@ open class SliderButton: UIView {
     public init() {
         super.init(frame: .zero)
 
+        backgroundColor = .themeSteel20
         cornerRadius = Self.height / 2
-        layer.cornerCurve = .continuous
 
         snp.makeConstraints { make in
             make.height.equalTo(Self.height)
         }
 
-        addSubview(initialBackground)
-        initialBackground.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+        let labelWrapper = UIView()
+
+        addSubview(labelWrapper)
+        labelWrapper.snp.makeConstraints { make in
+            make.top.trailing.bottom.equalToSuperview()
         }
 
-        initialBackground.backgroundColor = .themeSteel20
+        labelWrapper.clipsToBounds = true
 
-        addSubview(finalBackground)
-        finalBackground.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-
-        finalBackground.backgroundColor = .themeYellowD
-        finalBackground.alpha = 0
-
-        addSubview(label)
+        labelWrapper.addSubview(label)
         label.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview().inset(CGFloat.margin16)
+            make.leading.trailing.equalTo(self).inset(CGFloat.margin16)
             make.centerY.equalToSuperview()
         }
 
         label.textAlignment = .center
         label.font = .headline2
 
-        addSubview(initialImageView)
-        initialImageView.snp.makeConstraints { make in
-            make.leading.equalToSuperview().inset(CGFloat.margin6)
+        let finalLabelWrapper = UIView()
+
+        addSubview(finalLabelWrapper)
+        finalLabelWrapper.snp.makeConstraints { make in
+            make.top.leading.bottom.equalToSuperview()
+        }
+
+        finalLabelWrapper.clipsToBounds = true
+
+        finalLabelWrapper.addSubview(finalLabel)
+        finalLabel.snp.makeConstraints { make in
+            make.leading.trailing.equalTo(self).inset(CGFloat.margin16)
+            make.centerY.equalToSuperview()
+        }
+
+        finalLabel.textAlignment = .center
+        finalLabel.font = .headline2
+        finalLabel.textColor = .themeGray
+
+        addSubview(fillView)
+        fillView.snp.makeConstraints { make in
+            fillInitialConstraint = make.leading.equalToSuperview().constraint
+            make.top.bottom.equalToSuperview()
+            make.leading.equalTo(finalLabelWrapper.snp.trailing)
+        }
+
+        fillView.cornerRadius = Self.height / 2
+
+        addSubview(circleView)
+        circleView.snp.makeConstraints { make in
+            circleConstraint = make.leading.equalToSuperview().inset(Self.margin).constraint
             make.centerY.equalToSuperview()
             make.size.equalTo(CGFloat.heightButton)
+            make.trailing.equalTo(fillView.snp.trailing).inset(Self.margin)
+            make.leading.equalTo(labelWrapper.snp.leading)
+            fillFinalConstraint = make.leading.equalTo(fillView.snp.leading).offset(Self.margin).constraint
         }
 
-        initialImageView.contentMode = .center
-        initialImageView.cornerRadius = CGFloat.heightButton / 2
+        circleView.cornerRadius = .heightButton / 2
+        fillFinalConstraint?.deactivate()
 
-        addSubview(finalImageView)
+        circleView.addSubview(slideImageView)
+        slideImageView.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+            make.size.equalTo(CGFloat.iconSize24)
+        }
+
+        circleView.addSubview(finalImageView)
         finalImageView.snp.makeConstraints { make in
-            make.center.equalTo(initialImageView)
-            make.size.equalTo(CGFloat.heightButton)
+            make.center.equalToSuperview()
+            make.size.equalTo(CGFloat.iconSize24)
         }
 
-        finalImageView.contentMode = .center
-        finalImageView.cornerRadius = CGFloat.heightButton / 2
-        finalImageView.backgroundColor = .themeLeah
-        finalImageView.alpha = 0
+        finalImageView.isHidden = true
+        finalImageView.transform = CGAffineTransform(scaleX: CGFloat.leastNonzeroMagnitude, y: CGFloat.leastNonzeroMagnitude)
 
         syncState()
 
         let gestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(onTouch))
-        initialImageView.isUserInteractionEnabled = true
-        initialImageView.addGestureRecognizer(gestureRecognizer)
+        circleView.isUserInteractionEnabled = true
+        circleView.addGestureRecognizer(gestureRecognizer)
     }
 
     required public init?(coder aDecoder: NSCoder) {
@@ -91,14 +123,45 @@ open class SliderButton: UIView {
     }
 
     private func syncState() {
-        initialImageView.backgroundColor = isEnabled ? .themeYellowD : .themeSteel20
-        initialImageView.image = initialImageView.image?.withTintColor(isEnabled ? .themeDark : .themeGray50)
+        fillView.backgroundColor = isEnabled ? .themeYellowD.withAlphaComponent(0.5) : .themeSteel10
+        circleView.backgroundColor = isEnabled ? .themeYellowD : .themeSteel20
+        slideImageView.image = slideImageView.image?.withTintColor(isEnabled ? .themeDark : .themeGray50)
         label.textColor = isEnabled ? .themeGray : .themeGray50
     }
 
-    private func sync(alpha: CGFloat) {
-        finalBackground.alpha = alpha
-        finalImageView.alpha = alpha
+    private func handleFinish() {
+        finalImageView.isHidden = false
+
+        UIView.animate(
+                withDuration: 0.4,
+                delay: 0,
+                options: .curveEaseInOut,
+                animations: { [weak self] in
+                    self?.slideImageView.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
+                    self?.finalImageView.transform = CGAffineTransform(scaleX: 1, y: 1)
+                    self?.layoutIfNeeded()
+                },
+                completion: { [weak self] _ in
+                    self?.slideImageView.isHidden = true
+                    self?.handleFinish2()
+                }
+        )
+    }
+
+    private func handleFinish2() {
+        UIView.animate(
+                withDuration: 0.2,
+                delay: 0,
+                options: .curveEaseInOut,
+                animations: { [weak self] in
+                    self?.fillInitialConstraint?.deactivate()
+                    self?.fillFinalConstraint?.activate()
+                    self?.layoutIfNeeded()
+                },
+                completion: { [weak self] _ in
+                    self?.onTap?()
+                }
+        )
     }
 
     @objc private func onTouch(_ gestureRecognizer: UIPanGestureRecognizer) {
@@ -110,14 +173,15 @@ open class SliderButton: UIView {
             return
         }
 
-        if initialPosition == nil {
-            initialPosition = touchedView.frame.origin.x
-            maxPosition = frame.width - touchedView.width - .margin6
+        if maxPosition == nil {
+            maxPosition = frame.width - .heightButton - Self.margin
         }
 
-        guard let initialPosition, let maxPosition else {
+        guard let maxPosition else {
             return
         }
+
+        let initialPosition = Self.margin
 
         switch gestureRecognizer.state {
         case .changed:
@@ -130,25 +194,13 @@ open class SliderButton: UIView {
                 newPosition = maxPosition
             }
 
-            touchedView.frame.origin.x = newPosition
-            finalImageView.frame.origin.x = newPosition
-
-            let length = maxPosition - initialPosition
-            let currentLength = newPosition - initialPosition
-            sync(alpha: max(0, min(1, currentLength / length)))
-            label.alpha = max(0, min(1, 1 - currentLength * 2 / length))
+            circleConstraint?.update(offset: newPosition)
         case .ended:
             if touchedView.frame.origin.x == maxPosition {
-                sync(alpha: 1)
-                label.alpha = 0
-                initialImageView.isUserInteractionEnabled = false
-                onTap?()
+                handleFinish()
             } else {
                 UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseInOut) { [weak self] in
-                    touchedView.frame.origin.x = initialPosition
-                    self?.finalImageView.frame.origin.x = initialPosition
-                    self?.sync(alpha: 0)
-                    self?.label.alpha = 1
+                    self?.circleConstraint?.update(offset: initialPosition)
                     self?.layoutIfNeeded()
                 }
             }
@@ -161,13 +213,22 @@ open class SliderButton: UIView {
         set { label.text = newValue }
     }
 
-    public var image: UIImage? {
-        get { initialImageView.image }
+    public var finalTitle: String? {
+        get { finalLabel.text }
+        set { finalLabel.text = newValue }
+    }
+
+    public var slideImage: UIImage? {
+        get { slideImageView.image }
         set {
-            initialImageView.image = newValue
-            finalImageView.image = newValue?.withTintColor(.themeClaude)
+            slideImageView.image = newValue
             syncState()
         }
+    }
+
+    public var finalImage: UIImage? {
+        get { finalImageView.image }
+        set { finalImageView.image = newValue?.withTintColor(.themeDark) }
     }
 
 }

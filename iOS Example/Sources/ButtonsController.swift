@@ -129,7 +129,9 @@ class ButtonsController: ThemeViewController {
         CellBuilder.build(cell: sliderCell, elements: [.sliderButton])
         sliderCell.bind(index: 0, block: { (component: SliderButtonComponent) in
             component.button.title = "Slide to Send"
-            component.button.image = UIImage(named: "arrow_swap_2_24")
+            component.button.finalTitle = "Sending"
+            component.button.slideImage = UIImage(named: "forward_24")
+            component.button.finalImage = UIImage(named: "check_24")
             component.button.onTap = { print("On Tap Slider") }
         })
 
@@ -138,7 +140,7 @@ class ButtonsController: ThemeViewController {
         sliderDisabledCell.bind(index: 0, block: { (component: SliderButtonComponent) in
             component.button.isEnabled = false
             component.button.title = "Slide to Send"
-            component.button.image = UIImage(named: "arrow_swap_2_24")
+            component.button.slideImage = UIImage(named: "forward_24")
         })
 
         primaryRedCell.set(backgroundStyle: .transparent)
