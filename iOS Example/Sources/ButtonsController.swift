@@ -29,6 +29,8 @@ class ButtonsController: ThemeViewController {
     private let secondaryCircleCell = BaseThemeCell()
     private let transparentIconCell = BaseThemeCell()
 
+    private var sliderButton: SliderButton?
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -53,10 +55,11 @@ class ButtonsController: ThemeViewController {
             component.textColor = .themeLeah
             component.text = "Primary"
         })
-        primaryYellowCell.bind(index: 1, block: { (component: PrimaryButtonComponent) in
+        primaryYellowCell.bind(index: 1, block: { [weak self] (component: PrimaryButtonComponent) in
             component.button.set(style: .yellow)
             component.button.setTitle("Yellow", for: .normal)
             component.button.setContentHuggingPriority(.required, for: .horizontal)
+            component.onTap = { self?.sliderButton?.reset() }
         })
         primaryYellowCell.bind(index: 2, block: { (component: PrimaryButtonComponent) in
             component.button.set(style: .yellow)
@@ -127,12 +130,14 @@ class ButtonsController: ThemeViewController {
 
         sliderCell.set(backgroundStyle: .transparent)
         CellBuilder.build(cell: sliderCell, elements: [.sliderButton])
-        sliderCell.bind(index: 0, block: { (component: SliderButtonComponent) in
+        sliderCell.bind(index: 0, block: { [weak self] (component: SliderButtonComponent) in
             component.button.title = "Slide to Send"
             component.button.finalTitle = "Sending"
             component.button.slideImage = UIImage(named: "forward_24")
             component.button.finalImage = UIImage(named: "check_24")
             component.button.onTap = { print("On Tap Slider") }
+
+            self?.sliderButton = component.button
         })
 
         sliderDisabledCell.set(backgroundStyle: .transparent)

@@ -18,6 +18,7 @@ open class SliderButton: UIView {
     private var fillFinalConstraint: Constraint? = nil
 
     private var maxPosition: CGFloat?
+    private var finished = false
 
     public var onTap: (() -> ())?
 
@@ -89,7 +90,7 @@ open class SliderButton: UIView {
             make.centerY.equalToSuperview()
             make.size.equalTo(CGFloat.heightButton)
             make.trailing.equalTo(fillView.snp.trailing).inset(Self.margin)
-            make.leading.equalTo(labelWrapper.snp.leading)
+            make.leading.equalTo(labelWrapper.snp.leading).offset(-CGFloat.heightButton / 2)
             fillFinalConstraint = make.leading.equalTo(fillView.snp.leading).offset(Self.margin).constraint
         }
 
@@ -127,9 +128,13 @@ open class SliderButton: UIView {
         circleView.backgroundColor = isEnabled ? .themeYellowD : .themeSteel20
         slideImageView.image = slideImageView.image?.withTintColor(isEnabled ? .themeDark : .themeGray50)
         label.textColor = isEnabled ? .themeGray : .themeGray50
+
+        reset()
     }
 
     private func handleFinish() {
+        finished = true
+
         finalImageView.isHidden = false
 
         UIView.animate(
@@ -165,7 +170,7 @@ open class SliderButton: UIView {
     }
 
     @objc private func onTouch(_ gestureRecognizer: UIPanGestureRecognizer) {
-        guard isEnabled else {
+        guard isEnabled && !finished else {
             return
         }
 
@@ -229,6 +234,23 @@ open class SliderButton: UIView {
     public var finalImage: UIImage? {
         get { finalImageView.image }
         set { finalImageView.image = newValue?.withTintColor(.themeDark) }
+    }
+
+    public func reset() {
+        finalImageView.transform = CGAffineTransform(scaleX: CGFloat.leastNonzeroMagnitude, y: CGFloat.leastNonzeroMagnitude)
+        finalImageView.isHidden = true
+
+        slideImageView.transform = CGAffineTransform(scaleX: 1, y: 1)
+        slideImageView.isHidden = false
+
+        fillFinalConstraint?.deactivate()
+        fillInitialConstraint?.activate()
+
+        circleConstraint?.update(offset: Self.margin)
+
+        finished = false
+
+        layoutIfNeeded()
     }
 
 }
