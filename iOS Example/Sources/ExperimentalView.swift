@@ -11,7 +11,7 @@ struct ExperimentalView: View {
 //                    HighlightedDescriptionView(text: "The features below are experimental and should be used with caution. While we have thoroughly tested these features using our own crypto funds, we cannot guarantee they will work as expected in all possible cases.")
 //                    HighlightedDescriptionView(text: "The features below are experimental", style: .alert)
 
-                    ListSection {
+                    ListSection(footerText: "Together, with your support, we can make this app even better!") {
                         ClickableRow(action: {
                             print("Did Tap Donate")
                         }) {
@@ -151,6 +151,13 @@ extension Text {
                 .font(.themeSubhead1)
     }
 
+    func themeSubhead2(color: Color = .themeGray, alignment: Alignment = .leading) -> some View {
+        self
+                .frame(maxWidth: .infinity, alignment: alignment)
+                .foregroundColor(color)
+                .font(.themeSubhead2)
+    }
+
 }
 
 extension Image {
@@ -177,17 +184,27 @@ struct CellButton: ButtonStyle {
 
 struct ListSection<Content: View>: View {
     var content: Content
+    var footerText: String?
 
-    init(@ViewBuilder content: @escaping () -> Content) {
+    init(footerText: String? = nil, @ViewBuilder content: @escaping () -> Content) {
         self.content = content()
+        self.footerText = footerText
     }
 
     var body: some View {
-        _VariadicView.Tree(Layout()) {
-                    content
-                }
-                .background(RoundedRectangle(cornerRadius: .cornerRadius12, style: .continuous).fill(Color.themeLawrence))
-                .clipShape(RoundedRectangle(cornerRadius: .cornerRadius12, style: .continuous))
+        VStack(spacing: 0) {
+            _VariadicView.Tree(Layout()) {
+                        content
+                    }
+                    .background(RoundedRectangle(cornerRadius: .cornerRadius12, style: .continuous).fill(Color.themeLawrence))
+                    .clipShape(RoundedRectangle(cornerRadius: .cornerRadius12, style: .continuous))
+
+            if let footerText {
+                Text(footerText)
+                        .themeSubhead2()
+                        .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: 0, trailing: .margin16))
+            }
+        }
     }
 
     struct Layout: _VariadicView_UnaryViewRoot {
