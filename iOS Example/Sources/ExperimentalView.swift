@@ -2,28 +2,38 @@ import SwiftUI
 
 struct ExperimentalView: View {
     @State var testNetEnabled = false
+    @State var donatePresented = false
 
     var body: some View {
         ZStack {
             Color.themeTyler.edgesIgnoringSafeArea(.all)
             ScrollView {
                 VStack(spacing: .margin32) {
-//                    HighlightedDescriptionView(text: "The features below are experimental and should be used with caution. While we have thoroughly tested these features using our own crypto funds, we cannot guarantee they will work as expected in all possible cases.")
-//                    HighlightedDescriptionView(text: "The features below are experimental", style: .alert)
+                    //                    HighlightedDescriptionView(text: "The features below are experimental and should be used with caution. While we have thoroughly tested these features using our own crypto funds, we cannot guarantee they will work as expected in all possible cases.")
+                    //                    HighlightedDescriptionView(text: "The features below are experimental", style: .alert)
 
                     ListSection(footerText: "Together, with your support, we can make this app even better!") {
                         ClickableRow(action: {
-                            print("Did Tap Donate")
+                            donatePresented = true
                         }) {
                             Image("heart_fill_24").themeIcon(color: .themeJacob)
                             Text("Donate").themeBody()
                             Image.disclosureIcon
                         }
+                                .sheet(isPresented: $donatePresented) {
+                                    NavigationView {
+                                        ButtonsView()
+                                                .edgesIgnoringSafeArea(.all)
+                                                .navigationBarTitle("Buttons")
+                                    }
+                                }
                     }
 
                     ListSection {
-                        ClickableRow(action: {
-                            print("Did Tap Manage Wallets")
+                        NavigationRow(destination: {
+                            ButtonsView()
+                                    .edgesIgnoringSafeArea(.all)
+                                    .navigationBarTitle("Buttons")
                         }) {
                             Image("wallet_24").themeIcon()
                             Text("Manage Wallets").themeBody()
@@ -121,16 +131,17 @@ struct BrandFooter: View {
     var body: some View {
         VStack(spacing: .margin8) {
             Text("\(name) \(version) (\(build))")
-                .font(.caption)
-                .foregroundColor(.themeGray)
+                    .font(.caption)
+                    .foregroundColor(.themeGray)
             Divider()
-                .foregroundColor(.themeSteel20)
+                    .foregroundColor(.themeSteel20)
             Text(description)
-                .font(.themeMicro)
-                .foregroundColor(.themeGray)
+                    .font(.themeMicro)
+                    .foregroundColor(.themeGray)
             Image("HS Logo Image")
-                .padding(.top, .margin32)
-        }.fixedSize()
+                    .padding(.top, .margin32)
+        }
+                .fixedSize()
     }
 
 }
@@ -241,6 +252,20 @@ struct ClickableRow<Content: View>: View {
     }
 }
 
+struct NavigationRow<Content: View, Destination: View>: View {
+    @ViewBuilder let destination: () -> Destination
+    @ViewBuilder let content: Content
+
+    var body: some View {
+        NavigationLink(destination: destination) {
+            Row {
+                content
+            }
+        }
+                .buttonStyle(CellButton())
+    }
+}
+
 struct Row<Content: View>: View {
     @ViewBuilder let content: Content
 
@@ -306,4 +331,16 @@ struct ExperimentalView_Preview: PreviewProvider {
     static var previews: some View {
         ExperimentalView()
     }
+}
+
+struct ButtonsView: UIViewControllerRepresentable {
+    typealias UIViewControllerType = ButtonsController
+
+    func makeUIViewController(context: Context) -> ButtonsController {
+        ButtonsController()
+    }
+
+    func updateUIViewController(_ uiViewController: ButtonsController, context: Context) {
+    }
+
 }
