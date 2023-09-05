@@ -1,51 +1,165 @@
 import SwiftUI
 
 struct ExperimentalView: View {
+    @State var testNetEnabled = false
 
     var body: some View {
         ZStack {
             Color.themeTyler.edgesIgnoringSafeArea(.all)
             ScrollView {
-                VStack(spacing: .margin24) {
-                    HighlightedDescriptionView(text: "The features below are experimental and should be used with caution. While we have thoroughly tested these features using our own crypto funds, we cannot guarantee they will work as expected in all possible cases.")
-                    HighlightedDescriptionView(text: "The features below are experimental", style: .alert)
+                VStack(spacing: .margin32) {
+//                    HighlightedDescriptionView(text: "The features below are experimental and should be used with caution. While we have thoroughly tested these features using our own crypto funds, we cannot guarantee they will work as expected in all possible cases.")
+//                    HighlightedDescriptionView(text: "The features below are experimental", style: .alert)
 
                     ListSection {
-                        Button(action: {
-                            print("TAP")
-                        }, label: {
-                            HStack {
-                                Text("Time Lock")
-                                        .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin12, trailing: .margin16))
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                        .foregroundColor(.themeLeah)
-                                        .font(.themeBody)
+                        ClickableRow(action: {
+                            print("Did Tap Donate")
+                        }) {
+                            Image("heart_fill_24").themeIcon(color: .themeJacob)
+                            Text("Donate").themeBody()
+                            Image.disclosureIcon
+                        }
+                    }
 
-                                Image("icon_20")
-                                        .renderingMode(.template)
-                                        .foregroundColor(.themeGray)
-                                        .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin12, trailing: .margin16))
-                            }
+                    ListSection {
+                        ClickableRow(action: {
+                            print("Did Tap Manage Wallets")
+                        }) {
+                            Image("wallet_24").themeIcon()
+                            Text("Manage Wallets").themeBody()
+                            Image.disclosureIcon
+                        }
+
+                        ClickableRow(action: {
+                            print("Did Tap Blockchain Settings")
+                        }) {
+                            Image("wallet_24").themeIcon()
+                            Text("Blockchain Settings").themeBody()
+                            Image.disclosureIcon
+                        }
+                    }
+
+                    ListSection {
+                        ClickableRow(action: {
+                            print("Did Tap WalletConnect")
+                        }, content: {
+                            Image("wallet_24").themeIcon()
+                            Text("WalletConnect").themeBody()
+                            Image.disclosureIcon
                         })
-                                .contentShape(Rectangle())
+                    }
 
-                        HStack {
-                            Text("Evm TestNet")
-                                    .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin12, trailing: .margin16))
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                    .foregroundColor(.themeLeah)
-                                    .font(.themeBody)
+                    ListSection {
+                        ClickableRow(action: {
+                            print("Did Tap Security")
+                        }, content: {
+                            Image("wallet_24").themeIcon()
+                            Text("Security").themeBody()
+                            Image("warning_2_20").themeIcon(color: .themeLucian).padding(.trailing, -.margin8) // todo: find another way to decrease default spacing
+                            Image.disclosureIcon
+                        })
 
-                            Image("icon_20")
-                                    .renderingMode(.template)
-                                    .foregroundColor(.themeGray)
-                                    .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin12, trailing: .margin16))
+                        ClickableRow(action: {
+                            print("Did Tap Contacts")
+                        }, content: {
+                            Image("wallet_24").themeIcon()
+                            Text("Contacts").themeBody()
+                            Image.disclosureIcon
+                        })
+
+                        ClickableRow(action: {
+                            print("Did Tap Appearance")
+                        }, content: {
+                            Image("wallet_24").themeIcon()
+                            Text("Appearance").themeBody()
+                            Image.disclosureIcon
+                        })
+
+                        ClickableRow(action: {
+                            print("Did Tap Base Currency")
+                        }, content: {
+                            Image("wallet_24").themeIcon()
+                            Text("Base Currency").themeBody()
+                            Text("USD").themeSubhead1(alignment: .trailing).padding(.trailing, -.margin8) // todo: find another way to decrease default spacing
+                            Image.disclosureIcon
+                        })
+
+                        ClickableRow(action: {
+                            print("Did Tap Language")
+                            testNetEnabled = !testNetEnabled
+                        }, content: {
+                            Image("wallet_24").themeIcon()
+                            Text("Language").themeBody()
+                            Text("English").themeSubhead1(alignment: .trailing).padding(.trailing, -.margin8) // todo: find another way to decrease default spacing
+                            Image.disclosureIcon
+                        })
+                    }
+
+                    BrandFooter(name: "Unstoppable", version: "0.35", build: "25", companyName: "horizontal systems")
+
+                    ListSection {
+                        Row {
+                            Toggle(isOn: $testNetEnabled) {
+                                Text("TestNet Enabled").themeBody()
+                            }
                         }
                     }
                 }
                         .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
             }
         }
+    }
+
+}
+
+struct BrandFooter: View {
+    let name: String
+    let version: String
+    let build: String
+    let companyName: String
+
+    var body: some View {
+        Text(name)
+    }
+
+}
+
+extension Text {
+
+    func themeBody(color: Color = .themeLeah, alignment: Alignment = .leading) -> some View {
+        self
+                .frame(maxWidth: .infinity, alignment: alignment)
+                .foregroundColor(color)
+                .font(.themeBody)
+    }
+
+    func themeSubhead1(color: Color = .themeGray, alignment: Alignment = .leading) -> some View {
+        self
+                .frame(maxWidth: .infinity, alignment: alignment)
+                .foregroundColor(color)
+                .font(.themeSubhead1)
+    }
+
+}
+
+extension Image {
+
+    func themeIcon(color: Color = .themeGray) -> some View {
+        renderingMode(.template)
+                .foregroundColor(color)
+    }
+
+    static var disclosureIcon: some View {
+        Image("arrow_big_forward_20").themeIcon()
+    }
+
+}
+
+struct CellButton: ButtonStyle {
+
+    func makeBody(configuration: Self.Configuration) -> some View {
+        configuration.label
+                .background(configuration.isPressed ? Color.themeLawrencePressed : Color.themeLawrence)
     }
 
 }
@@ -59,9 +173,10 @@ struct ListSection<Content: View>: View {
 
     var body: some View {
         _VariadicView.Tree(Layout()) {
-            content
-        }
+                    content
+                }
                 .background(RoundedRectangle(cornerRadius: .cornerRadius12, style: .continuous).fill(Color.themeLawrence))
+                .clipShape(RoundedRectangle(cornerRadius: .cornerRadius12, style: .continuous))
     }
 
     struct Layout: _VariadicView_UnaryViewRoot {
@@ -81,6 +196,32 @@ struct ListSection<Content: View>: View {
         }
     }
 
+}
+
+struct ClickableRow<Content: View>: View {
+    let action: () -> Void
+    @ViewBuilder let content: Content
+
+    var body: some View {
+        Button(action: action, label: {
+            Row {
+                content
+            }
+        })
+                .buttonStyle(CellButton())
+                .contentShape(Rectangle())
+    }
+}
+
+struct Row<Content: View>: View {
+    @ViewBuilder let content: Content
+
+    var body: some View {
+        HStack(spacing: .margin16) {
+            content
+        }
+                .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin12, trailing: .margin16))
+    }
 }
 
 struct HorizontalDivider: View {

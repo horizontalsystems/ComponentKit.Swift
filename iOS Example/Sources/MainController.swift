@@ -5,7 +5,7 @@ import SnapKit
 
 class MainController: ThemeTabBarController {
 
-    init(selectedIndex: Int = 0) {
+    init(selectedIndex: Int = 2) {
         super.init()
 
         let buttonsTitle = "Buttons"
@@ -18,7 +18,7 @@ class MainController: ThemeTabBarController {
         cellsController.title = cellsTitle
         cellsController.tabBarItem = UITabBarItem(title: cellsTitle, image: UIImage(named: "TabBar Icon"), tag: 0)
 
-        let experimentalTitle = "Experimental"
+        let experimentalTitle = "Settings"
         let experimentalView = ExperimentalView()
         let experimentalController = UIHostingController(rootView: experimentalView)
         experimentalController.title = experimentalTitle
