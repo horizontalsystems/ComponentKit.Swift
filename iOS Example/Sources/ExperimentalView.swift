@@ -95,7 +95,7 @@ struct ExperimentalView: View {
                         })
                     }
 
-                    BrandFooter(name: "Unstoppable", version: "0.35", build: "25", companyName: "horizontal systems")
+                    BrandFooter(name: "Unstoppable", version: "0.35", build: "25", description: "decentralized app")
 
                     ListSection {
                         Row {
@@ -116,10 +116,21 @@ struct BrandFooter: View {
     let name: String
     let version: String
     let build: String
-    let companyName: String
+    let description: String
 
     var body: some View {
-        Text(name)
+        VStack(spacing: .margin8) {
+            Text("\(name) \(version) (\(build))")
+                .font(.caption)
+                .foregroundColor(.themeGray)
+            Divider()
+                .foregroundColor(.themeSteel20)
+            Text(description)
+                .font(.themeMicro)
+                .foregroundColor(.themeGray)
+            Image("HS Logo Image")
+                .padding(.top, .margin32)
+        }.fixedSize()
     }
 
 }
@@ -272,4 +283,10 @@ struct HighlightedDescriptionView: View {
         }
     }
 
+}
+
+struct ExperimentalView_Preview: PreviewProvider {
+    static var previews: some View {
+        ExperimentalView()
+    }
 }
