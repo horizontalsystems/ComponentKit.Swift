@@ -20,20 +20,20 @@ struct ExperimentalView: View {
                             Text("Donate").themeBody()
                             Image.disclosureIcon
                         }
-                                .sheet(isPresented: $donatePresented) {
-                                    NavigationView {
-                                        ButtonsView()
-                                                .edgesIgnoringSafeArea(.all)
-                                                .navigationBarTitle("Buttons")
-                                    }
-                                }
+                        .sheet(isPresented: $donatePresented) {
+                            NavigationView {
+                                ButtonsView()
+                                    .edgesIgnoringSafeArea(.all)
+                                    .navigationBarTitle("Buttons")
+                            }
+                        }
                     }
 
                     ListSection {
                         NavigationRow(destination: {
                             ButtonsView()
-                                    .edgesIgnoringSafeArea(.all)
-                                    .navigationBarTitle("Buttons")
+                                .edgesIgnoringSafeArea(.all)
+                                .navigationBarTitle("Buttons")
                         }) {
                             Image("wallet_24").themeIcon()
                             Text("Manage Wallets").themeBody()
@@ -65,7 +65,7 @@ struct ExperimentalView: View {
                         }, content: {
                             Image("wallet_24").themeIcon()
                             Text("Security").themeBody()
-                            Image("warning_2_20").themeIcon(color: .themeLucian).padding(.trailing, -.margin8) // todo: find another way to decrease default spacing
+                            Image("warning_2_20").themeIcon(color: .themeLucian).padding(.trailing, -.margin8) // TODO: find another way to decrease default spacing
                             Image.disclosureIcon
                         })
 
@@ -90,7 +90,7 @@ struct ExperimentalView: View {
                         }, content: {
                             Image("wallet_24").themeIcon()
                             Text("Base Currency").themeBody()
-                            Text("USD").themeSubhead1(alignment: .trailing).padding(.trailing, -.margin8) // todo: find another way to decrease default spacing
+                            Text("USD").themeSubhead1(alignment: .trailing).padding(.trailing, -.margin8) // TODO: find another way to decrease default spacing
                             Image.disclosureIcon
                         })
 
@@ -100,7 +100,7 @@ struct ExperimentalView: View {
                         }, content: {
                             Image("wallet_24").themeIcon()
                             Text("Language").themeBody()
-                            Text("English").themeSubhead1(alignment: .trailing).padding(.trailing, -.margin8) // todo: find another way to decrease default spacing
+                            Text("English").themeSubhead1(alignment: .trailing).padding(.trailing, -.margin8) // TODO: find another way to decrease default spacing
                             Image.disclosureIcon
                         })
                     }
@@ -115,11 +115,10 @@ struct ExperimentalView: View {
                         }
                     }
                 }
-                        .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
+                .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
             }
         }
     }
-
 }
 
 struct BrandFooter: View {
@@ -131,66 +130,56 @@ struct BrandFooter: View {
     var body: some View {
         VStack(spacing: .margin8) {
             Text("\(name) \(version) (\(build))")
-                    .font(.caption)
-                    .foregroundColor(.themeGray)
+                .font(.caption)
+                .foregroundColor(.themeGray)
             Divider()
-                    .foregroundColor(.themeSteel20)
+                .foregroundColor(.themeSteel20)
             Text(description)
-                    .font(.themeMicro)
-                    .foregroundColor(.themeGray)
+                .font(.themeMicro)
+                .foregroundColor(.themeGray)
             Image("HS Logo Image")
-                    .padding(.top, .margin32)
+                .padding(.top, .margin32)
         }
-                .fixedSize()
+        .fixedSize()
     }
-
 }
 
 extension Text {
-
     func themeBody(color: Color = .themeLeah, alignment: Alignment = .leading) -> some View {
-        self
-                .frame(maxWidth: .infinity, alignment: alignment)
-                .foregroundColor(color)
-                .font(.themeBody)
+        frame(maxWidth: .infinity, alignment: alignment)
+            .foregroundColor(color)
+            .font(.themeBody)
     }
 
     func themeSubhead1(color: Color = .themeGray, alignment: Alignment = .leading) -> some View {
-        self
-                .frame(maxWidth: .infinity, alignment: alignment)
-                .foregroundColor(color)
-                .font(.themeSubhead1)
+        frame(maxWidth: .infinity, alignment: alignment)
+            .foregroundColor(color)
+            .font(.themeSubhead1)
     }
 
     func themeSubhead2(color: Color = .themeGray, alignment: Alignment = .leading) -> some View {
-        self
-                .frame(maxWidth: .infinity, alignment: alignment)
-                .foregroundColor(color)
-                .font(.themeSubhead2)
+        frame(maxWidth: .infinity, alignment: alignment)
+            .foregroundColor(color)
+            .font(.themeSubhead2)
     }
-
 }
 
 extension Image {
-
     func themeIcon(color: Color = .themeGray) -> some View {
         renderingMode(.template)
-                .foregroundColor(color)
+            .foregroundColor(color)
     }
 
     static var disclosureIcon: some View {
         Image("arrow_big_forward_20").themeIcon()
     }
-
 }
 
 struct CellButton: ButtonStyle {
-
     func makeBody(configuration: Self.Configuration) -> some View {
         configuration.label
-                .background(configuration.isPressed ? Color.themeLawrencePressed : Color.themeLawrence)
+            .background(configuration.isPressed ? Color.themeLawrencePressed : Color.themeLawrence)
     }
-
 }
 
 struct ListSection<Content: View>: View {
@@ -205,15 +194,15 @@ struct ListSection<Content: View>: View {
     var body: some View {
         VStack(spacing: 0) {
             _VariadicView.Tree(Layout()) {
-                        content
-                    }
-                    .background(RoundedRectangle(cornerRadius: .cornerRadius12, style: .continuous).fill(Color.themeLawrence))
-                    .clipShape(RoundedRectangle(cornerRadius: .cornerRadius12, style: .continuous))
+                content
+            }
+            .background(RoundedRectangle(cornerRadius: .cornerRadius12, style: .continuous).fill(Color.themeLawrence))
+            .clipShape(RoundedRectangle(cornerRadius: .cornerRadius12, style: .continuous))
 
             if let footerText {
                 Text(footerText)
-                        .themeSubhead2()
-                        .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: 0, trailing: .margin16))
+                    .themeSubhead2()
+                    .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: 0, trailing: .margin16))
             }
         }
     }
@@ -234,7 +223,6 @@ struct ListSection<Content: View>: View {
             }
         }
     }
-
 }
 
 struct ClickableRow<Content: View>: View {
@@ -247,8 +235,8 @@ struct ClickableRow<Content: View>: View {
                 content
             }
         })
-                .buttonStyle(CellButton())
-                .contentShape(Rectangle())
+        .buttonStyle(CellButton())
+        .contentShape(Rectangle())
     }
 }
 
@@ -262,7 +250,7 @@ struct NavigationRow<Content: View, Destination: View>: View {
                 content
             }
         }
-                .buttonStyle(CellButton())
+        .buttonStyle(CellButton())
     }
 }
 
@@ -273,7 +261,7 @@ struct Row<Content: View>: View {
         HStack(spacing: .margin16) {
             content
         }
-                .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin12, trailing: .margin16))
+        .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin12, trailing: .margin16))
     }
 }
 
@@ -289,7 +277,6 @@ struct HorizontalDivider: View {
     var body: some View {
         color.frame(height: height)
     }
-
 }
 
 struct HighlightedDescriptionView: View {
@@ -303,14 +290,14 @@ struct HighlightedDescriptionView: View {
 
     var body: some View {
         Text(text)
-                .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin12, trailing: .margin16))
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .foregroundColor(.themeBran)
-                .font(.themeSubhead2)
-                .background(RoundedRectangle(cornerRadius: .cornerRadius12, style: .continuous).fill(style.color.opacity(0.2)))
-                .overlay(
-                        RoundedRectangle(cornerRadius: .cornerRadius12, style: .continuous).stroke(style.color, lineWidth: .heightOneDp)
-                )
+            .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin12, trailing: .margin16))
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .foregroundColor(.themeBran)
+            .font(.themeSubhead2)
+            .background(RoundedRectangle(cornerRadius: .cornerRadius12, style: .continuous).fill(style.color.opacity(0.2)))
+            .overlay(
+                RoundedRectangle(cornerRadius: .cornerRadius12, style: .continuous).stroke(style.color, lineWidth: .heightOneDp)
+            )
     }
 
     enum Style {
@@ -324,7 +311,6 @@ struct HighlightedDescriptionView: View {
             }
         }
     }
-
 }
 
 struct ExperimentalView_Preview: PreviewProvider {
@@ -336,11 +322,9 @@ struct ExperimentalView_Preview: PreviewProvider {
 struct ButtonsView: UIViewControllerRepresentable {
     typealias UIViewControllerType = ButtonsController
 
-    func makeUIViewController(context: Context) -> ButtonsController {
+    func makeUIViewController(context _: Context) -> ButtonsController {
         ButtonsController()
     }
 
-    func updateUIViewController(_ uiViewController: ButtonsController, context: Context) {
-    }
-
+    func updateUIViewController(_: ButtonsController, context _: Context) {}
 }
