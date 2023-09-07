@@ -23,8 +23,8 @@ struct ExperimentalView: View {
                         .sheet(isPresented: $donatePresented) {
                             NavigationView {
                                 ButtonsView()
-                                    .edgesIgnoringSafeArea(.all)
-                                    .navigationBarTitle("Buttons")
+                                    .ignoresSafeArea()
+                                    .navigationTitle("Buttons")
                             }
                         }
                     }
@@ -32,8 +32,8 @@ struct ExperimentalView: View {
                     ListSection {
                         NavigationRow(destination: {
                             ButtonsView()
-                                .edgesIgnoringSafeArea(.all)
-                                .navigationBarTitle("Buttons")
+                                .ignoresSafeArea()
+                                .navigationTitle("Buttons")
                         }) {
                             Image("wallet_24").themeIcon()
                             Text("Manage Wallets").themeBody()
