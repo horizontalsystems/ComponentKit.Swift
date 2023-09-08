@@ -1,5 +1,46 @@
 import SwiftUI
 
+struct PrimaryButton: ButtonStyle {
+    let style: Style
+
+    @Environment(\.isEnabled) var isEnabled
+
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .frame(maxWidth: .infinity)
+            .padding(EdgeInsets(top: 15, leading: .margin32, bottom: 15, trailing: .margin32))
+            .font(.themeHeadline2)
+            .foregroundColor(style.foregroundColor(isEnabled: isEnabled, isPressed: configuration.isPressed))
+            .background(style.backgroundColor(isEnabled: isEnabled, isPressed: configuration.isPressed))
+            .clipShape(Capsule(style: .continuous))
+            .animation(.easeOut(duration: 0.2), value: configuration.isPressed)
+    }
+
+    enum Style {
+        case yellow
+        case red
+        case gray
+        case transparent
+
+        func foregroundColor(isEnabled: Bool, isPressed: Bool) -> Color {
+            switch self {
+            case .yellow: return isEnabled ? .themeDark : .themeGray50
+            case .red, .gray: return isEnabled ? .themeClaude : .themeGray50
+            case .transparent: return isEnabled ? (isPressed ? .themeGray : .themeLeah) : .themeGray50
+            }
+        }
+
+        func backgroundColor(isEnabled: Bool, isPressed: Bool) -> Color {
+            switch self {
+            case .yellow: return isEnabled ? (isPressed ? .themeYellow50 : .themeYellow) : .themeSteel20
+            case .red: return isEnabled ? (isPressed ? .themeRed50 : .themeLucian) : .themeSteel20
+            case .gray: return isEnabled ? (isPressed ? .themeNina : .themeLeah) : .themeSteel20
+            case .transparent: return .clear
+            }
+        }
+    }
+}
+
 struct ExperimentalView: View {
     @State var testNetEnabled = false
     @State var donatePresented = false
@@ -9,8 +50,44 @@ struct ExperimentalView: View {
             Color.themeTyler.edgesIgnoringSafeArea(.all)
             ScrollView {
                 VStack(spacing: .margin32) {
-                    //                    HighlightedDescriptionView(text: "The features below are experimental and should be used with caution. While we have thoroughly tested these features using our own crypto funds, we cannot guarantee they will work as expected in all possible cases.")
-                    //                    HighlightedDescriptionView(text: "The features below are experimental", style: .alert)
+                    Group {
+                        HStack {
+                            Button("Press Me") {}
+                                .buttonStyle(PrimaryButton(style: .yellow))
+                            Button("Press Me") {}
+                                .buttonStyle(PrimaryButton(style: .yellow)).disabled(true)
+                        }
+                        .frame(maxWidth: .infinity)
+
+                        HStack {
+                            Button("Press Me") {}
+                                .buttonStyle(PrimaryButton(style: .red))
+                            Button("Press Me") {}
+                                .buttonStyle(PrimaryButton(style: .red)).disabled(true)
+                        }
+                        .frame(maxWidth: .infinity)
+
+                        HStack {
+                            Button("Press Me") {}
+                                .buttonStyle(PrimaryButton(style: .gray))
+                            Button("Press Me") {}
+                                .buttonStyle(PrimaryButton(style: .gray)).disabled(true)
+                        }
+                        .frame(maxWidth: .infinity)
+
+                        HStack {
+                            Button("Press Me") {}
+                                .buttonStyle(PrimaryButton(style: .transparent))
+                            Button("Press Me") {}
+                                .buttonStyle(PrimaryButton(style: .transparent)).disabled(true)
+                        }
+                        .frame(maxWidth: .infinity)
+                    }
+
+                    Group {
+                        HighlightedDescriptionView(text: "The features below are experimental and should be used with caution. While we have thoroughly tested these features using our own crypto funds, we cannot guarantee they will work as expected in all possible cases.")
+                        HighlightedDescriptionView(text: "The features below are experimental", style: .alert)
+                    }
 
                     ListSection(footerText: "Together, with your support, we can make this app even better!") {
                         ClickableRow(action: {
