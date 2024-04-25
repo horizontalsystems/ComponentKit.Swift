@@ -120,7 +120,8 @@ extension SecondaryButton {
 
     private static func font(style: Style) -> UIFont {
         switch style {
-        case .default, .transparent, .tab: return .subhead1
+        case .default, .transparent: return .captionSB
+        case .tab: return .subhead1
         case .transparent2: return .subhead2
         }
     }
@@ -134,14 +135,15 @@ extension SecondaryButton {
 
     private static func rightPadding(style: Style, hasImage: Bool) -> CGFloat {
         switch style {
-        case .default, .transparent, .tab: return hasImage ? .margin12 : .margin16
+        case .default, .transparent: return hasImage ? .margin8 : .margin16
+        case .tab: return .margin16
         case .transparent2: return 0
         }
     }
 
     private static func imagePadding(style: Style) -> CGFloat {
         switch style {
-        case .default, .transparent, .tab: return .margin4
+        case .default, .transparent, .tab: return .margin2
         case .transparent2: return .margin8
         }
     }
