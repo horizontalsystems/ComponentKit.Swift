@@ -2,7 +2,7 @@ import UIKit
 import SnapKit
 
 public class BadgeView: UIView {
-    static private let sideMargin: CGFloat = .margin4
+    static private let sideMargin: CGFloat = .margin6
     static private let spacing: CGFloat = .margin2
 
     private let stackView = UIStackView()
@@ -16,7 +16,7 @@ public class BadgeView: UIView {
             maker.height.equalTo(0)
         }
 
-        layer.cornerRadius = .cornerRadius4
+        layer.cornerRadius = .cornerRadius8
         layer.cornerCurve = .continuous
 
         addSubview(stackView)
