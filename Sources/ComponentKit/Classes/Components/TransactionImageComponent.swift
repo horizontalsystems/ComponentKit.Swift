@@ -94,16 +94,15 @@ public class TransactionImageComponent: UIView {
         imageView.image = image
     }
 
-    public func setImage(urlString: String?, placeholder: UIImage?) {
+    public func setImage(url: String?, alternativeUrl: String?, placeholder: UIImage?) {
         doubleImageWrapper.isHidden = true
         imageView.isHidden = false
 
         imageView.contentMode = .scaleAspectFill
-        imageView.image = nil
-        imageView.kf.setImage(with: urlString.flatMap { URL(string: $0) }, placeholder: placeholder, options: [.onlyLoadFirstFrame, .transition(.fade(0.5))])
+        imageView.setImage(url: url, alternativeUrl: alternativeUrl, placeholder: placeholder)
     }
 
-    public func setDoubleImage(frontType: ImageType, frontUrl: String?, frontPlaceholder: UIImage?, backType: ImageType, backUrl: String?, backPlaceholder: UIImage?) {
+    public func setDoubleImage(frontType: ImageType, frontUrl: String?, frontAlternativeUrl: String?, frontPlaceholder: UIImage?, backType: ImageType, backUrl: String?, backAlternativeUrl: String?, backPlaceholder: UIImage?) {
         imageView.isHidden = true
         doubleImageWrapper.isHidden = false
 
@@ -123,11 +122,8 @@ public class TransactionImageComponent: UIView {
             backImageView.cornerRadius = .cornerRadius4
         }
 
-        frontImageView.image = nil
-        backImageView.image = nil
-
-        frontImageView.kf.setImage(with: frontUrl.flatMap { URL(string: $0) }, placeholder: frontPlaceholder, options: [.onlyLoadFirstFrame, .transition(.fade(0.5))])
-        backImageView.kf.setImage(with: backUrl.flatMap { URL(string: $0) }, placeholder: backPlaceholder, options: [.onlyLoadFirstFrame, .transition(.fade(0.5))])
+        frontImageView.setImage(url: frontUrl, alternativeUrl: frontAlternativeUrl, placeholder: frontPlaceholder)
+        backImageView.setImage(url: backUrl, alternativeUrl: backAlternativeUrl, placeholder: backPlaceholder)
     }
 
 }

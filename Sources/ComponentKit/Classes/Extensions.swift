@@ -1,7 +1,7 @@
 import UIKit
+import Kingfisher
 
 public extension UIButton {
-
     func setBackgroundColor(_ color: UIColor, for state: UIControl.State) {
         UIGraphicsBeginImageContext(CGSize(width: 1, height: 1))
 
@@ -15,11 +15,9 @@ public extension UIButton {
             setBackgroundImage(image?.withTintColor(color), for: state)
         }
     }
-
 }
 
 extension UIView {
-
     @IBInspectable
     open var cornerCurve: CALayerCornerCurve {
         get {
@@ -29,7 +27,6 @@ extension UIView {
             layer.cornerCurve = newValue
         }
     }
-
 }
 
 extension UIRectEdge {
@@ -40,10 +37,30 @@ extension UIRectEdge {
 
     var corners: [UIRectCorner] {
         var corners = [UIRectCorner]()
-        if self.contains([.top, .left]) { corners.append(.topLeft) }
-        if self.contains([.top, .right]) { corners.append(.topRight) }
-        if self.contains([.bottom, .left]) { corners.append(.bottomLeft) }
-        if self.contains([.bottom, .right]) { corners.append(.bottomRight) }
+        if contains([.top, .left]) { corners.append(.topLeft) }
+        if contains([.top, .right]) { corners.append(.topRight) }
+        if contains([.bottom, .left]) { corners.append(.bottomLeft) }
+        if contains([.bottom, .right]) { corners.append(.bottomRight) }
         return corners
     }
 }
+
+public extension UIImageView {
+    func setImage(url urlString: String?, alternativeUrl alternativeUrlString: String? = nil, placeholder: UIImage? = nil) {
+        image = nil
+
+        let options: [KingfisherOptionsInfoItem] = [.onlyLoadFirstFrame, .transition(.fade(0.5))]
+        let url = urlString.flatMap { URL(string: $0) }
+
+        if let alternativeUrlString, let alternativeUrl = URL(string: alternativeUrlString) {
+            if ImageCache.default.isCached(forKey: alternativeUrlString) {
+                kf.setImage(with: alternativeUrl, placeholder: placeholder, options: options)
+            } else {
+                kf.setImage(with: url, placeholder: placeholder, options: options + [.alternativeSources([.network(alternativeUrl)])])
+            }
+        } else {
+            kf.setImage(with: url,placeholder: placeholder,options: options)
+        }
+    }
+}
+
