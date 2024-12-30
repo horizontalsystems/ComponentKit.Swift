@@ -92,7 +92,9 @@ open class BaseThemeCell: UITableViewCell {
             topSeparatorView.isHidden = isFirst
             wrapperView.backgroundColor = .themeLawrence
             wrapperView.borderColor = .clear
-        case .bordered, .externalBorderOnly:
+        case .bordered, .externalBorderOnly, .borderedLawrence:
+            var borderColor = UIColor.themeSteel20
+
             var borders: UIRectEdge = [.left, .right]
             if isFirst || isLast {
                 resolvedCornerRadius = cornerRadius
@@ -112,11 +114,16 @@ open class BaseThemeCell: UITableViewCell {
             }
 
             topSeparatorView.isHidden = isFirst || backgroundStyle == .externalBorderOnly
-            wrapperView.backgroundColor = .clear
+            if case let .borderedLawrence(color) = backgroundStyle {
+                borderColor = color
+                wrapperView.backgroundColor = .themeLawrence
+            } else {
+                wrapperView.backgroundColor = .clear
+            }
             wrapperView.borderWidth = .heightOneDp
             wrapperView.borders = borders
             wrapperView.cornerRadius = resolvedCornerRadius
-            wrapperView.borderColor = .themeSteel20
+            wrapperView.borderColor = borderColor
         case .transparent:
             var borders: UIRectEdge = []
             if !isFirst {
@@ -169,18 +176,30 @@ open class BaseThemeCell: UITableViewCell {
 
     public static func margin(backgroundStyle: BackgroundStyle) -> UIEdgeInsets {
         switch backgroundStyle {
-        case .lawrence, .bordered, .externalBorderOnly:
+        case .lawrence, .bordered, .externalBorderOnly, .borderedLawrence:
             return UIEdgeInsets(top: 0, left: .margin16, bottom: 0, right: .margin16)
         case .transparent:
             return UIEdgeInsets.zero
         }
     }
 
-    public enum BackgroundStyle {
+    public enum BackgroundStyle: Equatable {
         case lawrence
+        case borderedLawrence(UIColor)
         case bordered
         case externalBorderOnly
         case transparent
+        
+        public static func == (lhs: Self, rhs: Self) -> Bool {
+            switch (lhs, rhs) {
+            case (.lawrence, .lawrence): return true
+            case (.bordered, .bordered): return true
+            case (.externalBorderOnly, .externalBorderOnly): return true
+            case (.transparent, .transparent): return true
+            case let (.borderedLawrence(lhsColor), .borderedLawrence(rhsColor)): return lhsColor == rhsColor
+            default: return false
+            }
+        }
     }
 
 }
