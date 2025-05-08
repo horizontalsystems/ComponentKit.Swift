@@ -171,7 +171,7 @@ open class SliderButton: UIView {
     }
 
     @objc private func onTouch(_ gestureRecognizer: UIPanGestureRecognizer) {
-        guard isEnabled && !finished else {
+        guard isEnabled, !finished else {
             return
         }
 
