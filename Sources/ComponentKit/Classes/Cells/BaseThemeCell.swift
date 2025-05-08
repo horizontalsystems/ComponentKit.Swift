@@ -1,7 +1,7 @@
 import SkeletonView
 import SnapKit
-import UIKit
 import ThemeKit
+import UIKit
 
 open class BaseThemeCell: UITableViewCell {
     public static let leftInset: CGFloat = .margin16
@@ -189,7 +189,7 @@ open class BaseThemeCell: UITableViewCell {
         case bordered
         case externalBorderOnly
         case transparent
-        
+
         public static func == (lhs: Self, rhs: Self) -> Bool {
             switch (lhs, rhs) {
             case (.lawrence, .lawrence): return true
@@ -201,5 +201,4 @@ open class BaseThemeCell: UITableViewCell {
             }
         }
     }
-
 }

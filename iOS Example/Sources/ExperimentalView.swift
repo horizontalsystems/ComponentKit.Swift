@@ -1,7 +1,6 @@
 import SwiftUI
 
 struct ExperimentalView: View {
-
     var body: some View {
         ZStack {
             Color.themeTyler.edgesIgnoringSafeArea(.all)
@@ -16,38 +15,37 @@ struct ExperimentalView: View {
                         }, label: {
                             HStack {
                                 Text("Time Lock")
-                                        .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin12, trailing: .margin16))
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                        .foregroundColor(.themeLeah)
-                                        .font(.themeBody)
-
-                                Image("icon_20")
-                                        .renderingMode(.template)
-                                        .foregroundColor(.themeGray)
-                                        .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin12, trailing: .margin16))
-                            }
-                        })
-                                .contentShape(Rectangle())
-
-                        HStack {
-                            Text("Evm TestNet")
                                     .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin12, trailing: .margin16))
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                     .foregroundColor(.themeLeah)
                                     .font(.themeBody)
 
-                            Image("icon_20")
+                                Image("icon_20")
                                     .renderingMode(.template)
                                     .foregroundColor(.themeGray)
                                     .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin12, trailing: .margin16))
+                            }
+                        })
+                        .contentShape(Rectangle())
+
+                        HStack {
+                            Text("Evm TestNet")
+                                .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin12, trailing: .margin16))
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .foregroundColor(.themeLeah)
+                                .font(.themeBody)
+
+                            Image("icon_20")
+                                .renderingMode(.template)
+                                .foregroundColor(.themeGray)
+                                .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin12, trailing: .margin16))
                         }
                     }
                 }
-                        .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
+                .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
             }
         }
     }
-
 }
 
 struct ListSection<Content: View>: View {
@@ -61,7 +59,7 @@ struct ListSection<Content: View>: View {
         _VariadicView.Tree(Layout()) {
             content
         }
-                .background(RoundedRectangle(cornerRadius: .cornerRadius12, style: .continuous).fill(Color.themeLawrence))
+        .background(RoundedRectangle(cornerRadius: .cornerRadius12, style: .continuous).fill(Color.themeLawrence))
     }
 
     struct Layout: _VariadicView_UnaryViewRoot {
@@ -80,7 +78,6 @@ struct ListSection<Content: View>: View {
             }
         }
     }
-
 }
 
 struct HorizontalDivider: View {
@@ -95,7 +92,6 @@ struct HorizontalDivider: View {
     var body: some View {
         color.frame(height: height)
     }
-
 }
 
 struct HighlightedDescriptionView: View {
@@ -109,14 +105,14 @@ struct HighlightedDescriptionView: View {
 
     var body: some View {
         Text(text)
-                .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin12, trailing: .margin16))
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .foregroundColor(.themeBran)
-                .font(.themeSubhead2)
-                .background(RoundedRectangle(cornerRadius: .cornerRadius12, style: .continuous).fill(style.color.opacity(0.2)))
-                .overlay(
-                        RoundedRectangle(cornerRadius: .cornerRadius12, style: .continuous).stroke(style.color, lineWidth: .heightOneDp)
-                )
+            .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin12, trailing: .margin16))
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .foregroundColor(.themeBran)
+            .font(.themeSubhead2)
+            .background(RoundedRectangle(cornerRadius: .cornerRadius12, style: .continuous).fill(style.color.opacity(0.2)))
+            .overlay(
+                RoundedRectangle(cornerRadius: .cornerRadius12, style: .continuous).stroke(style.color, lineWidth: .heightOneDp)
+            )
     }
 
     enum Style {
@@ -130,5 +126,4 @@ struct HighlightedDescriptionView: View {
             }
         }
     }
-
 }

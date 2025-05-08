@@ -1,9 +1,8 @@
-import UIKit
-import ThemeKit
 import SnapKit
+import ThemeKit
+import UIKit
 
 open class SecondaryButton: UIButton {
-
     public init() {
         super.init(frame: .zero)
 
@@ -18,7 +17,8 @@ open class SecondaryButton: UIButton {
         }
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    public required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -113,11 +113,9 @@ open class SecondaryButton: UIButton {
         case transparent2
         case tab
     }
-
 }
 
 extension SecondaryButton {
-
     private static func font(style: Style) -> UIFont {
         switch style {
         case .default, .transparent: return .captionSB
@@ -164,5 +162,4 @@ extension SecondaryButton {
 
         return width + leftPadding(style: style) + rightPadding(style: style, hasImage: hasImage)
     }
-
 }

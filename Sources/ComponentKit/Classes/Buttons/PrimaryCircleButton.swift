@@ -1,6 +1,6 @@
-import UIKit
-import ThemeKit
 import SnapKit
+import ThemeKit
+import UIKit
 
 open class PrimaryCircleButton: UIButton {
     public static let size: CGFloat = .heightButton
@@ -19,7 +19,8 @@ open class PrimaryCircleButton: UIButton {
         }
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    public required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -56,5 +57,4 @@ open class PrimaryCircleButton: UIButton {
         case red
         case gray
     }
-
 }

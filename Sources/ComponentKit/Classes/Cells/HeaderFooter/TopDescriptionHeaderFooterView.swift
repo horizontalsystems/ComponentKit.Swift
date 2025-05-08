@@ -1,5 +1,5 @@
-import UIKit
 import SnapKit
+import UIKit
 
 open class TopDescriptionHeaderFooterView: UITableViewHeaderFooterView {
     private let descriptionView = TopDescriptionView()
@@ -13,20 +13,18 @@ open class TopDescriptionHeaderFooterView: UITableViewHeaderFooterView {
         }
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    public required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     open func bind(text: String?) {
         descriptionView.bind(text: text)
     }
-
 }
 
-extension TopDescriptionHeaderFooterView {
-
-    public static func height(containerWidth: CGFloat, text: String) -> CGFloat {
+public extension TopDescriptionHeaderFooterView {
+    static func height(containerWidth: CGFloat, text: String) -> CGFloat {
         TopDescriptionView.height(containerWidth: containerWidth, text: text)
     }
-
 }

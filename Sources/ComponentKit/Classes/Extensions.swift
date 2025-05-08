@@ -1,5 +1,5 @@
-import UIKit
 import Kingfisher
+import UIKit
 
 public extension UIButton {
     func setBackgroundColor(_ color: UIColor, for state: UIControl.State) {
@@ -59,8 +59,7 @@ public extension UIImageView {
                 kf.setImage(with: url, placeholder: placeholder, options: options + [.alternativeSources([.network(alternativeUrl)])])
             }
         } else {
-            kf.setImage(with: url,placeholder: placeholder,options: options)
+            kf.setImage(with: url, placeholder: placeholder, options: options)
         }
     }
 }
-

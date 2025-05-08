@@ -1,6 +1,6 @@
-import UIKit
 import HUD
 import ThemeKit
+import UIKit
 
 public enum ActivityIndicatorStyle {
     case small20
@@ -63,15 +63,14 @@ public enum ActivityIndicatorStyle {
     }
 }
 
-extension HUDActivityView {
-
-    static public func create(with style: ActivityIndicatorStyle) -> HUDActivityView {
+public extension HUDActivityView {
+    static func create(with style: ActivityIndicatorStyle) -> HUDActivityView {
         let activityView = HUDActivityView(
-                dashHeight: style.dashHeight,
-                dashStrokeWidth: style.dashStrokeWidth,
-                radius: style.radius,
-                strokeColor: .gray,
-                duration: 0.834
+            dashHeight: style.dashHeight,
+            dashStrokeWidth: style.dashStrokeWidth,
+            radius: style.radius,
+            strokeColor: .gray,
+            duration: 0.834
         )
         activityView.edgeInsets = style.edgeInsets
 
@@ -81,5 +80,4 @@ extension HUDActivityView {
 
         return activityView
     }
-
 }

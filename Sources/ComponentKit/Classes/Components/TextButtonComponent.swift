@@ -1,8 +1,8 @@
-import UIKit
 import SnapKit
+import UIKit
 
 public class TextButtonComponent: UIButton {
-    public var onTap: (() -> ())?
+    public var onTap: (() -> Void)?
 
     public init() {
         super.init(frame: .zero)
@@ -10,7 +10,8 @@ public class TextButtonComponent: UIButton {
         addTarget(self, action: #selector(_onTap), for: .touchUpInside)
     }
 
-    required public init(coder: NSCoder) {
+    @available(*, unavailable)
+    public required init(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -36,17 +37,14 @@ public class TextButtonComponent: UIButton {
         get { title(for: .normal) }
         set { setTitle(newValue, for: .normal) }
     }
-
 }
 
-extension TextButtonComponent {
-
-    public static func height(width: CGFloat, font: UIFont, text: String) -> CGFloat {
+public extension TextButtonComponent {
+    static func height(width: CGFloat, font: UIFont, text: String) -> CGFloat {
         text.height(forContainerWidth: width, font: font)
     }
 
-    public static func width(font: UIFont, text: String) -> CGFloat {
+    static func width(font: UIFont, text: String) -> CGFloat {
         text.size(containerWidth: CGFloat.greatestFiniteMagnitude, font: font).width
     }
-
 }

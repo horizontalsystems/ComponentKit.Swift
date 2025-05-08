@@ -1,5 +1,5 @@
-import UIKit
 import SnapKit
+import UIKit
 
 public class StackComponent: UIView {
     let stackView = UIStackView()
@@ -18,8 +18,8 @@ public class StackComponent: UIView {
         }
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    public required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
 }

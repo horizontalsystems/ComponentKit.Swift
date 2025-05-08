@@ -1,6 +1,6 @@
-import UIKit
 import SnapKit
 import ThemeKit
+import UIKit
 
 open class SubtitleHeaderFooterView: UITableViewHeaderFooterView {
     private let label = UILabel()
@@ -20,7 +20,8 @@ open class SubtitleHeaderFooterView: UITableViewHeaderFooterView {
         label.textColor = .themeGray
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    public required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -28,9 +29,8 @@ open class SubtitleHeaderFooterView: UITableViewHeaderFooterView {
         label.text = text?.uppercased()
         backgroundView?.backgroundColor = backgroundColor
     }
-
 }
 
-extension SubtitleHeaderFooterView {
-    public static let height: CGFloat = .margin32
+public extension SubtitleHeaderFooterView {
+    static let height: CGFloat = .margin32
 }

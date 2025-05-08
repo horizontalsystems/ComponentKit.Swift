@@ -1,6 +1,6 @@
-import UIKit
-import SnapKit
 import HUD
+import SnapKit
+import UIKit
 
 open class SpinnerCell: UITableViewCell {
     private let spinner = HUDActivityView.create(with: .medium24)
@@ -20,8 +20,8 @@ open class SpinnerCell: UITableViewCell {
         spinner.startAnimating()
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    public required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
 }

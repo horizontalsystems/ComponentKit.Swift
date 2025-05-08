@@ -1,6 +1,6 @@
-import UIKit
 import SnapKit
 import ThemeKit
+import UIKit
 
 open class BaseSelectableThemeCell: BaseThemeCell {
     private let selectView = UIView()
@@ -20,11 +20,12 @@ open class BaseSelectableThemeCell: BaseThemeCell {
         selectView.alpha = 0
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    public required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    open override func set(backgroundStyle: BackgroundStyle, cornerRadius: CGFloat = .cornerRadius12, isFirst: Bool = false, isLast: Bool = false) {
+    override open func set(backgroundStyle: BackgroundStyle, cornerRadius: CGFloat = .cornerRadius12, isFirst: Bool = false, isLast: Bool = false) {
         super.set(backgroundStyle: backgroundStyle, cornerRadius: cornerRadius, isFirst: isFirst, isLast: isLast)
 
         switch backgroundStyle {
@@ -78,5 +79,4 @@ open class BaseSelectableThemeCell: BaseThemeCell {
             selectView.alpha = selected ? 1 : 0
         }
     }
-
 }

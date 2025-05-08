@@ -1,7 +1,7 @@
-import UIKit
-import SnapKit
 import SectionsTableView
+import SnapKit
 import ThemeKit
+import UIKit
 
 public class CellBuilder {
     public static let defaultMargin: CGFloat = .margin16
@@ -28,74 +28,74 @@ public class CellBuilder {
     }
 
     public static func row(
-            elements: [CellElement],
-            layoutMargins: UIEdgeInsets = defaultLayoutMargins,
-            tableView: UITableView,
-            id: String,
-            hash: String? = nil,
-            height: CGFloat? = nil,
-            rowActionProvider: (() -> [RowAction])? = nil,
-            dynamicHeight: ((CGFloat) -> CGFloat)? = nil,
-            bind: ((BaseThemeCell) -> ())? = nil
+        elements: [CellElement],
+        layoutMargins: UIEdgeInsets = defaultLayoutMargins,
+        tableView: UITableView,
+        id: String,
+        hash: String? = nil,
+        height: CGFloat? = nil,
+        rowActionProvider: (() -> [RowAction])? = nil,
+        dynamicHeight: ((CGFloat) -> CGFloat)? = nil,
+        bind: ((BaseThemeCell) -> Void)? = nil
     ) -> RowProtocol {
         let reuseIdentifier = reuseIdentifier(elements: elements, layoutMargins: layoutMargins)
 
         tableView.register(BaseThemeCell.self, forCellReuseIdentifier: reuseIdentifier)
 
         return Row<BaseThemeCell>(
-                id: id,
-                hash: hash,
-                height: height,
-                rowActionProvider: rowActionProvider,
-                rowType: .dynamic(reuseIdentifier: reuseIdentifier, prepare: { cell in
-                    guard let cell = cell as? BaseThemeCell else {
-                        return
-                    }
+            id: id,
+            hash: hash,
+            height: height,
+            rowActionProvider: rowActionProvider,
+            rowType: .dynamic(reuseIdentifier: reuseIdentifier, prepare: { cell in
+                guard let cell = cell as? BaseThemeCell else {
+                    return
+                }
 
-                    build(cell: cell, elements: elements, layoutMargins: layoutMargins)
-                }),
-                dynamicHeight: dynamicHeight,
-                bind: { cell, _ in bind?(cell) }
+                build(cell: cell, elements: elements, layoutMargins: layoutMargins)
+            }),
+            dynamicHeight: dynamicHeight,
+            bind: { cell, _ in bind?(cell) }
         )
     }
 
     public static func selectableRow(
-            elements: [CellElement],
-            layoutMargins: UIEdgeInsets = defaultLayoutMargins,
-            tableView: UITableView,
-            id: String,
-            hash: String? = nil,
-            height: CGFloat? = nil,
-            autoDeselect: Bool = false,
-            rowActionProvider: (() -> [RowAction])? = nil,
-            dynamicHeight: ((CGFloat) -> CGFloat)? = nil,
-            bind: ((BaseThemeCell) -> ())? = nil,
-            action: (() -> ())? = nil,
-            actionWithCell: ((BaseThemeCell) -> ())? = nil
+        elements: [CellElement],
+        layoutMargins: UIEdgeInsets = defaultLayoutMargins,
+        tableView: UITableView,
+        id: String,
+        hash: String? = nil,
+        height: CGFloat? = nil,
+        autoDeselect: Bool = false,
+        rowActionProvider: (() -> [RowAction])? = nil,
+        dynamicHeight: ((CGFloat) -> CGFloat)? = nil,
+        bind: ((BaseThemeCell) -> Void)? = nil,
+        action: (() -> Void)? = nil,
+        actionWithCell: ((BaseThemeCell) -> Void)? = nil
     ) -> RowProtocol {
         let reuseIdentifier = selectableReuseIdentifier(elements: elements, layoutMargins: layoutMargins)
 
         tableView.register(BaseSelectableThemeCell.self, forCellReuseIdentifier: reuseIdentifier)
 
         return Row<BaseSelectableThemeCell>(
-                id: id,
-                hash: hash,
-                height: height,
-                autoDeselect: autoDeselect,
-                rowActionProvider: rowActionProvider,
-                rowType: .dynamic(reuseIdentifier: reuseIdentifier, prepare: { cell in
-                    guard let cell = cell as? BaseThemeCell else {
-                        return
-                    }
-
-                    build(cell: cell, elements: elements, layoutMargins: layoutMargins)
-                }),
-                dynamicHeight: dynamicHeight,
-                bind: { cell, _ in bind?(cell) },
-                action: { cell in
-                    action?()
-                    actionWithCell?(cell)
+            id: id,
+            hash: hash,
+            height: height,
+            autoDeselect: autoDeselect,
+            rowActionProvider: rowActionProvider,
+            rowType: .dynamic(reuseIdentifier: reuseIdentifier, prepare: { cell in
+                guard let cell = cell as? BaseThemeCell else {
+                    return
                 }
+
+                build(cell: cell, elements: elements, layoutMargins: layoutMargins)
+            }),
+            dynamicHeight: dynamicHeight,
+            bind: { cell, _ in bind?(cell) },
+            action: { cell in
+                action?()
+                actionWithCell?(cell)
+            }
         )
     }
 
@@ -148,7 +148,7 @@ public class CellBuilder {
             case .margin12: lastMargin = .margin12
             case .margin16: lastMargin = .margin16
             case .margin24: lastMargin = .margin24
-            case .fixed(let width):
+            case let .fixed(width):
                 textWidth -= lastMargin + width
                 lastMargin = defaultMargin
             case .multiline:
@@ -199,12 +199,10 @@ public class CellBuilder {
     private static func cellId(elements: [CellElement], layoutMargins: UIEdgeInsets) -> String {
         "\(elements.map { $0.rawValue }.joined(separator: "-"))|\(Int(layoutMargins.top))-\(Int(layoutMargins.left))-\(Int(layoutMargins.bottom))-\(Int(layoutMargins.right))"
     }
-
 }
 
-extension CellBuilder {
-
-    public enum CellElement: String {
+public extension CellBuilder {
+    enum CellElement: String {
         case text
         case multiText
         case image16
@@ -234,7 +232,7 @@ extension CellBuilder {
         case margin24
     }
 
-    public enum LayoutElement {
+    enum LayoutElement {
         case fixed(width: CGFloat)
         case multiline
 
@@ -245,5 +243,4 @@ extension CellBuilder {
         case margin16
         case margin24
     }
-
 }

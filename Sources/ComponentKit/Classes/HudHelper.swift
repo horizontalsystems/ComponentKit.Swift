@@ -1,5 +1,5 @@
-import UIKit
 import HUD
+import UIKit
 
 public class HudHelper {
     public static let instance = HudHelper()
@@ -44,7 +44,7 @@ public class HudHelper {
         config.startAdjustSize = 0.8
         config.finishAdjustSize = 0.8
         config.preferredSize = CGSize(width: 146, height: 114)
-        config.backgroundColor = UIColor.themeTyler.withAlphaComponent(0.4)//todo .4 does not work for theme, it needs themed color. But it's not working without 0.4 as well
+        config.backgroundColor = UIColor.themeTyler.withAlphaComponent(0.4) // todo .4 does not work for theme, it needs themed color. But it's not working without 0.4 as well
         config.blurEffectStyle = .themeHud
 
         return config
@@ -60,32 +60,30 @@ public class HudHelper {
 
         return config
     }
-
 }
 
-extension HudHelper {
-
-    public func showSuccess(title: String? = nil, subtitle: String? = nil) {
+public extension HudHelper {
+    func showSuccess(title: String? = nil, subtitle: String? = nil) {
         show(type: .success, title: title, subtitle: subtitle)
     }
 
-    public func showError(title: String? = nil, subtitle: String? = nil) {
+    func showError(title: String? = nil, subtitle: String? = nil) {
         show(type: .error, title: title, subtitle: subtitle)
     }
 
-    public func showAttention(title: String? = nil, subtitle: String? = nil) {
+    func showAttention(title: String? = nil, subtitle: String? = nil) {
         show(type: .attention, title: title, subtitle: subtitle)
     }
 
-    public func showSuccessBanner(title: String) {
+    func showSuccessBanner(title: String) {
         show(banner: .success(title: title))
     }
 
-    public func showErrorBanner(title: String) {
+    func showErrorBanner(title: String) {
         show(banner: .error(string: title))
     }
 
-    public func showSpinner(title: String? = nil, userInteractionEnabled: Bool = false) {
+    func showSpinner(title: String? = nil, userInteractionEnabled: Bool = false) {
         var customConfig = themeConfigHud()
         customConfig.hapticType = nil
         customConfig.userInteractionEnabled = userInteractionEnabled
@@ -120,14 +118,12 @@ extension HudHelper {
         activityView.startAnimating()
     }
 
-    public func hide() {
+    func hide() {
         HUD.instance.hide()
     }
-
 }
 
 extension HudHelper {
-
     private func show(banner: BannerType) {
         var config = HUDConfig()
 
@@ -147,11 +143,11 @@ extension HudHelper {
         config.cornerRadius = 28
 
         let viewItem = HUD.ViewItem(
-                icon: banner.icon,
-                iconColor: banner.color,
-                title: banner.title,
-                showingTime: banner.showingTime,
-                isLoading: banner.isLoading
+            icon: banner.icon,
+            iconColor: banner.color,
+            title: banner.title,
+            showingTime: banner.showingTime,
+            isLoading: banner.isLoading
         )
 
         HUD.instance.show(config: config, viewItem: viewItem, forced: banner.forced)
@@ -179,8 +175,8 @@ extension HudHelper {
 
         var title: String {
             switch self {
-            case .success(let title): return title
-            case .error(let description): return description
+            case let .success(title): return title
+            case let .error(description): return description
             }
         }
 
@@ -199,7 +195,5 @@ extension HudHelper {
         var forced: Bool {
             true
         }
-
     }
-
 }

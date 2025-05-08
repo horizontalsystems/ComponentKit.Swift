@@ -1,6 +1,6 @@
-import UIKit
-import ThemeKit
 import SnapKit
+import ThemeKit
+import UIKit
 
 open class BottomDescriptionView: UIView {
     private static let sideMargin: CGFloat = .margin32
@@ -23,7 +23,8 @@ open class BottomDescriptionView: UIView {
         }
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    public required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -37,14 +38,11 @@ open class BottomDescriptionView: UIView {
             maker.bottom.equalToSuperview().inset(bottomMargin)
         }
     }
-
 }
 
-extension BottomDescriptionView {
-
-    public static func height(containerWidth: CGFloat, text: String, topMargin: CGFloat = .margin12, bottomMargin: CGFloat = .margin32) -> CGFloat {
+public extension BottomDescriptionView {
+    static func height(containerWidth: CGFloat, text: String, topMargin: CGFloat = .margin12, bottomMargin: CGFloat = .margin32) -> CGFloat {
         let textHeight = text.height(forContainerWidth: containerWidth - 2 * BottomDescriptionView.sideMargin, font: BottomDescriptionView.font)
         return textHeight + topMargin + bottomMargin
     }
-
 }

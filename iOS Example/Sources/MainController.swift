@@ -1,10 +1,9 @@
-import SwiftUI
-import UIKit
-import ThemeKit
 import SnapKit
+import SwiftUI
+import ThemeKit
+import UIKit
 
 class MainController: ThemeTabBarController {
-
     init(selectedIndex: Int = 0) {
         super.init()
 
@@ -33,12 +32,12 @@ class MainController: ThemeTabBarController {
         self.selectedIndex = selectedIndex
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
     }
-
 }

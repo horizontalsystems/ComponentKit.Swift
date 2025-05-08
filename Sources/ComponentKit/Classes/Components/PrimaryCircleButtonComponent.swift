@@ -1,11 +1,11 @@
-import UIKit
 import SnapKit
+import UIKit
 
 public class PrimaryCircleButtonComponent: UIView {
     public let button = PrimaryCircleButton()
     private let dummyButton = UIButton()
 
-    public var onTap: (() -> ())?
+    public var onTap: (() -> Void)?
 
     override public init(frame: CGRect) {
         super.init(frame: frame)
@@ -25,12 +25,12 @@ public class PrimaryCircleButtonComponent: UIView {
         button.addTarget(self, action: #selector(_onTap), for: .touchUpInside)
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    public required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     @objc private func _onTap() {
         onTap?()
     }
-
 }
