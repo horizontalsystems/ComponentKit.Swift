@@ -1,6 +1,6 @@
-import UIKit
-import SnapKit
 import HUD
+import SnapKit
+import UIKit
 
 public class SpinnerComponent: UIView {
     private let spinner: HUDActivityView
@@ -19,8 +19,8 @@ public class SpinnerComponent: UIView {
         spinner.startAnimating()
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    public required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
 }

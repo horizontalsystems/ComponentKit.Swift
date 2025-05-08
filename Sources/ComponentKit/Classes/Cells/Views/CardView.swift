@@ -1,5 +1,5 @@
-import UIKit
 import SnapKit
+import UIKit
 
 open class CardView: UIView {
     private let roundedBackground = UIView()
@@ -38,11 +38,11 @@ open class CardView: UIView {
         updateUI()
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
 
-    public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+    override public func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
 
         updateUI()
@@ -51,5 +51,4 @@ open class CardView: UIView {
     private func updateUI() {
         roundedBackground.layer.shadowColor = UIColor.themeAndy.cgColor
     }
-
 }

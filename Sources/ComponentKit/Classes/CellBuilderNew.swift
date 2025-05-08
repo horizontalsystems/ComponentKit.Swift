@@ -1,7 +1,7 @@
-import UIKit
-import SnapKit
 import SectionsTableView
+import SnapKit
 import ThemeKit
+import UIKit
 
 public class CellBuilderNew {
     public static let defaultMargin: CGFloat = .margin16
@@ -21,18 +21,18 @@ public class CellBuilderNew {
     }
 
     public static func row(
-            rootElement: CellElement,
-            layoutMargins: UIEdgeInsets = defaultLayoutMargins,
-            tableView: UITableView,
-            id: String,
-            hash: String? = nil,
-            height: CGFloat? = nil,
-            autoDeselect: Bool = false,
-            rowActionProvider: (() -> [RowAction])? = nil,
-            dynamicHeight: ((CGFloat) -> CGFloat)? = nil,
-            bind: ((BaseThemeCell) -> ())? = nil,
-            action: (() -> ())? = nil,
-            actionWithCell: ((BaseThemeCell) -> ())? = nil
+        rootElement: CellElement,
+        layoutMargins: UIEdgeInsets = defaultLayoutMargins,
+        tableView: UITableView,
+        id: String,
+        hash: String? = nil,
+        height: CGFloat? = nil,
+        autoDeselect: Bool = false,
+        rowActionProvider: (() -> [RowAction])? = nil,
+        dynamicHeight: ((CGFloat) -> CGFloat)? = nil,
+        bind: ((BaseThemeCell) -> Void)? = nil,
+        action: (() -> Void)? = nil,
+        actionWithCell: ((BaseThemeCell) -> Void)? = nil
     ) -> RowProtocol {
         let cellClass = action != nil || actionWithCell != nil ? BaseSelectableThemeCell.self : BaseThemeCell.self
         let reuseIdentifier = reuseIdentifier(cellClass: cellClass, rootElement: rootElement, layoutMargins: layoutMargins)
@@ -40,46 +40,46 @@ public class CellBuilderNew {
 
         if action != nil || actionWithCell != nil {
             return Row<BaseSelectableThemeCell>(
-                    id: id,
-                    hash: hash,
-                    height: height,
-                    autoDeselect: autoDeselect,
-                    rowActionProvider: rowActionProvider,
-                    rowType: .dynamic(reuseIdentifier: reuseIdentifier, prepare: { cell in
-                        guard let cell = cell as? BaseThemeCell else {
-                            return
-                        }
-
-                        build(cell: cell, rootElement: rootElement, layoutMargins: layoutMargins)
-                    }),
-                    dynamicHeight: dynamicHeight,
-                    bind: { cell, _ in
-                        bind?(cell)
-                        cell.bind(rootElement: rootElement)
-                    },
-                    action: { cell in
-                        action?()
-                        actionWithCell?(cell)
+                id: id,
+                hash: hash,
+                height: height,
+                autoDeselect: autoDeselect,
+                rowActionProvider: rowActionProvider,
+                rowType: .dynamic(reuseIdentifier: reuseIdentifier, prepare: { cell in
+                    guard let cell = cell as? BaseThemeCell else {
+                        return
                     }
+
+                    build(cell: cell, rootElement: rootElement, layoutMargins: layoutMargins)
+                }),
+                dynamicHeight: dynamicHeight,
+                bind: { cell, _ in
+                    bind?(cell)
+                    cell.bind(rootElement: rootElement)
+                },
+                action: { cell in
+                    action?()
+                    actionWithCell?(cell)
+                }
             )
         } else {
             return Row<BaseThemeCell>(
-                    id: id,
-                    hash: hash,
-                    height: height,
-                    rowActionProvider: rowActionProvider,
-                    rowType: .dynamic(reuseIdentifier: reuseIdentifier, prepare: { cell in
-                        guard let cell = cell as? BaseThemeCell else {
-                            return
-                        }
-
-                        build(cell: cell, rootElement: rootElement, layoutMargins: layoutMargins)
-                    }),
-                    dynamicHeight: dynamicHeight,
-                    bind: { cell, _ in
-                        bind?(cell)
-                        cell.bind(rootElement: rootElement)
+                id: id,
+                hash: hash,
+                height: height,
+                rowActionProvider: rowActionProvider,
+                rowType: .dynamic(reuseIdentifier: reuseIdentifier, prepare: { cell in
+                    guard let cell = cell as? BaseThemeCell else {
+                        return
                     }
+
+                    build(cell: cell, rootElement: rootElement, layoutMargins: layoutMargins)
+                }),
+                dynamicHeight: dynamicHeight,
+                bind: { cell, _ in
+                    bind?(cell)
+                    cell.bind(rootElement: rootElement)
+                }
             )
         }
     }
@@ -120,7 +120,7 @@ public class CellBuilderNew {
             case .margin16: lastMargin = .margin16
             case .margin24: lastMargin = .margin24
             case .margin32: lastMargin = .margin32
-            case .fixed(let width):
+            case let .fixed(width):
                 textWidth -= lastMargin + width
                 lastMargin = defaultMargin
             case .multiline:
@@ -142,7 +142,7 @@ public class CellBuilderNew {
 
         for element in elements {
             switch element {
-            case .margin(let value): lastMargin = value
+            case let .margin(value): lastMargin = value
             case .margin0: lastMargin = 0
             case .margin4: lastMargin = .margin4
             case .margin8: lastMargin = .margin8
@@ -209,15 +209,13 @@ public class CellBuilderNew {
     private static func cellId(rootElement: CellElement, layoutMargins: UIEdgeInsets) -> String {
         "\(rootElement.id)|\(Int(layoutMargins.top))-\(Int(layoutMargins.left))-\(Int(layoutMargins.bottom))-\(Int(layoutMargins.right))"
     }
-
 }
 
-extension CellBuilderNew {
-
-    public enum CellElement {
-        case hStack(_ elements: [CellElement], _ bind: ((StackComponent) ->  ())? = nil)
-        case vStack(_ elements: [CellElement], _ bind: ((StackComponent) ->  ())? = nil)
-        case vStackCentered(_ elements: [CellElement], _ bind: ((StackComponent) ->  ())? = nil)
+public extension CellBuilderNew {
+    enum CellElement {
+        case hStack(_ elements: [CellElement], _ bind: ((StackComponent) -> Void)? = nil)
+        case vStack(_ elements: [CellElement], _ bind: ((StackComponent) -> Void)? = nil)
+        case vStackCentered(_ elements: [CellElement], _ bind: ((StackComponent) -> Void)? = nil)
 
         case margin(_ value: CGFloat)
         case margin0
@@ -228,25 +226,25 @@ extension CellBuilderNew {
         case margin24
         case margin32
 
-        case text(_ bind: (TextComponent) ->  ())
-        case textButton(_ bind: (TextButtonComponent) ->  ())
-        case image16(_ bind: (ImageComponent) ->  ())
-        case image20(_ bind: (ImageComponent) ->  ())
-        case image24(_ bind: (ImageComponent) ->  ())
-        case image32(_ bind: (ImageComponent) ->  ())
-        case transactionImage(_ bind: (TransactionImageComponent) ->  ())
-        case `switch`(_ bind: (SwitchComponent) ->  ())
-        case primaryButton(_ bind: (PrimaryButtonComponent) ->  ())
-        case primaryCircleButton(_ bind: (PrimaryCircleButtonComponent) ->  ())
-        case secondaryButton(_ bind: (SecondaryButtonComponent) ->  ())
-        case secondaryCircleButton(_ bind: (SecondaryCircleButtonComponent) ->  ())
-        case badge(_ bind: (BadgeComponent) ->  ())
-        case spinner20(_ bind: (SpinnerComponent) ->  ())
-        case spinner24(_ bind: (SpinnerComponent) ->  ())
-        case spinner48(_ bind: (SpinnerComponent) ->  ())
-        case determiniteSpinner20(_ bind: (DeterminiteSpinnerComponent) -> ())
-        case determiniteSpinner24(_ bind: (DeterminiteSpinnerComponent) -> ())
-        case determiniteSpinner48(_ bind: (DeterminiteSpinnerComponent) -> ())
+        case text(_ bind: (TextComponent) -> Void)
+        case textButton(_ bind: (TextButtonComponent) -> Void)
+        case image16(_ bind: (ImageComponent) -> Void)
+        case image20(_ bind: (ImageComponent) -> Void)
+        case image24(_ bind: (ImageComponent) -> Void)
+        case image32(_ bind: (ImageComponent) -> Void)
+        case transactionImage(_ bind: (TransactionImageComponent) -> Void)
+        case `switch`(_ bind: (SwitchComponent) -> Void)
+        case primaryButton(_ bind: (PrimaryButtonComponent) -> Void)
+        case primaryCircleButton(_ bind: (PrimaryCircleButtonComponent) -> Void)
+        case secondaryButton(_ bind: (SecondaryButtonComponent) -> Void)
+        case secondaryCircleButton(_ bind: (SecondaryCircleButtonComponent) -> Void)
+        case badge(_ bind: (BadgeComponent) -> Void)
+        case spinner20(_ bind: (SpinnerComponent) -> Void)
+        case spinner24(_ bind: (SpinnerComponent) -> Void)
+        case spinner48(_ bind: (SpinnerComponent) -> Void)
+        case determiniteSpinner20(_ bind: (DeterminiteSpinnerComponent) -> Void)
+        case determiniteSpinner24(_ bind: (DeterminiteSpinnerComponent) -> Void)
+        case determiniteSpinner48(_ bind: (DeterminiteSpinnerComponent) -> Void)
 
         var id: String {
             switch self {
@@ -254,7 +252,7 @@ extension CellBuilderNew {
             case let .vStack(elements, _): return "vStack[\(elements.map { $0.id }.joined(separator: "-"))]"
             case let .vStackCentered(elements, _): return "vStackCentered[\(elements.map { $0.id }.joined(separator: "-"))]"
 
-            case .margin(let value): return "margin\(value)"
+            case let .margin(value): return "margin\(value)"
             case .margin0: return "margin0"
             case .margin4: return "margin4"
             case .margin8: return "margin8"
@@ -294,7 +292,7 @@ extension CellBuilderNew {
 
         func bind(view: UIView) {
             switch self {
-            case .hStack(let elements, let bind), .vStack(let elements, let bind), .vStackCentered(let elements, let bind):
+            case let .hStack(elements, bind), let .vStack(elements, bind), let .vStackCentered(elements, bind):
                 if let component = view as? StackComponent {
                     if let bind = bind {
                         bind(component)
@@ -303,51 +301,51 @@ extension CellBuilderNew {
                         element.bind(view: component.stackView.arrangedSubviews[index])
                     }
                 }
-            case .text(let bind):
+            case let .text(bind):
                 if let component = view as? TextComponent {
                     bind(component)
                 }
-            case .textButton(let bind):
+            case let .textButton(bind):
                 if let component = view as? TextButtonComponent {
                     bind(component)
                 }
-            case .image16(let bind), .image20(let bind), .image24(let bind), .image32(let bind):
+            case let .image16(bind), let .image20(bind), let .image24(bind), let .image32(bind):
                 if let component = view as? ImageComponent {
                     bind(component)
                 }
-            case .transactionImage(let bind):
+            case let .transactionImage(bind):
                 if let component = view as? TransactionImageComponent {
                     bind(component)
                 }
-            case .switch(let bind):
+            case let .switch(bind):
                 if let component = view as? SwitchComponent {
                     bind(component)
                 }
-            case .primaryButton(let bind):
+            case let .primaryButton(bind):
                 if let component = view as? PrimaryButtonComponent {
                     bind(component)
                 }
-            case .primaryCircleButton(let bind):
+            case let .primaryCircleButton(bind):
                 if let component = view as? PrimaryCircleButtonComponent {
                     bind(component)
                 }
-            case .secondaryButton(let bind):
+            case let .secondaryButton(bind):
                 if let component = view as? SecondaryButtonComponent {
                     bind(component)
                 }
-            case .secondaryCircleButton(let bind):
+            case let .secondaryCircleButton(bind):
                 if let component = view as? SecondaryCircleButtonComponent {
                     bind(component)
                 }
-            case .badge(let bind):
+            case let .badge(bind):
                 if let component = view as? BadgeComponent {
                     bind(component)
                 }
-            case .spinner20(let bind), .spinner24(let bind), .spinner48(let bind):
+            case let .spinner20(bind), let .spinner24(bind), let .spinner48(bind):
                 if let component = view as? SpinnerComponent {
                     bind(component)
                 }
-            case .determiniteSpinner20(let bind), .determiniteSpinner24(let bind), .determiniteSpinner48(let bind):
+            case let .determiniteSpinner20(bind), let .determiniteSpinner24(bind), let .determiniteSpinner48(bind):
                 if let component = view as? DeterminiteSpinnerComponent {
                     bind(component)
                 }
@@ -356,7 +354,7 @@ extension CellBuilderNew {
         }
     }
 
-    public enum LayoutElement {
+    enum LayoutElement {
         case fixed(width: CGFloat)
         case multiline
 
@@ -368,5 +366,4 @@ extension CellBuilderNew {
         case margin24
         case margin32
     }
-
 }

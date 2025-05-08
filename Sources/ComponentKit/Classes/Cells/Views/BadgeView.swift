@@ -1,9 +1,9 @@
-import UIKit
 import SnapKit
+import UIKit
 
 public class BadgeView: UIView {
-    static private let sideMargin: CGFloat = .margin6
-    static private let spacing: CGFloat = .margin2
+    private static let sideMargin: CGFloat = .margin6
+    private static let spacing: CGFloat = .margin2
 
     private let stackView = UIStackView()
     private let label = UILabel()
@@ -49,7 +49,8 @@ public class BadgeView: UIView {
         }
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -85,17 +86,15 @@ public class BadgeView: UIView {
         }
     }
 
-    static public func width(for text: String, change: Change?, style: Style) -> CGFloat {
+    public static func width(for text: String, change: Change?, style: Style) -> CGFloat {
         let textWidth = text.size(containerWidth: .greatestFiniteMagnitude, font: style.font).width
         let changeWidth = change.map { $0.text.size(containerWidth: .greatestFiniteMagnitude, font: style.font).width + spacing } ?? 0
         return textWidth + changeWidth + sideMargin * 2
     }
-
 }
 
-extension BadgeView {
-
-    public enum Style {
+public extension BadgeView {
+    enum Style {
         case small
         case medium
 
@@ -126,10 +125,9 @@ extension BadgeView {
             case .medium: return .themeLucian
             }
         }
-
     }
 
-    public enum Change {
+    enum Change {
         case up(String)
         case down(String)
 
@@ -154,5 +152,4 @@ extension BadgeView {
             }
         }
     }
-
 }

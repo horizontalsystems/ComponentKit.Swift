@@ -14,7 +14,6 @@ open class CornerPath {
         offset = lineWidth / 2
     }
 
-
     open func point(edgeType: CornerEdgeType?, corner: UIRectCorner, xOffset: Bool = true, yOffset: Bool = true) -> Point {
         var a: CGFloat = 0
         var b: CGFloat = 0
@@ -83,11 +82,9 @@ open class CornerPath {
 
         return path
     }
-
 }
 
 public extension CornerPath {
-
     enum CornerEdgeType {
         case start, end, center
     }
@@ -127,5 +124,4 @@ public extension CornerPath {
             "P: [\(point.x): \(point.y)] CP1: [\(cp1.x): \(cp1.y)]  CP2: [\(cp2.x): \(cp2.y)]"
         }
     }
-
 }

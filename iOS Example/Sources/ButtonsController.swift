@@ -1,8 +1,8 @@
-import UIKit
-import ThemeKit
-import SnapKit
 import ComponentKit
 import SectionsTableView
+import SnapKit
+import ThemeKit
+import UIKit
 
 class ButtonsController: ThemeViewController {
     private let tableView = SectionsTableView(style: .grouped)
@@ -474,42 +474,39 @@ class ButtonsController: ThemeViewController {
             component.button.borderColor = .themeSteel10
         })
     }
-
 }
 
 extension ButtonsController: SectionsDataSource {
-
     func buildSections() -> [SectionProtocol] {
         [
             Section(
-                    id: "main",
-                    headerState: .margin(height: .margin12),
-                    footerState: .margin(height: .margin32),
-                    rows: [
-                        StaticRow(cell: primaryYellowCell, id: "primary-yellow", height: .heightDoubleLineCell),
-                        StaticRow(cell: primaryYellowIconCell, id: "primary-yellow-icon", height: .heightDoubleLineCell),
-                        StaticRow(cell: primaryYellowSpinnerCell, id: "primary-yellow-spinner", height: .heightDoubleLineCell),
-                        StaticRow(cell: primaryYellowIconCell2, id: "primary-yellow-icon-2", height: .heightDoubleLineCell),
-                        StaticRow(cell: primaryYellowSpinnerCell2, id: "primary-yellow-spinner-2", height: .heightDoubleLineCell),
-                        StaticRow(cell: sliderCell, id: "slider", height: 80),
-                        StaticRow(cell: sliderDisabledCell, id: "slider-disabled", height: 80),
-                        StaticRow(cell: primaryRedCell, id: "primary-red", height: .heightDoubleLineCell),
-                        StaticRow(cell: primaryRedIconCell, id: "primary-red-icon", height: .heightDoubleLineCell),
-                        StaticRow(cell: primaryGrayCell, id: "primary-gray", height: .heightDoubleLineCell),
-                        StaticRow(cell: primaryGrayIconCell, id: "primary-gray-icon", height: .heightDoubleLineCell),
-                        StaticRow(cell: primaryTransparentCell, id: "primary-transparent", height: .heightDoubleLineCell),
-                        StaticRow(cell: primaryTransparentIconCell, id: "primary-transparent-icon", height: .heightDoubleLineCell),
-                        StaticRow(cell: primaryCircleCell, id: "primary-icon", height: .heightDoubleLineCell),
-                        StaticRow(cell: secondaryCell, id: "secondary", height: .heightSingleLineCell),
-                        StaticRow(cell: secondaryTransparentCell, id: "secondary-transparent", height: .heightSingleLineCell),
-                        StaticRow(cell: secondaryTransparent2Cell, id: "secondary-transparent-2", height: .heightSingleLineCell),
-                        StaticRow(cell: secondaryFullCell, id: "secondary-full", height: .heightSingleLineCell),
-                        StaticRow(cell: secondaryFull2Cell, id: "secondary-full-2", height: .heightSingleLineCell),
-                        StaticRow(cell: secondaryCircleCell, id: "secondary-circle", height: .heightSingleLineCell),
-                        StaticRow(cell: transparentIconCell, id: "transparent-icon", height: .heightSingleLineCell),
-                    ]
-            )
+                id: "main",
+                headerState: .margin(height: .margin12),
+                footerState: .margin(height: .margin32),
+                rows: [
+                    StaticRow(cell: primaryYellowCell, id: "primary-yellow", height: .heightDoubleLineCell),
+                    StaticRow(cell: primaryYellowIconCell, id: "primary-yellow-icon", height: .heightDoubleLineCell),
+                    StaticRow(cell: primaryYellowSpinnerCell, id: "primary-yellow-spinner", height: .heightDoubleLineCell),
+                    StaticRow(cell: primaryYellowIconCell2, id: "primary-yellow-icon-2", height: .heightDoubleLineCell),
+                    StaticRow(cell: primaryYellowSpinnerCell2, id: "primary-yellow-spinner-2", height: .heightDoubleLineCell),
+                    StaticRow(cell: sliderCell, id: "slider", height: 80),
+                    StaticRow(cell: sliderDisabledCell, id: "slider-disabled", height: 80),
+                    StaticRow(cell: primaryRedCell, id: "primary-red", height: .heightDoubleLineCell),
+                    StaticRow(cell: primaryRedIconCell, id: "primary-red-icon", height: .heightDoubleLineCell),
+                    StaticRow(cell: primaryGrayCell, id: "primary-gray", height: .heightDoubleLineCell),
+                    StaticRow(cell: primaryGrayIconCell, id: "primary-gray-icon", height: .heightDoubleLineCell),
+                    StaticRow(cell: primaryTransparentCell, id: "primary-transparent", height: .heightDoubleLineCell),
+                    StaticRow(cell: primaryTransparentIconCell, id: "primary-transparent-icon", height: .heightDoubleLineCell),
+                    StaticRow(cell: primaryCircleCell, id: "primary-icon", height: .heightDoubleLineCell),
+                    StaticRow(cell: secondaryCell, id: "secondary", height: .heightSingleLineCell),
+                    StaticRow(cell: secondaryTransparentCell, id: "secondary-transparent", height: .heightSingleLineCell),
+                    StaticRow(cell: secondaryTransparent2Cell, id: "secondary-transparent-2", height: .heightSingleLineCell),
+                    StaticRow(cell: secondaryFullCell, id: "secondary-full", height: .heightSingleLineCell),
+                    StaticRow(cell: secondaryFull2Cell, id: "secondary-full-2", height: .heightSingleLineCell),
+                    StaticRow(cell: secondaryCircleCell, id: "secondary-circle", height: .heightSingleLineCell),
+                    StaticRow(cell: transparentIconCell, id: "transparent-icon", height: .heightSingleLineCell),
+                ]
+            ),
         ]
     }
-
 }

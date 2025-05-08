@@ -1,6 +1,6 @@
-import UIKit
-import SnapKit
 import Kingfisher
+import SnapKit
+import UIKit
 
 public class ImageComponent: UIView {
     public let imageView = UIImageView()
@@ -16,7 +16,8 @@ public class ImageComponent: UIView {
         }
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    public required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -31,5 +32,4 @@ public class ImageComponent: UIView {
     public func setImage(urlString: String?, placeholder: UIImage?) {
         imageView.kf.setImage(with: urlString.flatMap { URL(string: $0) }, placeholder: placeholder, options: [.scaleFactor(UIScreen.main.scale)])
     }
-
 }

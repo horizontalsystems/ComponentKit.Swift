@@ -1,7 +1,7 @@
-import UIKit
+import HUD
 import SnapKit
 import ThemeKit
-import HUD
+import UIKit
 
 open class PrimaryButton: UIButton {
     private static let horizontalPadding: CGFloat = .margin16
@@ -36,7 +36,8 @@ open class PrimaryButton: UIButton {
         }
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    public required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -76,7 +77,7 @@ open class PrimaryButton: UIButton {
         }
 
         switch accessoryType {
-        case .icon(let image):
+        case let .icon(image):
             switch style {
             case .yellow:
                 setImage(image?.withTintColor(.themeDark), for: .normal)
@@ -133,5 +134,4 @@ open class PrimaryButton: UIButton {
         case spinner
         case none
     }
-
 }

@@ -1,10 +1,10 @@
-import UIKit
 import SnapKit
+import UIKit
 
 public class SwitchComponent: UIView {
     public let switchView = UISwitch()
 
-    public var onSwitch: ((Bool) -> ())?
+    public var onSwitch: ((Bool) -> Void)?
 
     override public init(frame: CGRect) {
         super.init(frame: frame)
@@ -22,12 +22,12 @@ public class SwitchComponent: UIView {
         switchView.addTarget(self, action: #selector(onToggle), for: .valueChanged)
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    public required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     @objc private func onToggle() {
         onSwitch?(switchView.isOn)
     }
-
 }

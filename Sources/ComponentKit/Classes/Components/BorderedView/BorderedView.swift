@@ -137,10 +137,10 @@ public class BorderedView: UIView {
         }
 
         let path = UIBezierPath()
-        borders.toArray.forEach { edge in
+        for edge in borders.toArray {
             path.append(linePath(border: edge, cornerPath: cornerPath))
         }
-        borders.corners.forEach { corner in
+        for corner in borders.corners {
             path.append(cornerPath.corner(corner: corner))
         }
 
@@ -152,14 +152,14 @@ public class BorderedView: UIView {
         borderLayer.removeAllAnimations()
     }
 
-    public override func layoutSubviews() {
+    override public func layoutSubviews() {
         super.layoutSubviews()
         updateSubLayers()
     }
 }
 
-extension BorderedView {
-    public enum BorderStyle {
+public extension BorderedView {
+    enum BorderStyle {
         case solid
         case corners(length: CGFloat)
     }

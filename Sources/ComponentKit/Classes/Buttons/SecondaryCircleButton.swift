@@ -1,6 +1,6 @@
-import UIKit
-import ThemeKit
 import SnapKit
+import ThemeKit
+import UIKit
 
 open class SecondaryCircleButton: UIButton {
     public static let size: CGFloat = 28
@@ -15,7 +15,8 @@ open class SecondaryCircleButton: UIButton {
         }
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    public required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -52,15 +53,12 @@ open class SecondaryCircleButton: UIButton {
             setImage(image?.withTintColor(.themeYellow50), for: [.selected, .highlighted])
         }
     }
-
 }
 
-extension SecondaryCircleButton {
-
-    public enum Style {
+public extension SecondaryCircleButton {
+    enum Style {
         case `default`
         case transparent
         case red
     }
-
 }

@@ -1,6 +1,6 @@
-import UIKit
-import ThemeKit
 import SnapKit
+import ThemeKit
+import UIKit
 
 public class MultiTextComponent: UIView {
     private let titleStackView = UIStackView()
@@ -71,7 +71,8 @@ public class MultiTextComponent: UIView {
         subtitleStackView.addArrangedSubview(subtitleRight)
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    public required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -120,12 +121,10 @@ public class MultiTextComponent: UIView {
             subtitleRight.isHidden = false
         }
     }
-
 }
 
-extension MultiTextComponent {
-
-    public enum Style {
+public extension MultiTextComponent {
+    enum Style {
         case m1
         case m2
         case m3
@@ -134,5 +133,4 @@ extension MultiTextComponent {
         case m6
         case m7
     }
-
 }

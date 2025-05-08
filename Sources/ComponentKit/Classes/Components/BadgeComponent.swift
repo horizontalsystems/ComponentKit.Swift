@@ -1,5 +1,5 @@
-import UIKit
 import SnapKit
+import UIKit
 
 public class BadgeComponent: UIView {
     public let badgeView = BadgeView()
@@ -14,8 +14,8 @@ public class BadgeComponent: UIView {
         }
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    public required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
 }

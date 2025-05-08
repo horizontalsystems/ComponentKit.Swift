@@ -32,7 +32,7 @@ open class ContinuousCornerPath: CornerPath {
             ControlPoint(p0.cgPoint, p0cp1.cgPoint, p0cp2.cgPoint),
             ControlPoint(p1.cgPoint, p1cp1.cgPoint, p1cp2.cgPoint),
             ControlPoint(p2.cgPoint, p2cp1.cgPoint, p2cp2.cgPoint),
-            ControlPoint(p3.cgPoint, .zero, .zero)
+            ControlPoint(p3.cgPoint, .zero, .zero),
         ]
     }
 
@@ -48,5 +48,4 @@ open class ContinuousCornerPath: CornerPath {
 
         return path
     }
-
 }

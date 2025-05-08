@@ -1,6 +1,6 @@
-import UIKit
 import SnapKit
 import ThemeKit
+import UIKit
 
 open class SliderButton: UIView {
     public static let margin: CGFloat = 3
@@ -20,7 +20,7 @@ open class SliderButton: UIView {
     private var maxPosition: CGFloat?
     private var finished = false
 
-    public var onTap: (() -> ())?
+    public var onTap: (() -> Void)?
 
     public var isEnabled: Bool = true {
         didSet {
@@ -119,7 +119,8 @@ open class SliderButton: UIView {
         circleView.addGestureRecognizer(gestureRecognizer)
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    public required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -138,34 +139,34 @@ open class SliderButton: UIView {
         finalImageView.isHidden = false
 
         UIView.animate(
-                withDuration: 0.4,
-                delay: 0,
-                options: .curveEaseInOut,
-                animations: { [weak self] in
-                    self?.slideImageView.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
-                    self?.finalImageView.transform = CGAffineTransform(scaleX: 1, y: 1)
-                    self?.layoutIfNeeded()
-                },
-                completion: { [weak self] _ in
-                    self?.slideImageView.isHidden = true
-                    self?.handleFinish2()
-                }
+            withDuration: 0.4,
+            delay: 0,
+            options: .curveEaseInOut,
+            animations: { [weak self] in
+                self?.slideImageView.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
+                self?.finalImageView.transform = CGAffineTransform(scaleX: 1, y: 1)
+                self?.layoutIfNeeded()
+            },
+            completion: { [weak self] _ in
+                self?.slideImageView.isHidden = true
+                self?.handleFinish2()
+            }
         )
     }
 
     private func handleFinish2() {
         UIView.animate(
-                withDuration: 0.2,
-                delay: 0,
-                options: .curveEaseInOut,
-                animations: { [weak self] in
-                    self?.fillInitialConstraint?.deactivate()
-                    self?.fillFinalConstraint?.activate()
-                    self?.layoutIfNeeded()
-                },
-                completion: { [weak self] _ in
-                    self?.onTap?()
-                }
+            withDuration: 0.2,
+            delay: 0,
+            options: .curveEaseInOut,
+            animations: { [weak self] in
+                self?.fillInitialConstraint?.deactivate()
+                self?.fillFinalConstraint?.activate()
+                self?.layoutIfNeeded()
+            },
+            completion: { [weak self] _ in
+                self?.onTap?()
+            }
         )
     }
 
@@ -252,5 +253,4 @@ open class SliderButton: UIView {
 
         layoutIfNeeded()
     }
-
 }

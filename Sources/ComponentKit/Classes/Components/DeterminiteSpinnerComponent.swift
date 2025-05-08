@@ -1,18 +1,18 @@
-import UIKit
-import SnapKit
 import HUD
+import SnapKit
+import UIKit
 
 public class DeterminiteSpinnerComponent: UIView {
     private let spinner: HUDProgressView
 
     init(size: CGFloat) {
         spinner = HUDProgressView(
-                progress: 0,
-                strokeLineWidth: 2,
-                radius: (size - 2) / 2,
-                strokeColor: .themeGray,
-                donutColor: .themeSteel10,
-                duration: 2
+            progress: 0,
+            strokeLineWidth: 2,
+            radius: (size - 2) / 2,
+            strokeColor: .themeGray,
+            donutColor: .themeSteel10,
+            duration: 2
         )
 
         super.init(frame: .zero)
@@ -25,7 +25,8 @@ public class DeterminiteSpinnerComponent: UIView {
         }
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    public required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -33,5 +34,4 @@ public class DeterminiteSpinnerComponent: UIView {
         spinner.set(progress: Float(progress))
         spinner.startAnimating()
     }
-
 }

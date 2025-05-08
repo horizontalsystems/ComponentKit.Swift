@@ -1,16 +1,16 @@
-import UIKit
-import SnapKit
-import Kingfisher
 import HUD
+import Kingfisher
+import SnapKit
+import UIKit
 
 public class TransactionImageComponent: UIView {
     private let spinner = HUDProgressView(
-            progress: 0,
-            strokeLineWidth: 2,
-            radius: 21,
-            strokeColor: .themeGray,
-            donutColor: .themeSteel10,
-            duration: 2
+        progress: 0,
+        strokeLineWidth: 2,
+        radius: 21,
+        strokeColor: .themeGray,
+        donutColor: .themeSteel10,
+        duration: 2
     )
 
     private let imageView = UIImageView()
@@ -35,8 +35,6 @@ public class TransactionImageComponent: UIView {
             maker.center.equalTo(spinner)
             maker.size.equalTo(CGFloat.iconSize32)
         }
-
-        imageView.cornerRadius = .cornerRadius4
 
         addSubview(doubleImageWrapper)
         doubleImageWrapper.snp.makeConstraints { maker in
@@ -71,7 +69,8 @@ public class TransactionImageComponent: UIView {
         frontImageMask.backgroundColor = .themeTyler
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    public required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -92,14 +91,22 @@ public class TransactionImageComponent: UIView {
 
         imageView.contentMode = contentMode
         imageView.image = image
+        imageView.cornerRadius = .cornerRadius4
     }
 
-    public func setImage(url: String?, alternativeUrl: String?, placeholder: UIImage?) {
+    public func setImage(url: String?, alternativeUrl: String?, placeholder: UIImage?, type: ImageType = .squircle) {
         doubleImageWrapper.isHidden = true
         imageView.isHidden = false
 
         imageView.contentMode = .scaleAspectFill
         imageView.setImage(url: url, alternativeUrl: alternativeUrl, placeholder: placeholder)
+
+        switch type {
+        case .circle:
+            imageView.cornerRadius = CGFloat.iconSize32 / 2
+        case .squircle:
+            imageView.cornerRadius = .cornerRadius4
+        }
     }
 
     public func setDoubleImage(frontType: ImageType, frontUrl: String?, frontAlternativeUrl: String?, frontPlaceholder: UIImage?, backType: ImageType, backUrl: String?, backAlternativeUrl: String?, backPlaceholder: UIImage?) {
@@ -125,14 +132,11 @@ public class TransactionImageComponent: UIView {
         frontImageView.setImage(url: frontUrl, alternativeUrl: frontAlternativeUrl, placeholder: frontPlaceholder)
         backImageView.setImage(url: backUrl, alternativeUrl: backAlternativeUrl, placeholder: backPlaceholder)
     }
-
 }
 
-extension TransactionImageComponent {
-
-    public enum ImageType {
+public extension TransactionImageComponent {
+    enum ImageType {
         case circle
         case squircle
     }
-
 }
