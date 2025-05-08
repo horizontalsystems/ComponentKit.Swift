@@ -117,7 +117,7 @@ public class CellBuilder {
             case .margin24: lastMargin = .margin24
             default:
                 if let view = view(element: element) {
-                    if let last = lastMargin, let lastView = lastView {
+                    if let last = lastMargin, let lastView {
                         cell.stackView.setCustomSpacing(last, after: lastView)
                         lastMargin = nil
                     }
@@ -197,7 +197,7 @@ public class CellBuilder {
     }
 
     private static func cellId(elements: [CellElement], layoutMargins: UIEdgeInsets) -> String {
-        "\(elements.map { $0.rawValue }.joined(separator: "-"))|\(Int(layoutMargins.top))-\(Int(layoutMargins.left))-\(Int(layoutMargins.bottom))-\(Int(layoutMargins.right))"
+        "\(elements.map(\.rawValue).joined(separator: "-"))|\(Int(layoutMargins.top))-\(Int(layoutMargins.left))-\(Int(layoutMargins.bottom))-\(Int(layoutMargins.right))"
     }
 }
 

@@ -124,7 +124,7 @@ public class BorderedView: UIView {
     private func updateSubLayers() {
         borderLayer.frame = layer.bounds
         guard !borderLayer.frame.isEmpty,
-              let borderColor = borderColor
+              let borderColor
         else {
             borderLayer.path = nil
             return

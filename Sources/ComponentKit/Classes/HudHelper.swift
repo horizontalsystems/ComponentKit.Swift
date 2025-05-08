@@ -101,7 +101,7 @@ public extension HudHelper {
         activityView.snp.removeConstraints()
 
         var titleLabel: UILabel?
-        if let title = title {
+        if let title {
             titleLabel = UILabel()
             titleLabel?.font = statusConfig.titleLabelFont
             titleLabel?.textColor = statusConfig.titleLabelColor

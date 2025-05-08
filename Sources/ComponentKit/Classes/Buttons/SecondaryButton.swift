@@ -82,7 +82,7 @@ open class SecondaryButton: UIButton {
         let rightPadding = Self.rightPadding(style: style, hasImage: image != nil)
         let imagePadding = Self.imagePadding(style: style)
 
-        if let image = image {
+        if let image {
             switch style {
             case .default, .transparent, .tab:
                 setImage(image.withTintColor(.themeGray), for: .normal)

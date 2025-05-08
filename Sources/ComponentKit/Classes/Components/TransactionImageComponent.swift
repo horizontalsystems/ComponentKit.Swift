@@ -75,7 +75,7 @@ public class TransactionImageComponent: UIView {
     }
 
     public func set(progress: Float?) {
-        if let progress = progress {
+        if let progress {
             spinner.isHidden = false
             spinner.set(progress: progress)
             spinner.startAnimating()

@@ -149,7 +149,7 @@ open class BaseThemeCell: UITableViewCell {
     }
 
     public func bind(rootElement: CellBuilderNew.CellElement) {
-        guard let rootView = rootView else {
+        guard let rootView else {
             return
         }
 

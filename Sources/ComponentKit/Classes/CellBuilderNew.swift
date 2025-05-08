@@ -152,7 +152,7 @@ public class CellBuilderNew {
             case .margin32: lastMargin = .margin32
             default:
                 if let view = view(element: element) {
-                    if let last = lastMargin, let lastView = lastView {
+                    if let last = lastMargin, let lastView {
                         component.stackView.setCustomSpacing(last, after: lastView)
                         lastMargin = nil
                     }
@@ -248,9 +248,9 @@ public extension CellBuilderNew {
 
         var id: String {
             switch self {
-            case let .hStack(elements, _): return "hStack[\(elements.map { $0.id }.joined(separator: "-"))]"
-            case let .vStack(elements, _): return "vStack[\(elements.map { $0.id }.joined(separator: "-"))]"
-            case let .vStackCentered(elements, _): return "vStackCentered[\(elements.map { $0.id }.joined(separator: "-"))]"
+            case let .hStack(elements, _): return "hStack[\(elements.map(\.id).joined(separator: "-"))]"
+            case let .vStack(elements, _): return "vStack[\(elements.map(\.id).joined(separator: "-"))]"
+            case let .vStackCentered(elements, _): return "vStackCentered[\(elements.map(\.id).joined(separator: "-"))]"
 
             case let .margin(value): return "margin\(value)"
             case .margin0: return "margin0"
@@ -294,10 +294,10 @@ public extension CellBuilderNew {
             switch self {
             case let .hStack(elements, bind), let .vStack(elements, bind), let .vStackCentered(elements, bind):
                 if let component = view as? StackComponent {
-                    if let bind = bind {
+                    if let bind {
                         bind(component)
                     }
-                    for (index, element) in elements.filter({ $0.isView }).enumerated() {
+                    for (index, element) in elements.filter(\.isView).enumerated() {
                         element.bind(view: component.stackView.arrangedSubviews[index])
                     }
                 }
