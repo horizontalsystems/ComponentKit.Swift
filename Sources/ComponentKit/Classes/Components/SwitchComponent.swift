@@ -18,7 +18,7 @@ public class SwitchComponent: UIView {
         switchView.setContentCompressionResistancePriority(.required, for: .horizontal)
         switchView.setContentHuggingPriority(.required, for: .horizontal)
         switchView.tintColor = .themeSteel20
-        switchView.onTintColor = .themeYellowD
+        switchView.onTintColor = .themeOrange
         switchView.addTarget(self, action: #selector(onToggle), for: .valueChanged)
     }
 

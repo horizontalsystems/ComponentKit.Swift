@@ -56,13 +56,13 @@ class ButtonsController: ThemeViewController {
             component.text = "Primary"
         })
         primaryYellowCell.bind(index: 1, block: { [weak self] (component: PrimaryButtonComponent) in
-            component.button.set(style: .yellow)
+            component.button.set(style: .active)
             component.button.setTitle("Yellow", for: .normal)
             component.button.setContentHuggingPriority(.required, for: .horizontal)
             component.onTap = { self?.sliderButton?.reset() }
         })
         primaryYellowCell.bind(index: 2, block: { (component: PrimaryButtonComponent) in
-            component.button.set(style: .yellow)
+            component.button.set(style: .active)
             component.button.isEnabled = false
             component.button.setTitle("Disabled", for: .normal)
             component.button.setContentHuggingPriority(.required, for: .horizontal)
@@ -76,13 +76,13 @@ class ButtonsController: ThemeViewController {
             component.text = "Primary Icon"
         })
         primaryYellowIconCell.bind(index: 1, block: { (component: PrimaryButtonComponent) in
-            component.button.set(style: .yellow, accessoryType: .icon(image: UIImage(named: "arrow_swap_2_24")))
+            component.button.set(style: .active, accessoryType: .icon(image: UIImage(named: "arrow_swap_2_24")))
             component.button.setTitle("Yellow", for: .normal)
             component.button.setContentHuggingPriority(.required, for: .horizontal)
             component.button.setContentCompressionResistancePriority(.required, for: .horizontal)
         })
         primaryYellowIconCell.bind(index: 2, block: { (component: PrimaryButtonComponent) in
-            component.button.set(style: .yellow, accessoryType: .icon(image: UIImage(named: "arrow_swap_2_24")))
+            component.button.set(style: .active, accessoryType: .icon(image: UIImage(named: "arrow_swap_2_24")))
             component.button.isEnabled = false
             component.button.setTitle("Disabled", for: .normal)
             component.button.setContentHuggingPriority(.required, for: .horizontal)
@@ -97,13 +97,13 @@ class ButtonsController: ThemeViewController {
             component.text = "Primary Spinner"
         })
         primaryYellowSpinnerCell.bind(index: 1, block: { (component: PrimaryButtonComponent) in
-            component.button.set(style: .yellow, accessoryType: .spinner)
+            component.button.set(style: .active, accessoryType: .spinner)
             component.button.setTitle("Yellow", for: .normal)
             component.button.setContentHuggingPriority(.required, for: .horizontal)
             component.button.setContentCompressionResistancePriority(.required, for: .horizontal)
         })
         primaryYellowSpinnerCell.bind(index: 2, block: { (component: PrimaryButtonComponent) in
-            component.button.set(style: .yellow, accessoryType: .spinner)
+            component.button.set(style: .active, accessoryType: .spinner)
             component.button.isEnabled = false
             component.button.setTitle("Disabled", for: .normal)
             component.button.setContentHuggingPriority(.required, for: .horizontal)
@@ -113,7 +113,7 @@ class ButtonsController: ThemeViewController {
         primaryYellowIconCell2.set(backgroundStyle: .transparent)
         CellBuilder.build(cell: primaryYellowIconCell2, elements: [.primaryButton])
         primaryYellowIconCell2.bind(index: 0, block: { (component: PrimaryButtonComponent) in
-            component.button.set(style: .yellow, accessoryType: .icon(image: UIImage(named: "arrow_swap_2_24")))
+            component.button.set(style: .active, accessoryType: .icon(image: UIImage(named: "arrow_swap_2_24")))
             component.button.setTitle("Yellow", for: .normal)
             component.button.setContentHuggingPriority(.required, for: .horizontal)
             component.button.setContentCompressionResistancePriority(.required, for: .horizontal)
@@ -122,7 +122,7 @@ class ButtonsController: ThemeViewController {
         primaryYellowSpinnerCell2.set(backgroundStyle: .transparent)
         CellBuilder.build(cell: primaryYellowSpinnerCell2, elements: [.primaryButton])
         primaryYellowSpinnerCell2.bind(index: 0, block: { (component: PrimaryButtonComponent) in
-            component.button.set(style: .yellow, accessoryType: .spinner)
+            component.button.set(style: .active, accessoryType: .spinner)
             component.button.setTitle("Yellow", for: .normal)
             component.button.setContentHuggingPriority(.required, for: .horizontal)
             component.button.setContentCompressionResistancePriority(.required, for: .horizontal)
@@ -284,7 +284,7 @@ class ButtonsController: ThemeViewController {
             component.text = "Primary Circle"
         })
         primaryCircleCell.bind(index: 1, block: { (component: PrimaryCircleButtonComponent) in
-            component.button.set(style: .yellow)
+            component.button.set(style: .active)
             component.button.set(image: UIImage(named: "arrow_swap_2_24"))
         })
         primaryCircleCell.bind(index: 2, block: { (component: PrimaryCircleButtonComponent) in
@@ -296,7 +296,7 @@ class ButtonsController: ThemeViewController {
             component.button.set(image: UIImage(named: "arrow_swap_2_24"))
         })
         primaryCircleCell.bind(index: 4, block: { (component: PrimaryCircleButtonComponent) in
-            component.button.set(style: .yellow)
+            component.button.set(style: .active)
             component.button.isEnabled = false
             component.button.set(image: UIImage(named: "arrow_swap_2_24"))
         })

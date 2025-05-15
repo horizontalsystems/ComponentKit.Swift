@@ -30,7 +30,7 @@ open class SecondaryButton: UIButton {
         }
 
         switch style {
-        case .default, .transparent, .tab: cornerRadius = height / 2
+        case .default, .tab, .active, .transparent: cornerRadius = height / 2
         case .transparent2: cornerRadius = 0
         }
 
@@ -38,44 +38,56 @@ open class SecondaryButton: UIButton {
 
         switch style {
         case .default:
-            setBackgroundColor(.themeSteel20, for: .normal)
-            setBackgroundColor(.themeSteel10, for: .highlighted)
-            setBackgroundColor(.themeSteel20, for: .disabled)
-            setBackgroundColor(.themeYellowD, for: .selected)
-            setBackgroundColor(.themeYellow50, for: [.selected, .highlighted])
+            setBackgroundColor(.themeBlade, for: .normal)
+            setBackgroundColor(.themeBlade.pressed, for: .highlighted)
+            setBackgroundColor(.themeBlade, for: .disabled)
+//            setBackgroundColor(.themeYellowD, for: .selected)
+//            setBackgroundColor(.themeOrange.pressed, for: [.selected, .highlighted])
+        case .active:
+            setBackgroundColor(.themeOrange, for: .normal)
+            setBackgroundColor(.themeOrange.pressed, for: .highlighted)
+            setBackgroundColor(.themeBlade, for: .disabled)
+//            setBackgroundColor(.themeYellowD, for: .selected)
+//            setBackgroundColor(.themeOrange.pressed, for: [.selected, .highlighted])
         case .transparent:
             setBackgroundColor(.clear, for: .normal)
             setBackgroundColor(.clear, for: .highlighted)
             setBackgroundColor(.clear, for: .disabled)
-            setBackgroundColor(.themeYellowD, for: .selected)
-            setBackgroundColor(.themeYellow50, for: [.selected, .highlighted])
+//            setBackgroundColor(.themeYellowD, for: .selected)
+//            setBackgroundColor(.themeOrange.pressed, for: [.selected, .highlighted])
         case .transparent2, .tab:
             setBackgroundColor(.clear, for: .normal)
             setBackgroundColor(.clear, for: .highlighted)
             setBackgroundColor(.clear, for: .disabled)
-            setBackgroundColor(.clear, for: .selected)
-            setBackgroundColor(.clear, for: [.selected, .highlighted])
+//            setBackgroundColor(.clear, for: .selected)
+//            setBackgroundColor(.clear, for: [.selected, .highlighted])
         }
 
         switch style {
+        case .active:
+            setTitleColor(.themeLawrence, for: .normal)
+            setTitleColor(.themeLawrence, for: .highlighted)
+            setTitleColor(.themeAndy, for: .disabled)
+//            setTitleColor(.themeDark, for: .selected)
+//            setTitleColor(.themeDark, for: [.selected, .highlighted])
         case .default, .transparent:
             setTitleColor(.themeLeah, for: .normal)
             setTitleColor(.themeGray, for: .highlighted)
-            setTitleColor(.themeGray50, for: .disabled)
-            setTitleColor(.themeDark, for: .selected)
-            setTitleColor(.themeDark, for: [.selected, .highlighted])
+            setTitleColor(.themeAndy, for: .disabled)
+//            setTitleColor(.themeDark, for: .selected)
+//            setTitleColor(.themeDark, for: [.selected, .highlighted])
         case .transparent2:
-            setTitleColor(.themeGray, for: .normal)
-            setTitleColor(.themeGray50, for: .highlighted)
-            setTitleColor(.themeGray50, for: .disabled)
-            setTitleColor(.themeLeah, for: .selected)
-            setTitleColor(.themeGray, for: [.selected, .highlighted])
+            setTitleColor(.themeLeah, for: .normal)
+            setTitleColor(.themeGray, for: .highlighted)
+            setTitleColor(.themeAndy, for: .disabled)
+//            setTitleColor(.themeLeah, for: .selected)
+//            setTitleColor(.themeGray, for: [.selected, .highlighted])
         case .tab:
             setTitleColor(.themeGray, for: .normal)
             setTitleColor(.themeGray, for: .highlighted)
             setTitleColor(.themeGray50, for: .disabled)
-            setTitleColor(.themeLeah, for: .selected)
-            setTitleColor(.themeLeah, for: [.selected, .highlighted])
+//            setTitleColor(.themeLeah, for: .selected)
+//            setTitleColor(.themeLeah, for: [.selected, .highlighted])
         }
 
         let leftPadding = Self.leftPadding(style: style)
@@ -84,18 +96,24 @@ open class SecondaryButton: UIButton {
 
         if let image {
             switch style {
+            case .active:
+                setImage(image.withTintColor(.themeLawrence), for: .normal)
+                setImage(image.withTintColor(.themeLawrence), for: .highlighted)
+                setImage(image.withTintColor(.themeAndy), for: .disabled)
+//                setImage(image.withTintColor(.themeDark), for: .selected)
+//                setImage(image.withTintColor(.themeDark), for: [.selected, .highlighted])
             case .default, .transparent, .tab:
-                setImage(image.withTintColor(.themeGray), for: .normal)
+                setImage(image.withTintColor(.themeLeah), for: .normal)
                 setImage(image.withTintColor(.themeGray), for: .highlighted)
-                setImage(image.withTintColor(.themeGray50), for: .disabled)
-                setImage(image.withTintColor(.themeDark), for: .selected)
-                setImage(image.withTintColor(.themeDark), for: [.selected, .highlighted])
+                setImage(image.withTintColor(.themeAndy), for: .disabled)
+//                setImage(image.withTintColor(.themeDark), for: .selected)
+//                setImage(image.withTintColor(.themeDark), for: [.selected, .highlighted])
             case .transparent2:
-                setImage(image.withTintColor(.themeGray), for: .normal)
-                setImage(image.withTintColor(.themeGray50), for: .highlighted)
-                setImage(image.withTintColor(.themeGray50), for: .disabled)
-                setImage(image.withTintColor(.themeGray), for: .selected)
-                setImage(image.withTintColor(.themeGray50), for: [.selected, .highlighted])
+                setImage(image.withTintColor(.themeLeah), for: .normal)
+                setImage(image.withTintColor(.themeGray), for: .highlighted)
+                setImage(image.withTintColor(.themeAndy), for: .disabled)
+//                setImage(image.withTintColor(.themeGray), for: .selected)
+//                setImage(image.withTintColor(.themeGray50), for: [.selected, .highlighted])
             }
 
             let verticalPadding = (height - CGFloat.iconSize20) / 2
@@ -108,6 +126,7 @@ open class SecondaryButton: UIButton {
     }
 
     public enum Style {
+        case active
         case `default`
         case transparent
         case transparent2
@@ -118,7 +137,7 @@ open class SecondaryButton: UIButton {
 extension SecondaryButton {
     private static func font(style: Style) -> UIFont {
         switch style {
-        case .default, .transparent: return .captionSB
+        case .default, .active, .transparent: return .captionSB
         case .tab: return .subhead1
         case .transparent2: return .subhead2
         }
@@ -126,14 +145,14 @@ extension SecondaryButton {
 
     private static func leftPadding(style: Style) -> CGFloat {
         switch style {
-        case .default, .transparent, .tab: return .margin16
+        case .default, .active, .transparent, .tab: return .margin16
         case .transparent2: return 0
         }
     }
 
     private static func rightPadding(style: Style, hasImage: Bool) -> CGFloat {
         switch style {
-        case .default, .transparent: return hasImage ? .margin8 : .margin16
+        case .default, .active, .transparent: return hasImage ? .margin8 : .margin16
         case .tab: return .margin16
         case .transparent2: return 0
         }
@@ -141,14 +160,14 @@ extension SecondaryButton {
 
     private static func imagePadding(style: Style) -> CGFloat {
         switch style {
-        case .default, .transparent, .tab: return .margin2
+        case .default, .active, .transparent, .tab: return .margin2
         case .transparent2: return .margin8
         }
     }
 
     public static func height(style: Style) -> CGFloat {
         switch style {
-        case .default, .transparent, .tab: return 28
+        case .default, .active, .transparent, .tab: return 28
         case .transparent2: return 20
         }
     }

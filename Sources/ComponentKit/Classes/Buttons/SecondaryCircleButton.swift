@@ -22,10 +22,14 @@ open class SecondaryCircleButton: UIButton {
 
     public func set(image: UIImage?, style: Style = .default) {
         switch style {
-        case .default, .red:
-            setBackgroundColor(.themeSteel20, for: .normal)
-            setBackgroundColor(.themeSteel10, for: .highlighted)
-            setBackgroundColor(.themeSteel20, for: .disabled)
+        case .active:
+            setBackgroundColor(.orange, for: .normal)
+            setBackgroundColor(.orange.pressed, for: .highlighted)
+            setBackgroundColor(.themeAndy, for: .disabled)
+        case .default:
+            setBackgroundColor(.themeBlade, for: .normal)
+            setBackgroundColor(.themeBlade.pressed, for: .highlighted)
+            setBackgroundColor(.themeAndy, for: .disabled)
         case .transparent:
             setBackgroundColor(.clear, for: .normal)
             setBackgroundColor(.clear, for: .highlighted)
@@ -35,22 +39,22 @@ open class SecondaryCircleButton: UIButton {
         switch style {
         case .default:
             setImage(image?.withTintColor(.themeLeah), for: .normal)
-            setImage(image?.withTintColor(.themeGray), for: .highlighted)
-            setImage(image?.withTintColor(.themeGray50), for: .disabled)
-            setImage(image?.withTintColor(.themeJacob), for: .selected)
-            setImage(image?.withTintColor(.themeYellow50), for: [.selected, .highlighted])
+            setImage(image?.withTintColor(.themeLeah), for: .highlighted)
+            setImage(image?.withTintColor(.themeAndy), for: .disabled)
+//            setImage(image?.withTintColor(.themeJacob), for: .selected)
+//            setImage(image?.withTintColor(.themeOrange.pressed), for: [.selected, .highlighted])
         case .transparent:
             setImage(image?.withTintColor(.themeGray), for: .normal)
-            setImage(image?.withTintColor(.themeGray50), for: .highlighted)
-            setImage(image?.withTintColor(.themeGray50), for: .disabled)
-            setImage(image?.withTintColor(.themeLeah), for: .selected)
-            setImage(image?.withTintColor(.themeGray), for: [.selected, .highlighted])
-        case .red:
-            setImage(image?.withTintColor(.themeLucian), for: .normal)
-            setImage(image?.withTintColor(.themeRed50), for: .highlighted)
-            setImage(image?.withTintColor(.themeGray50), for: .disabled)
-            setImage(image?.withTintColor(.themeJacob), for: .selected)
-            setImage(image?.withTintColor(.themeYellow50), for: [.selected, .highlighted])
+            setImage(image?.withTintColor(.themeGray.pressed), for: .highlighted)
+            setImage(image?.withTintColor(.themeAndy), for: .disabled)
+//            setImage(image?.withTintColor(.themeLeah), for: .selected)
+//            setImage(image?.withTintColor(.themeGray), for: [.selected, .highlighted])
+        case .active:
+            setImage(image?.withTintColor(.themeLawrence), for: .normal)
+            setImage(image?.withTintColor(.themeLawrence), for: .highlighted)
+            setImage(image?.withTintColor(.themeAndy), for: .disabled)
+//            setImage(image?.withTintColor(.themeJacob), for: .selected)
+//            setImage(image?.withTintColor(.themeOrange.pressed), for: [.selected, .highlighted])
         }
     }
 }
@@ -59,6 +63,6 @@ public extension SecondaryCircleButton {
     enum Style {
         case `default`
         case transparent
-        case red
+        case active
     }
 }
