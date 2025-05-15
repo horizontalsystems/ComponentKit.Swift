@@ -25,36 +25,38 @@ open class PrimaryCircleButton: UIButton {
     }
 
     public func set(image: UIImage?) {
-        if let style, case .yellow = style {
-            setImage(image?.withTintColor(.themeDark), for: .normal)
-            setImage(image?.withTintColor(.themeDark), for: .highlighted)
-        } else {
-            setImage(image?.withTintColor(.themeClaude), for: .normal)
-            setImage(image?.withTintColor(.themeClaude), for: .highlighted)
+        switch style {
+        case .orange:
+            setImage(image?.withTintColor(.themeLawrence), for: .normal)
+            setImage(image?.withTintColor(.themeLawrence), for: .highlighted)
+        case .leah:
+            setImage(image?.withTintColor(.themeTyler), for: .normal)
+            setImage(image?.withTintColor(.themeTyler), for: .highlighted)
+        case nil:
+            setImage(image?.withTintColor(.themeBlade), for: .normal)
+            setImage(image?.withTintColor(.themeBlade), for: .highlighted)
         }
-        setImage(image?.withTintColor(.themeSteel20), for: .disabled)
+
+        setImage(image?.withTintColor(.themeAndy), for: .disabled)
     }
 
     public func set(style: Style) {
         self.style = style
 
         switch style {
-        case .yellow:
-            setImage(imageView?.image?.withTintColor(.themeDark), for: .normal)
-            setBackgroundColor(.themeYellowD, for: .normal)
-            setBackgroundColor(.themeYellow50, for: .highlighted)
-        case .red:
-            setBackgroundColor(.themeLucian, for: .normal)
-            setBackgroundColor(.themeRed50, for: .highlighted)
-        case .gray:
+        case .orange:
+            setBackgroundColor(.themeOrange, for: .normal)
+            setBackgroundColor(.themeOrange.pressed, for: .highlighted)
+            setBackgroundColor(.themeBlade, for: .disabled)
+        case .leah:
             setBackgroundColor(.themeLeah, for: .normal)
-            setBackgroundColor(.themeNina, for: .highlighted)
+            setBackgroundColor(.themeLeah.pressed, for: .highlighted)
+            setBackgroundColor(.themeBlade, for: .highlighted)
         }
     }
 
     public enum Style {
-        case yellow
-        case red
-        case gray
+        case orange
+        case leah
     }
 }

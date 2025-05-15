@@ -114,15 +114,15 @@ public extension BadgeView {
 
         var textColor: UIColor {
             switch self {
-            case .small: return .themeBran
-            case .medium: return .themeWhite
+            case .small: return .themeLeah
+            case .medium: return .themeLeah
             }
         }
 
         var backgroundColor: UIColor {
             switch self {
-            case .small: return .themeJeremy
-            case .medium: return .themeLucian
+            case .small: return .themeBlade
+            case .medium: return .themeBlade
             }
         }
     }
